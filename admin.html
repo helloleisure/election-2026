@@ -378,17 +378,18 @@ input,select,textarea{font-family:inherit}
     <div class="admin-section-body">
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">검색 키워드</label>
-          <input type="text" class="form-input" id="news-keyword"
-            value="전남광주특별시장 지방선거 광주 전남 6.3 지선">
-        </div>
-        <div class="form-group">
-          <label class="form-label">카테고리 분류</label>
-          <select class="form-select" id="news-cat-default">
+          <label class="form-label">카테고리 선택</label>
+          <select class="form-select" id="news-cat-default" onchange="onNewsCatChange(this.value)">
             <option value="mayor">특별시장</option>
             <option value="gwangju">광주</option>
             <option value="jeonnam">전남</option>
           </select>
+        </div>
+        <div class="form-group" style="position:relative">
+          <label class="form-label">검색 키워드 <span style="color:var(--txt3);font-weight:400">(카테고리 변경 시 자동 교체)</span></label>
+          <input type="text" class="form-input" id="news-keyword"
+            value="6.3지선, 김영록, 민형배, 지방선거, 선거 캠프, 여론조사, 민주당">
+          <button class="btn btn-sm btn-ghost" style="position:absolute;right:4px;bottom:0;font-size:11px;padding:3px 8px" onclick="resetNewsKeyword()">기본값</button>
         </div>
       </div>
       <div id="fetched-results"></div>
@@ -805,12 +806,37 @@ function savePhase() {
 // ════════════════════════════════════════
 // NEWS FETCH
 // ════════════════════════════════════════
+const NEWS_KEYWORD_DEFAULTS = {
+  mayor:   '6.3지선, 김영록, 민형배, 지방선거, 선거 캠프, 여론조사, 민주당',
+  gwangju: '광주 구청장, 광주 광역의원, 광주 6.3 지방선거, 광주 민주당 공천, 광주 선거 여론조사',
+  jeonnam: '전남 시장 군수, 전남 광역의원, 전남 6.3 지방선거, 전남개발공사 JNDC, 전남 선거 여론조사'
+};
+
+const NEWS_PROMPTS = {
+  mayor:   (kw) => `한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 키워드: ${kw}. 전남광주통합특별시장 경선·결선(김영록·민형배), 여론조사, 선거 캠프, 민주당 동향 관련 뉴스 5개. JSON 배열만. 필드: title, summary(30자), source, url, category("mayor").`,
+  gwangju: (kw) => `한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 키워드: ${kw}. 광주시 5개 구청장 후보·광역의원 선거·공천·여론조사·선거운동 관련 뉴스 5개. JSON 배열만. 필드: title, summary(30자), source, url, category("gwangju").`,
+  jeonnam: (kw) => `한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 키워드: ${kw}. 전남 22개 시군 시장·군수·광역의원 선거, 전남개발공사(JNDC), 여론조사 관련 뉴스 5개. JSON 배열만. 필드: title, summary(30자), source, url, category("jeonnam").`
+};
+
+function onNewsCatChange(cat) {
+  const kw = NEWS_KEYWORD_DEFAULTS[cat] || NEWS_KEYWORD_DEFAULTS.mayor;
+  document.getElementById('news-keyword').value = kw;
+}
+
+function resetNewsKeyword() {
+  const cat = document.getElementById('news-cat-default').value;
+  document.getElementById('news-keyword').value = NEWS_KEYWORD_DEFAULTS[cat] || NEWS_KEYWORD_DEFAULTS.mayor;
+  showToast('기본 키워드로 초기화했습니다');
+}
+
 let fetchedItems = [];
 
 async function fetchAdminNews() {
   const apiKey = localStorage.getItem('perplexity_api_key');
   if (!apiKey) { showToast('Perplexity API 키를 먼저 설정해주세요'); return; }
-  const keyword = document.getElementById('news-keyword').value||'전남광주특별시장 지방선거';
+  const keyword = document.getElementById('news-keyword').value || NEWS_KEYWORD_DEFAULTS.mayor;
+  const cat = document.getElementById('news-cat-default').value || 'mayor';
+  const prompt = (NEWS_PROMPTS[cat] || NEWS_PROMPTS.mayor)(keyword);
   const btn = document.getElementById('btn-fetch-news');
   btn.textContent = '수집 중...';
   btn.disabled = true;
@@ -821,10 +847,7 @@ async function fetchAdminNews() {
       headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},
       body: JSON.stringify({
         model:'sonar',
-        messages:[{
-          role:'user',
-          content:`"${keyword}" 관련 최신 뉴스 5개를 JSON 배열로 응답해줘. 각 항목: title(제목), summary(한줄요약), source(언론사), url(기사URL), category(mayor|gwangju|jeonnam|all 중 하나). JSON만 응답.`
-        }],
+        messages:[{role:'user', content: prompt}],
         temperature:0.1
       })
     });
