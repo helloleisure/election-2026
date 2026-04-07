@@ -542,23 +542,33 @@ img{display:block;max-width:100%}
 .region-acc-arrow.open{transform:rotate(180deg)}
 .region-acc-body{display:none;padding:10px 14px;border-top:1px solid var(--border);background:var(--bg)}
 .region-acc-body.open{display:block}
-.mini-cand-list{display:flex;flex-direction:column;gap:4px}
+.mini-cand-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 .mini-cand-item{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 10px;border-radius:6px;
+  display:flex;flex-direction:column;
+  border-radius:var(--rad);overflow:hidden;
   background:var(--bg2);border:1px solid var(--border);
-  font-size:14px;
+  position:relative;
 }
+.mini-cand-stripe{height:3px;width:100%;flex-shrink:0}
+.mini-cand-top{display:flex;gap:12px;padding:12px;align-items:flex-start}
 .mini-cand-avatar{
-  width:44px;height:48px;border-radius:6px;
+  width:72px;height:80px;border-radius:8px;
   overflow:hidden;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:700;color:#fff;
+  font-size:22px;font-weight:700;color:#fff;
 }
 .mini-cand-avatar img{width:100%;height:100%;object-fit:cover;object-position:top center}
-.mini-cand-name{font-weight:600;min-width:52px;flex-shrink:0}
-.mini-cand-pos{font-size:12px;color:var(--txt2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mini-cand-comp{font-size:11px;color:var(--txt3);background:rgba(255,255,255,0.04);padding:1px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+.mini-cand-info{flex:1;min-width:0}
+.mini-cand-name{font-size:16px;font-weight:700;margin-bottom:3px}
+.mini-cand-comp{font-size:11px;color:var(--txt3);background:rgba(255,255,255,0.06);padding:2px 6px;border-radius:3px;display:inline-block;margin-bottom:4px}
+.mini-cand-career{font-size:11px;color:var(--txt2);display:flex;flex-direction:column;gap:1px}
+.mini-cand-career-item{display:flex;gap:4px;align-items:flex-start;line-height:1.4}
+.mini-cand-career-item::before{content:'·';color:var(--purple);flex-shrink:0;margin-top:1px}
+.mini-cand-edu{font-size:10px;color:var(--txt3);margin-top:4px;display:flex;flex-direction:column;gap:1px;padding-top:4px;border-top:1px solid var(--border)}
+.mini-cand-edu-item{display:flex;gap:4px;align-items:flex-start;line-height:1.4}
+.mini-cand-edu-item::before{content:'🎓';font-size:9px;flex-shrink:0;margin-top:1px}
+.mini-cand-district{font-size:11px;color:var(--txt3);font-weight:600;padding:6px 12px 2px;border-top:1px solid var(--border);background:rgba(255,255,255,0.02)}
+.mini-cand-slogan{font-size:11px;color:var(--txt2);padding:6px 12px 10px;border-top:1px solid var(--border);font-style:italic;border-left:2px solid var(--purple);margin:0 12px 10px;border-radius:0 3px 3px 0;background:var(--pdim)}
 
 /* ── NEWS PAGE ── */
 .news-page-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
@@ -1371,23 +1381,34 @@ function renderRegionAcc(containerId, regions, displayFn){
   }).join('');
 }
 
-function candAvatar(c){
+function candCard(c, showDistrict=false){
   const bg=c.color||'#8b5cf6';
-  if(c.image)
-    return `<div class="mini-cand-avatar" style="background:${bg}"><img src="${c.image}" alt="${c.name}" onerror="this.style.display='none'"></div>`;
-  return `<div class="mini-cand-avatar" style="background:${bg}">${initial(c.name)}</div>`;
+  const fav=c.favorable?`<span class="badge-favorable" style="font-size:10px">⭐유력</span>`:'';
+  const av=c.image
+    ?`<div class="mini-cand-avatar" style="background:${bg}"><img src="${c.image}" alt="${c.name}" onerror="this.style.display='none'"></div>`
+    :`<div class="mini-cand-avatar" style="background:${bg}">${initial(c.name)}</div>`;
+  const career=(c.career||[]).map(i=>`<div class="mini-cand-career-item">${i}</div>`).join('');
+  const edu=(c.edu||[]).map(i=>`<div class="mini-cand-edu-item">${i}</div>`).join('');
+  const districtTag=showDistrict&&c.district?`<div style="font-size:10px;color:var(--txt3);margin-bottom:2px">${c.district}</div>`:'';
+  const slogan=c.slogan&&c.slogan!=='준비중'?`<div class="mini-cand-slogan">${c.slogan}</div>`:'';
+  return `<div class="mini-cand-item">
+    <div class="mini-cand-stripe" style="background:${bg}"></div>
+    <div class="mini-cand-top">
+      ${av}
+      <div class="mini-cand-info">
+        ${districtTag}
+        <div class="mini-cand-name">${c.name}${fav}</div>
+        <div class="mini-cand-comp">${c.competition}</div>
+        ${career?`<div class="mini-cand-career">${career}</div>`:''}
+        ${edu?`<div class="mini-cand-edu">${edu}</div>`:''}
+      </div>
+    </div>
+    ${slogan}
+  </div>`;
 }
 
 function mayorCandHtml(cands){
-  return cands.map(c=>{
-    const fav=c.favorable?`<span class="badge-favorable" style="font-size:10px;margin-left:4px">⭐유력</span>`:'';
-    return `<div class="mini-cand-item">
-      ${candAvatar(c)}
-      <span class="mini-cand-name">${c.name}${fav}</span>
-      <span class="mini-cand-pos">${c.slogan&&c.slogan!=='준비중'?c.slogan:(c.position||c.status||'')}</span>
-      <span class="mini-cand-comp">${c.competition}</span>
-    </div>`;
-  }).join('');
+  return cands.map(c=>candCard(c)).join('');
 }
 
 function councilCandHtml(cands){
@@ -1398,16 +1419,9 @@ function councilCandHtml(cands){
     byDistrict[d].push(c);
   });
   return Object.entries(byDistrict).map(([dist,list])=>`
-    <div style="margin-bottom:8px">
-      <div style="font-size:11px;color:var(--txt3);margin-bottom:4px;font-weight:600">${dist}</div>
-      ${list.map(c=>{
-        const fav=c.favorable?`<span class="badge-favorable" style="font-size:10px;margin-left:4px">⭐유력</span>`:'';
-        return `<div class="mini-cand-item">
-          ${candAvatar(c)}
-          <span class="mini-cand-name">${c.name}${fav}</span>
-          <span class="mini-cand-comp">${c.competition}</span>
-        </div>`;
-      }).join('')}
+    <div style="margin-bottom:12px">
+      <div class="mini-cand-district">${dist}</div>
+      <div class="mini-cand-list" style="margin-top:6px">${list.map(c=>candCard(c)).join('')}</div>
     </div>`).join('');
 }
 
