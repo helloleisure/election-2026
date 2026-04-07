@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>관리자 패널 — 전남광주 6.3 지선</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0d13;--bg2:#111827;--bg3:#1a2236;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --txt:#e8edf5;--txt2:#8b96aa;--txt3:#4e5968;
+  --blue:#3b82f6;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;
+  --rad:10px;
+}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+button{cursor:pointer;font-family:inherit}
+input,select,textarea{font-family:inherit}
+
+/* ── LOCK SCREEN ── */
+#lock-screen{
+  position:fixed;inset:0;
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;
+}
+.lock-box{
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:var(--rad);padding:40px;
+  width:100%;max-width:360px;text-align:center;
+}
+.lock-icon{font-size:40px;margin-bottom:16px}
+.lock-title{font-size:20px;font-weight:700;margin-bottom:6px}
+.lock-sub{font-size:13px;color:var(--txt2);margin-bottom:24px}
+.lock-input{
+  width:100%;padding:10px 14px;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;color:var(--txt);font-size:15px;
+  text-align:center;letter-spacing:4px;margin-bottom:12px;
+  outline:none;transition:.2s;
+}
+.lock-input:focus{border-color:var(--blue)}
+.lock-btn{
+  width:100%;padding:10px;
+  background:var(--blue);color:#fff;
+  border:none;border-radius:8px;font-size:14px;font-weight:600;
+  transition:.2s;
+}
+.lock-btn:hover{background:#2563eb}
+.lock-err{color:var(--red);font-size:13px;margin-top:8px;display:none}
+
+/* ── HEADER ── */
+#admin-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,13,19,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+}
+.admin-logo{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px}
+.admin-badge{
+  background:rgba(239,68,68,0.15);color:var(--red);
+  font-size:11px;padding:2px 7px;border-radius:4px;font-weight:600;
+}
+.btn-back{
+  font-size:12px;color:var(--txt2);
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border2);
+  border-radius:6px;padding:4px 10px;
+}
+.btn-back:hover{color:var(--txt)}
+
+/* ── LAYOUT ── */
+.admin-container{max-width:900px;margin:0 auto;padding:24px 20px}
+
+/* ── SECTION ── */
+.admin-section{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rad);overflow:hidden;margin-bottom:20px;
+}
+.admin-section-head{
+  padding:14px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.admin-section-title{
+  font-size:14px;font-weight:700;
+  display:flex;align-items:center;gap:8px;
+}
+.admin-section-title::before{
+  content:'';display:block;width:3px;height:14px;
+  background:var(--blue);border-radius:2px;
+}
+.admin-section-body{padding:20px}
+
+/* ── FORM ── */
+.form-group{margin-bottom:16px}
+.form-label{
+  display:block;font-size:12px;font-weight:600;
+  color:var(--txt2);margin-bottom:6px;letter-spacing:0.3px;
+}
+.form-input{
+  width:100%;padding:9px 12px;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;color:var(--txt);font-size:13px;
+  outline:none;transition:.2s;
+}
+.form-input:focus{border-color:var(--blue)}
+.form-input.success{border-color:var(--green)}
+.form-input[type=password]{letter-spacing:2px}
+.form-select{
+  width:100%;padding:9px 12px;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;color:var(--txt);font-size:13px;
+  outline:none;cursor:pointer;
+}
+.form-textarea{
+  width:100%;padding:9px 12px;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;color:var(--txt);font-size:13px;
+  outline:none;resize:vertical;min-height:80px;
+  transition:.2s;
+}
+.form-textarea:focus{border-color:var(--blue)}
+.form-hint{font-size:11px;color:var(--txt3);margin-top:4px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.form-row{grid-template-columns:1fr}}
+
+/* ── BUTTONS ── */
+.btn{
+  padding:8px 16px;border-radius:8px;
+  font-size:13px;font-weight:600;border:none;
+  transition:.2s;
+}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#2563eb}
+.btn-success{background:var(--green);color:#fff}
+.btn-success:hover{background:#16a34a}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#dc2626}
+.btn-ghost{
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border2);
+  color:var(--txt2);
+}
+.btn-ghost:hover{color:var(--txt);background:rgba(255,255,255,0.08)}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+/* ── PHASE SELECTOR ── */
+.phase-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;
+}
+.phase-option{
+  padding:10px 12px;border-radius:8px;
+  border:1px solid var(--border2);background:var(--bg3);
+  cursor:pointer;text-align:center;transition:.2s;
+}
+.phase-option:hover{border-color:var(--border2);background:var(--bg3)}
+.phase-option.selected{border-color:var(--blue);background:rgba(59,130,246,0.12)}
+.phase-option-label{font-size:12px;font-weight:600;margin-bottom:2px}
+.phase-option-dot{width:6px;height:6px;border-radius:50%;margin:0 auto}
+
+/* ── NEWS FETCH RESULTS ── */
+.fetched-news-list{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.fetched-news-item{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:12px;
+  display:flex;align-items:flex-start;gap:10px;
+}
+.fetched-check{
+  width:18px;height:18px;border-radius:4px;
+  border:1px solid var(--border2);flex-shrink:0;margin-top:2px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:.15s;
+}
+.fetched-check.checked{background:var(--blue);border-color:var(--blue);color:#fff;font-size:10px}
+.fetched-news-title{font-size:13px;font-weight:500;margin-bottom:3px}
+.fetched-news-meta{font-size:11px;color:var(--txt2)}
+.fetched-news-body{flex:1}
+
+/* ── RESULTS INPUT ── */
+.results-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;border-bottom:1px solid var(--border);
+}
+.results-row:last-child{border-bottom:none}
+.results-avatar{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:#fff;flex-shrink:0;
+}
+.results-name{font-size:13px;font-weight:600;min-width:60px}
+.results-input{
+  flex:1;padding:6px 10px;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:6px;color:var(--txt);font-size:13px;
+  outline:none;
+}
+.results-pct{font-size:14px;font-weight:700;min-width:55px;text-align:right}
+
+/* ── CAMP EDITOR ── */
+.camp-editor{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:540px){.camp-editor{grid-template-columns:1fr}}
+.camp-editor-card{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;padding:16px;
+}
+.camp-editor-title{font-size:13px;font-weight:700;margin-bottom:12px}
+.camp-update-row{
+  display:flex;gap:6px;align-items:flex-start;margin-bottom:8px;
+}
+.camp-update-input{
+  flex:1;padding:6px 10px;background:var(--bg);
+  border:1px solid var(--border2);border-radius:6px;
+  color:var(--txt);font-size:12px;outline:none;
+}
+.btn-del{background:rgba(239,68,68,0.12);border:none;color:var(--red);border-radius:4px;padding:5px 8px;font-size:12px}
+
+/* ── STATUS BAR ── */
+#status-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(10,13,19,0.98);border-top:1px solid var(--border);
+  padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;color:var(--txt2);
+  z-index:999;
+}
+.status-msg{color:var(--green)}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;top:70px;right:20px;
+  background:#1f2937;border:1px solid var(--border2);
+  color:var(--txt);font-size:13px;padding:10px 16px;
+  border-radius:8px;z-index:9999;
+  opacity:0;transform:translateY(-8px);
+  transition:.3s;pointer-events:none;
+}
+#toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ── LOCK SCREEN ── -->
+<div id="lock-screen">
+  <div class="lock-box">
+    <div class="lock-icon">🔐</div>
+    <div class="lock-title">관리자 패널</div>
+    <div class="lock-sub">전남광주 6.3 지선 개표센터</div>
+    <input type="password" class="lock-input" id="pw-input"
+      placeholder="비밀번호" onkeydown="if(event.key==='Enter')checkPw()">
+    <button class="lock-btn" onclick="checkPw()">입장</button>
+    <div class="lock-err" id="lock-err">비밀번호가 올바르지 않습니다</div>
+    <div style="font-size:11px;color:var(--txt3);margin-top:16px">초기 비밀번호: 0603</div>
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<header id="admin-header" style="display:none">
+  <div class="admin-logo">
+    <span class="admin-badge">ADMIN</span>
+    전남광주 6.3 지선 관리자 패널
+  </div>
+  <button class="btn-back" onclick="window.location='index.html'">← 사이트로</button>
+</header>
+
+<div id="admin-body" style="display:none">
+<div class="admin-container">
+
+  <!-- ── GitHub 배포 설정 ── -->
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <div class="admin-section-title">GitHub 연동 설정</div>
+      <button class="btn btn-sm btn-primary" onclick="saveGithubSettings()">저장</button>
+    </div>
+    <div class="admin-section-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">GitHub 유저네임</label>
+          <input type="text" class="form-input" id="gh-user" placeholder="예: cosmozian">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Repository 이름</label>
+          <input type="text" class="form-input" id="gh-repo" placeholder="예: election-2026">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">GitHub Personal Access Token</label>
+        <input type="password" class="form-input" id="gh-token" placeholder="ghp_...">
+        <div class="form-hint">Settings → Developer settings → Personal access tokens → repo 권한 체크</div>
+      </div>
+      <!-- 저장 & 배포 -->
+      <div style="background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:14px;margin-top:4px">
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px">GitHub에 전체 저장</div>
+        <div style="font-size:12px;color:var(--txt2);margin-bottom:12px">뉴스·개표결과·캠프상황·선거단계를 GitHub에 저장하면 사이트에 즉시 반영됩니다.</div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-success" id="btn-gh-push" onclick="pushToGithub()">
+            ↑ GitHub에 저장 &amp; 배포
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="testGithubApi()">
+            API 연결 테스트
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="checkDeployStatus()">
+            배포 상태 확인
+          </button>
+          <button class="btn btn-ghost btn-sm" id="btn-open-site" onclick="openSite()" style="display:none">
+            사이트 열기 ↗
+          </button>
+        </div>
+        <span id="gh-push-status" style="font-size:12px;color:var(--txt2);display:block;margin-top:10px"></span>
+      </div>
+
+      <!-- 배포 현황 패널 -->
+      <div id="deploy-panel" style="display:none;margin-top:12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-size:12px;font-weight:700;margin-bottom:10px">배포 현황</div>
+        <div id="deploy-pages-status" style="margin-bottom:10px"></div>
+        <div style="font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:6px">파일별 마지막 업데이트</div>
+        <div id="deploy-files-status"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── API 설정 ── -->
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <div class="admin-section-title">API 키 설정</div>
+      <button class="btn btn-sm btn-primary" onclick="saveApiKeys()">저장</button>
+    </div>
+    <div class="admin-section-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">PERPLEXITY API KEY (뉴스 수집)</label>
+          <input type="password" class="form-input" id="plex-key" placeholder="pplx-...">
+          <div class="form-hint">뉴스 자동 수집에 사용됩니다</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">ANTHROPIC API KEY (AI 요약)</label>
+          <input type="password" class="form-input" id="ant-key" placeholder="sk-ant-...">
+          <div class="form-hint">뉴스 AI 요약에 사용됩니다</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">관리자 비밀번호 변경</label>
+        <div class="form-row">
+          <input type="password" class="form-input" id="new-pw1" placeholder="새 비밀번호">
+          <input type="password" class="form-input" id="new-pw2" placeholder="새 비밀번호 확인">
+        </div>
+        <button class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="changePw()">비밀번호 변경</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 선거 단계 설정 ── -->
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <div class="admin-section-title">선거 단계</div>
+      <button class="btn btn-sm btn-primary" onclick="savePhase()">저장</button>
+    </div>
+    <div class="admin-section-body">
+      <div class="phase-grid" id="phase-grid">
+        <!-- JS render -->
+      </div>
+      <div class="form-group" style="margin-top:16px">
+        <label class="form-label">개표율 (%)</label>
+        <input type="number" class="form-input" id="cnt-rate-input"
+          min="0" max="100" placeholder="0" style="max-width:120px">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 뉴스 수집 ── -->
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <div class="admin-section-title">뉴스 수집 (Perplexity)</div>
+      <button class="btn btn-sm btn-ghost" id="btn-fetch-news" onclick="fetchAdminNews()">뉴스 가져오기</button>
+    </div>
+    <div class="admin-section-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">검색 키워드</label>
+          <input type="text" class="form-input" id="news-keyword"
+            value="전남광주특별시장 지방선거 광주 전남 6.3 지선">
+        </div>
+        <div class="form-group">
+          <label class="form-label">카테고리 분류</label>
+          <select class="form-select" id="news-cat-default">
+            <option value="mayor">특별시장</option>
+            <option value="gwangju">광주</option>
+            <option value="jeonnam">전남</option>
+          </select>
+        </div>
+      </div>
+      <div id="fetched-results"></div>
+      <div id="fetched-actions" style="display:none;margin-top:12px">
+        <button class="btn btn-success btn-sm" onclick="publishSelected()">선택 항목 발행</button>
+        <button class="btn btn-ghost btn-sm" style="margin-left:8px" onclick="clearFetched()">취소</button>
+      </div>
+
+      <!-- 뉴스 직접 등록 -->
+      <div style="border-top:1px solid var(--border);margin-top:20px;padding-top:20px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:12px">수동 뉴스 등록</div>
+        <div class="form-group">
+          <label class="form-label">제목</label>
+          <input type="text" class="form-input" id="manual-title" placeholder="뉴스 제목">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">언론사</label>
+            <input type="text" class="form-input" id="manual-source" placeholder="뉴스1, 연합뉴스 등">
+          </div>
+          <div class="form-group">
+            <label class="form-label">카테고리</label>
+            <select class="form-select" id="manual-cat">
+              <option value="mayor">특별시장</option>
+              <option value="gwangju">광주</option>
+              <option value="jeonnam">전남</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">URL</label>
+          <input type="text" class="form-input" id="manual-url" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">요약</label>
+          <textarea class="form-textarea" id="manual-summary" placeholder="한 줄 요약" style="min-height:60px"></textarea>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="addManualNews()">등록</button>
+      </div>
+
+      <!-- 등록된 뉴스 목록 -->
+      <div style="border-top:1px solid var(--border);margin-top:20px;padding-top:20px">
+        <div style="font-size:13px;font-weight:600;margin-bottom:12px">등록된 뉴스 관리</div>
+        <div id="news-manage-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 개표 결과 입력 ── -->
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <div class="admin-section-title">전남광주특별시장 개표 입력</div>
+      <button class="btn btn-sm btn-primary" onclick="saveResults()">저장</button>
+    </div>
+    <div class="admin-section-body">
+      <div id="results-input-list"><!-- JS render --></div>
+      <div class="form-group" style="margin-top:16px">
+        <label class="form-label">전체 투표수</label>
+        <input type="number" class="form-input" id="total-votes-input"
+          placeholder="0" style="max-width:200px">
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 캠프 상황실 ── -->
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <div class="admin-section-title">캠프 상황실 업데이트</div>
+      <button class="btn btn-sm btn-primary" onclick="saveCamps()">저장</button>
+    </div>
+    <div class="admin-section-body">
+      <div class="camp-editor" id="camp-editor"><!-- JS render --></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- Status Bar -->
+<div id="status-bar" style="display:none">
+  <span id="status-msg" class="status-msg">준비됨</span>
+  <span style="color:var(--txt3)">변경사항은 저장 버튼을 눌러야 반영됩니다</span>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="data/config.js"></script>
+<script src="data/candidates.js"></script>
+<script src="data/results.js"></script>
+<script src="data/news.js"></script>
+<script src="data/camps.js"></script>
+
+<script>
+// ════════════════════════════════════════
+// AUTH
+// ════════════════════════════════════════
+const DEFAULT_PW = '0603';
+
+function checkPw() {
+  const pw = document.getElementById('pw-input').value;
+  const stored = localStorage.getItem('admin_pw') || DEFAULT_PW;
+  if (pw === stored) {
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('admin-header').style.display = 'flex';
+    document.getElementById('admin-body').style.display = 'block';
+    document.getElementById('status-bar').style.display = 'flex';
+    loadAdmin();
+  } else {
+    document.getElementById('lock-err').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+  }
+}
+
+function changePw() {
+  const p1 = document.getElementById('new-pw1').value;
+  const p2 = document.getElementById('new-pw2').value;
+  if (!p1) { showToast('비밀번호를 입력해주세요'); return; }
+  if (p1 !== p2) { showToast('비밀번호가 일치하지 않습니다'); return; }
+  localStorage.setItem('admin_pw', p1);
+  showToast('비밀번호가 변경되었습니다');
+  document.getElementById('new-pw1').value = '';
+  document.getElementById('new-pw2').value = '';
+}
+
+// ════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+function setStatus(msg) {
+  const el = document.getElementById('status-msg');
+  if (el) el.textContent = msg;
+}
+
+function getInitial(name) { return name ? name.charAt(0) : '?'; }
+
+// ════════════════════════════════════════
+// LOAD ADMIN
+// ════════════════════════════════════════
+function loadAdmin() {
+  loadGithubSettings();
+  loadApiKeys();
+  renderPhaseSelector();
+  renderResultsInput();
+  renderCampEditor();
+  renderNewsManage();
+}
+
+// ════════════════════════════════════════
+// GITHUB SETTINGS
+// ════════════════════════════════════════
+function loadGithubSettings() {
+  document.getElementById('gh-user').value  = localStorage.getItem('gh_user')||'';
+  document.getElementById('gh-repo').value  = localStorage.getItem('gh_repo')||'';
+  document.getElementById('gh-token').value = localStorage.getItem('gh_token')||'';
+}
+
+function saveGithubSettings() {
+  const user  = document.getElementById('gh-user').value.trim();
+  const repo  = document.getElementById('gh-repo').value.trim();
+  const token = document.getElementById('gh-token').value.trim();
+  if (user)  localStorage.setItem('gh_user',  user);
+  if (repo)  localStorage.setItem('gh_repo',  repo);
+  if (token) localStorage.setItem('gh_token', token);
+  showToast('GitHub 설정이 저장되었습니다');
+}
+
+// XHR 기반 — fetch/AbortController 브라우저 호환성 문제 우회
+function xhrRequest(method, url, token, body) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(method, url);
+    xhr.timeout = 15000;
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+    if (body) xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = () => resolve({ status: xhr.status, body: xhr.responseText });
+    xhr.ontimeout = () => reject(new Error('타임아웃 (15s)'));
+    xhr.onerror  = () => reject(new Error('네트워크 오류'));
+    xhr.send(body || null);
+  });
+}
+
+async function ghUpdateFile(token, user, repo, path, content, message) {
+  const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
+
+  // SHA 조회
+  let sha = '';
+  try {
+    const r = await xhrRequest('GET', url, token);
+    if (r.status === 200) sha = JSON.parse(r.body).sha || '';
+  } catch(e) {}
+
+  const payload = { message, content: btoa(unescape(encodeURIComponent(content))) };
+  if (sha) payload.sha = sha;
+
+  const r = await xhrRequest('PUT', url, token, JSON.stringify(payload));
+  if (r.status !== 200 && r.status !== 201) {
+    const msg = JSON.parse(r.body || '{}').message || '';
+    throw new Error(`${path} 실패 (${r.status}${msg ? ': '+msg : ''})`);
+  }
+}
+
+async function pushToGithub() {
+  const user  = localStorage.getItem('gh_user');
+  const repo  = localStorage.getItem('gh_repo');
+  const token = localStorage.getItem('gh_token');
+  if (!user || !repo || !token) {
+    showToast('GitHub 유저네임, Repository, 토큰을 먼저 저장해주세요');
+    return;
+  }
+  const btn = document.getElementById('btn-gh-push');
+  const statusEl = document.getElementById('gh-push-status');
+  btn.disabled = true;
+  btn.textContent = '저장 중...';
+
+  const files = [
+    { path:'data/config.js',     content:`const CONFIG = ${JSON.stringify(CONFIG, null,2)};` },
+    { path:'data/news.js',       content:`const NEWS = ${JSON.stringify(NEWS, null,2)};` },
+    { path:'data/results.js',    content:`const RESULTS = ${JSON.stringify(RESULTS, null,2)};` },
+    { path:'data/camps.js',      content:`const CAMPS = ${JSON.stringify(CAMPS, null,2)};` },
+    { path:'data/candidates.js', content:`const CANDIDATES = ${JSON.stringify(CANDIDATES, null,2)};` },
+    { path:'data/polls.js',      content:`const POLLS = ${JSON.stringify(POLLS, null,2)};` },
+  ];
+
+  try {
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      statusEl.textContent = `저장 중... (${i+1}/${files.length}) ${f.path}`;
+      await ghUpdateFile(token, user, repo, f.path, f.content, `Update ${f.path}`);
+    }
+    statusEl.textContent = '✅ 배포 완료!';
+    showToast('GitHub에 저장 완료! 1~2분 후 사이트에 반영됩니다');
+  } catch(e) {
+    statusEl.textContent = '❌ '+e.message;
+    showToast('저장 실패: '+e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '↑ GitHub에 저장 & 배포';
+  }
+}
+
+// ════════════════════════════════════════
+// GITHUB API 연결 테스트
+// ════════════════════════════════════════
+async function testGithubApi() {
+  const user  = localStorage.getItem('gh_user');
+  const repo  = localStorage.getItem('gh_repo');
+  const token = localStorage.getItem('gh_token');
+  const statusEl = document.getElementById('gh-push-status');
+  if (!user || !repo || !token) {
+    showToast('GitHub 설정을 먼저 저장해주세요'); return;
+  }
+  statusEl.textContent = '🔍 API 연결 테스트 중...';
+  try {
+    const r = await fetchWithTimeout(
+      `https://api.github.com/repos/${user}/${repo}`,
+      { headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github.v3+json' } },
+      8000
+    );
+    if (r.ok) {
+      const d = await r.json();
+      statusEl.textContent = `✅ 연결 성공: ${d.full_name} (${d.private ? '비공개':'공개'})`;
+    } else {
+      statusEl.textContent = `❌ 연결 실패 (${r.status}) — 토큰 또는 저장소 이름을 확인하세요`;
+    }
+  } catch(e) {
+    statusEl.textContent = `❌ 네트워크 오류: ${e.message} — GitHub API에 접근할 수 없습니다`;
+  }
+}
+
+// ════════════════════════════════════════
+// DEPLOY STATUS CHECK
+// ════════════════════════════════════════
+function openSite() {
+  const user = localStorage.getItem('gh_user');
+  const repo = localStorage.getItem('gh_repo');
+  if (!user || !repo) { showToast('GitHub 설정을 먼저 저장해주세요'); return; }
+  window.open(`https://${user}.github.io/${repo}/`, '_blank');
+}
+
+async function checkDeployStatus() {
+  const user  = localStorage.getItem('gh_user');
+  const repo  = localStorage.getItem('gh_repo');
+  const token = localStorage.getItem('gh_token');
+  if (!user || !repo || !token) {
+    showToast('GitHub 설정을 먼저 저장해주세요');
+    return;
+  }
+
+  const panel    = document.getElementById('deploy-panel');
+  const pagesEl  = document.getElementById('deploy-pages-status');
+  const filesEl  = document.getElementById('deploy-files-status');
+  const openBtn  = document.getElementById('btn-open-site');
+  const statusEl = document.getElementById('gh-push-status');
+
+  panel.style.display = 'block';
+  pagesEl.innerHTML   = '<span style="color:var(--txt2);font-size:12px">확인 중...</span>';
+  filesEl.innerHTML   = '';
+  statusEl.textContent = '';
+
+  const headers = {
+    'Authorization': `token ${token}`,
+    'Accept': 'application/vnd.github.v3+json'
+  };
+
+  // 1) GitHub Pages 배포 상태 — 실제 사이트 URL로 직접 확인
+  const siteUrl = `https://${user}.github.io/${repo}/`;
+  try {
+    const r = await fetch(siteUrl, { method:'HEAD', mode:'no-cors' });
+    // no-cors는 항상 opaque response → 도달 가능하면 성공으로 간주
+    pagesEl.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:13px;font-weight:700;color:var(--green)">✅ 배포 완료</span>
+        <a href="${siteUrl}" target="_blank"
+           style="font-size:12px;color:var(--blue);text-decoration:underline">${siteUrl}</a>
+      </div>`;
+    openBtn.style.display = 'inline-flex';
+  } catch(e) {
+    pagesEl.innerHTML = `<span style="font-size:12px;color:var(--red)">⚠️ 사이트 접근 실패: ${siteUrl}</span>`;
+  }
+
+  // 2) 파일별 마지막 커밋 시간
+  const trackedFiles = ['data/config.js','data/news.js','data/results.js','data/camps.js','data/candidates.js','data/polls.js'];
+  const rows = await Promise.all(trackedFiles.map(async path => {
+    try {
+      const r = await fetch(
+        `https://api.github.com/repos/${user}/${repo}/commits?path=${path}&per_page=1`,
+        { headers }
+      );
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      const commit = d[0];
+      if (!commit) return { path, time: '커밋 없음', sha: '' };
+      const date = new Date(commit.commit.author.date);
+      const timeStr = date.toLocaleString('ko-KR', { month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit' });
+      const sha = commit.sha.slice(0,7);
+      return { path, time: timeStr, sha };
+    } catch(e) {
+      return { path, time: '조회 실패', sha: '' };
+    }
+  }));
+
+  filesEl.innerHTML = rows.map(row => `
+    <div style="display:flex;align-items:center;justify-content:space-between;
+                padding:6px 0;border-bottom:1px solid var(--border);font-size:12px">
+      <span style="color:var(--txt2);font-family:monospace">${row.path}</span>
+      <span style="color:var(--txt);display:flex;gap:8px;align-items:center">
+        ${row.sha ? `<span style="color:var(--txt3);font-family:monospace">${row.sha}</span>` : ''}
+        <span>${row.time}</span>
+      </span>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════
+// API KEYS
+// ════════════════════════════════════════
+function loadApiKeys() {
+  const pKey = localStorage.getItem('perplexity_api_key')||'';
+  const aKey = localStorage.getItem('anthropic_api_key')||'';
+  document.getElementById('plex-key').value = pKey;
+  document.getElementById('ant-key').value  = aKey;
+  if (pKey) document.getElementById('plex-key').classList.add('success');
+  if (aKey) document.getElementById('ant-key').classList.add('success');
+}
+
+function saveApiKeys() {
+  const pKey = document.getElementById('plex-key').value.trim();
+  const aKey = document.getElementById('ant-key').value.trim();
+  if (pKey) localStorage.setItem('perplexity_api_key', pKey);
+  if (aKey) localStorage.setItem('anthropic_api_key', aKey);
+  showToast('API 키가 저장되었습니다');
+  loadApiKeys();
+}
+
+// ════════════════════════════════════════
+// PHASE
+// ════════════════════════════════════════
+let selectedPhase = CONFIG.phase;
+
+function renderPhaseSelector() {
+  const el = document.getElementById('phase-grid');
+  const cntEl = document.getElementById('cnt-rate-input');
+  if (cntEl) cntEl.value = CONFIG.countingRate||0;
+  el.innerHTML = Object.entries(CONFIG.phases).map(([key, ph])=>`
+    <div class="phase-option${key===selectedPhase?' selected':''}"
+      onclick="selectPhase('${key}',this)">
+      <div class="phase-option-dot" style="background:${ph.color}"></div>
+      <div class="phase-option-label" style="color:${ph.color};margin-top:6px">${ph.label}</div>
+    </div>`).join('');
+}
+
+function selectPhase(key, el) {
+  selectedPhase = key;
+  document.querySelectorAll('.phase-option').forEach(e=>e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function savePhase() {
+  CONFIG.phase = selectedPhase;
+  const rate = parseInt(document.getElementById('cnt-rate-input').value)||0;
+  CONFIG.countingRate = rate;
+  RESULTS.mayor.countingRate = rate;
+  showToast('선거 단계가 저장되었습니다 (배포 전까지 임시 적용)');
+  setStatus('선거 단계: '+CONFIG.phases[selectedPhase].label);
+}
+
+// ════════════════════════════════════════
+// NEWS FETCH
+// ════════════════════════════════════════
+let fetchedItems = [];
+
+async function fetchAdminNews() {
+  const apiKey = localStorage.getItem('perplexity_api_key');
+  if (!apiKey) { showToast('Perplexity API 키를 먼저 설정해주세요'); return; }
+  const keyword = document.getElementById('news-keyword').value||'전남광주특별시장 지방선거';
+  const btn = document.getElementById('btn-fetch-news');
+  btn.textContent = '수집 중...';
+  btn.disabled = true;
+
+  try {
+    const resp = await fetch('https://api.perplexity.ai/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'sonar',
+        messages:[{
+          role:'user',
+          content:`"${keyword}" 관련 최신 뉴스 5개를 JSON 배열로 응답해줘. 각 항목: title(제목), summary(한줄요약), source(언론사), url(기사URL), category(mayor|gwangju|jeonnam|all 중 하나). JSON만 응답.`
+        }],
+        temperature:0.1
+      })
+    });
+    const data = await resp.json();
+    const text = data.choices?.[0]?.message?.content||'';
+    const match = text.match(/\[[\s\S]*\]/);
+    if (!match) throw new Error('JSON 파싱 실패');
+    fetchedItems = JSON.parse(match[0]);
+    renderFetchedNews();
+  } catch(e) {
+    showToast('수집 실패: '+e.message);
+  } finally {
+    btn.textContent = '뉴스 가져오기';
+    btn.disabled = false;
+  }
+}
+
+function renderFetchedNews() {
+  const el = document.getElementById('fetched-results');
+  const act = document.getElementById('fetched-actions');
+  if (!fetchedItems.length) { el.innerHTML='<div style="color:var(--txt3);font-size:13px">결과 없음</div>'; return; }
+  el.innerHTML = `<div class="fetched-news-list">`+fetchedItems.map((item,i)=>`
+    <div class="fetched-news-item">
+      <div class="fetched-check" id="check-${i}" onclick="toggleCheck(${i})"></div>
+      <div class="fetched-news-body">
+        <div class="fetched-news-title">${item.title||''}</div>
+        <div class="fetched-news-meta">${item.source||''} · <span style="color:var(--blue)">${item.category||''}</span></div>
+        <div style="font-size:11px;color:var(--txt3);margin-top:3px">${item.summary||''}</div>
+      </div>
+    </div>`).join('')+`</div>`;
+  act.style.display = 'block';
+}
+
+function toggleCheck(i) {
+  const el = document.getElementById('check-'+i);
+  el.classList.toggle('checked');
+  if (el.classList.contains('checked')) el.textContent='✓';
+  else el.textContent='';
+}
+
+function publishSelected() {
+  let count=0;
+  fetchedItems.forEach((item,i)=>{
+    const el = document.getElementById('check-'+i);
+    if (el?.classList.contains('checked')) {
+      const exists = NEWS.find(n=>n.title===item.title);
+      if (!exists) {
+        NEWS.unshift({
+          id: Date.now()+i,
+          title: item.title||'',
+          summary: item.summary||'',
+          source: item.source||'미상',
+          url: item.url||'',
+          category: item.category||'all',
+          publishedAt: new Date().toISOString(),
+          aiSummary: item.summary||''
+        });
+        count++;
+      }
+    }
+  });
+  showToast(count+'건 발행됨');
+  clearFetched();
+  renderNewsManage();
+}
+
+function clearFetched() {
+  fetchedItems=[];
+  document.getElementById('fetched-results').innerHTML='';
+  document.getElementById('fetched-actions').style.display='none';
+}
+
+// ════════════════════════════════════════
+// MANUAL NEWS
+// ════════════════════════════════════════
+function addManualNews() {
+  const title  = document.getElementById('manual-title').value.trim();
+  const source = document.getElementById('manual-source').value.trim();
+  const cat    = document.getElementById('manual-cat').value;
+  const url    = document.getElementById('manual-url').value.trim();
+  const sum    = document.getElementById('manual-summary').value.trim();
+  if (!title) { showToast('제목을 입력해주세요'); return; }
+  NEWS.unshift({
+    id: Date.now(),
+    title, source: source||'직접입력', url: url||'',
+    category: cat, publishedAt: new Date().toISOString(),
+    summary: sum, aiSummary: ''
+  });
+  document.getElementById('manual-title').value='';
+  document.getElementById('manual-source').value='';
+  document.getElementById('manual-url').value='';
+  document.getElementById('manual-summary').value='';
+  showToast('뉴스가 등록되었습니다');
+  renderNewsManage();
+}
+
+function deleteNews(id) {
+  const idx = NEWS.findIndex(n=>n.id===id);
+  if (idx>-1) NEWS.splice(idx,1);
+  renderNewsManage();
+  showToast('삭제됨');
+}
+
+function renderNewsManage() {
+  const el = document.getElementById('news-manage-list');
+  if (!el) return;
+  if (!NEWS.length) { el.innerHTML='<div style="color:var(--txt3);font-size:13px">등록된 뉴스 없음</div>'; return; }
+  el.innerHTML = NEWS.slice(0,10).map(n=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${n.title}</div>
+        <div style="font-size:11px;color:var(--txt3)">${n.source} · ${n.category}</div>
+      </div>
+      <button class="btn btn-sm btn-danger" onclick="deleteNews(${n.id})">삭제</button>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════
+// RESULTS INPUT
+// ════════════════════════════════════════
+function renderResultsInput() {
+  const el = document.getElementById('results-input-list');
+  if (!el) return;
+  el.innerHTML = CANDIDATES.mayor.map(c=>`
+    <div class="results-row">
+      <div class="results-avatar" style="background:${c.color}">${getInitial(c.name)}</div>
+      <div class="results-name">${c.name}</div>
+      <input type="number" class="results-input" id="votes-${c.id}"
+        placeholder="득표수" value="${RESULTS.mayor.candidates[c.id]?.votes||''}">
+      <div class="results-pct" id="pct-${c.id}" style="color:${c.color}">
+        ${RESULTS.mayor.candidates[c.id]?.rate ? RESULTS.mayor.candidates[c.id].rate.toFixed(1)+'%' : '-'}
+      </div>
+    </div>`).join('');
+  const totalEl = document.getElementById('total-votes-input');
+  if (totalEl) totalEl.value = RESULTS.mayor.totalVotes||'';
+}
+
+function saveResults() {
+  let total = parseInt(document.getElementById('total-votes-input').value)||0;
+  const votes = {};
+  let sum = 0;
+  CANDIDATES.mayor.forEach(c=>{
+    const v = parseInt(document.getElementById('votes-'+c.id)?.value)||0;
+    votes[c.id] = v;
+    sum += v;
+  });
+  if (!total) total = sum;
+  RESULTS.mayor.totalVotes = total;
+  RESULTS.mayor.totalVotes = total;
+  CANDIDATES.mayor.forEach(c=>{
+    const v = votes[c.id]||0;
+    const rate = total>0 ? (v/total*100) : 0;
+    RESULTS.mayor.candidates[c.id] = {votes:v, rate: Math.round(rate*10)/10};
+    const pctEl = document.getElementById('pct-'+c.id);
+    if (pctEl) pctEl.textContent = rate>0 ? rate.toFixed(1)+'%' : '-';
+  });
+  showToast('개표 결과가 저장되었습니다');
+  setStatus('개표 결과 업데이트됨');
+}
+
+// ════════════════════════════════════════
+// CAMP EDITOR
+// ════════════════════════════════════════
+function renderCampEditor() {
+  const el = document.getElementById('camp-editor');
+  if (!el) return;
+  el.innerHTML = Object.entries(CAMPS).map(([key,camp])=>`
+    <div class="camp-editor-card">
+      <div class="camp-editor-title" style="color:${camp.color}">${camp.label}</div>
+      <div id="camp-updates-${key}">
+        ${(camp.updates||[]).map((u,i)=>`
+          <div class="camp-update-row">
+            <input type="text" class="camp-update-input" id="cu-${key}-${i}" value="${u.text}">
+            <button class="btn-del" onclick="delCampUpdate('${key}',${i})">✕</button>
+          </div>`).join('')}
+      </div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:8px;width:100%"
+        onclick="addCampUpdate('${key}')">+ 상황 추가</button>
+    </div>`).join('');
+}
+
+function addCampUpdate(key) {
+  if (!CAMPS[key]) return;
+  CAMPS[key].updates.unshift({id: Date.now(), text:'새 업데이트', time: new Date().toISOString()});
+  renderCampEditor();
+}
+
+function delCampUpdate(key, idx) {
+  CAMPS[key]?.updates.splice(idx,1);
+  renderCampEditor();
+}
+
+function saveCamps() {
+  Object.keys(CAMPS).forEach(key=>{
+    const camp = CAMPS[key];
+    (camp.updates||[]).forEach((u,i)=>{
+      const el = document.getElementById(`cu-${key}-${i}`);
+      if (el) u.text = el.value;
+    });
+  });
+  showToast('캠프 상황이 저장되었습니다');
+}
+
+// Enter key on password
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('pw-input')?.focus();
+});
+</script>
+</body>
+</html>

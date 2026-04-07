@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전남광주 6.3 지선 — 개표센터</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:    #0c0c15;
+  --bg2:   #13131e;
+  --bg3:   #1b1b28;
+  --bg4:   #222232;
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+  --txt:   #e2e8f0;
+  --txt2:  #8892a4;
+  --txt3:  #454f62;
+  --purple:#8b5cf6;
+  --purple2:#6d28d9;
+  --pdim:  rgba(139,92,246,0.15);
+  --green: #22c55e;
+  --blue:  #60a5fa;
+  --amber: #fbbf24;
+  --live:  #ef4444;
+  --rad:   10px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans KR',sans-serif;
+  background:var(--bg);
+  color:var(--txt);
+  font-size:16px;
+  line-height:1.6;
+  min-height:100vh;
+}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit;font-size:15px}
+img{display:block;max-width:100%}
+
+/* ── SITE HEADER ── */
+#site-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;
+  border-bottom:1px solid var(--border);
+}
+.site-logo{
+  display:flex;align-items:center;gap:8px;
+  font-size:15px;font-weight:700;
+}
+.site-logo-d{
+  width:26px;height:26px;border-radius:6px;
+  background:var(--purple);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900;color:#fff;
+}
+.btn-admin{
+  font-size:13px;color:var(--txt2);
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--border2);
+  border-radius:5px;padding:4px 11px;
+  transition:.2s;
+}
+.btn-admin:hover{color:var(--txt)}
+
+/* ── HERO ── */
+#hero{
+  position:relative;
+  padding:40px 20px 34px;
+  text-align:center;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(109,40,217,0.25) 0%, transparent 70%),
+    var(--bg);
+}
+/* hex pattern */
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'%3E%3Cpolygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='rgba(139,92,246,0.08)' stroke-width='1'/%3E%3C/svg%3E");
+  background-size:60px 52px;
+  opacity:1;pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(139,92,246,0.15);
+  border:1px solid rgba(139,92,246,0.3);
+  border-radius:20px;padding:4px 14px;
+  font-size:13px;font-weight:600;color:var(--purple);
+  margin-bottom:14px;position:relative;
+}
+.hero-live{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--live);
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{
+  font-size:36px;font-weight:900;
+  letter-spacing:-0.5px;line-height:1.2;
+  margin-bottom:8px;position:relative;
+}
+.hero-title em{color:var(--purple);font-style:normal}
+.hero-sub{
+  font-size:15px;color:var(--txt2);
+  position:relative;
+}
+
+/* ── TAB NAV ── */
+#tabs{
+  position:sticky;top:0;z-index:100;
+  background:rgba(12,12,21,0.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:center;
+  padding:10px 16px;gap:4px;
+}
+.tab-btn{
+  padding:8px 22px;
+  font-size:15px;font-weight:500;
+  color:var(--txt2);
+  background:none;border:none;
+  border-radius:20px;
+  transition:.2s;white-space:nowrap;
+}
+.tab-btn:hover{color:var(--txt);background:rgba(255,255,255,0.04)}
+.tab-btn.active{
+  color:#fff;
+  background:var(--purple);
+  font-weight:600;
+}
+
+/* ── LAYOUT ── */
+.container{max-width:1080px;margin:0 auto;padding:24px 18px}
+.home-grid{
+  display:grid;
+  grid-template-columns:1fr 310px;
+  gap:20px;align-items:start;
+}
+@media(max-width:860px){
+  .home-grid{grid-template-columns:1fr}
+  .home-sidebar{order:-1}
+}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* ── SECTION LABEL ── */
+.sec-label{
+  font-size:19px;font-weight:800;
+  color:var(--txt2);letter-spacing:-.3px;
+  margin-bottom:12px;
+}
+
+/* ── DUEL CARD (경선/여론조사 대결구도) ── */
+.duel-wrap{padding:18px 16px 0}
+.duel-card{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:6px;margin-bottom:12px;
+}
+.duel-avatar{
+  width:80px;height:80px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;font-weight:900;color:#fff;
+  position:relative;border:3px solid rgba(255,255,255,0.12);
+  overflow:visible;
+}
+.duel-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.duel-av-rank{
+  position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  font-size:10px;font-weight:800;padding:2px 8px;border-radius:8px;
+  white-space:nowrap;border:1.5px solid var(--bg2);
+}
+.duel-side{flex:1;text-align:center;padding:0 2px}
+.duel-name{font-size:18px;font-weight:800;margin-bottom:2px}
+.duel-party{font-size:11px;color:var(--txt2);margin-bottom:8px}
+.duel-pct{font-size:36px;font-weight:900;line-height:1}
+.duel-mid{text-align:center;flex-shrink:0;padding:0 6px}
+.duel-gap-lbl{font-size:11px;color:var(--txt2);margin-bottom:4px;font-weight:600}
+.duel-gap{font-size:16px;font-weight:800;color:var(--txt)}
+.duel-bar{display:flex;height:8px;overflow:hidden}
+.duel-bar-l,.duel-bar-r{height:100%;transition:width .8s ease}
+.duel-foot{font-size:11px;color:var(--txt3);padding:8px 16px 12px;text-align:center}
+
+/* ── SCHEDULE (세로 타임라인) ── */
+.schedule-list{display:flex;flex-direction:column;padding:4px 0 0 0}
+.schedule-item{
+  display:flex;gap:14px;align-items:flex-start;
+  position:relative;padding:0 0 20px 0;
+}
+.schedule-item:last-child{padding-bottom:0}
+.schedule-item:not(:last-child)::after{
+  content:'';position:absolute;
+  left:4px;top:13px;bottom:0;width:1.5px;
+  background:repeating-linear-gradient(to bottom,var(--border2) 0,var(--border2) 4px,transparent 4px,transparent 9px);
+}
+.schedule-bullet{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--txt3);flex-shrink:0;margin-top:3px;
+  position:relative;z-index:1;
+}
+.schedule-item.s-active .schedule-bullet{background:var(--amber);box-shadow:0 0 6px var(--amber)}
+.schedule-item.s-done .schedule-bullet{background:var(--green)}
+.schedule-item.s-main .schedule-bullet{background:var(--purple);width:14px;height:14px;margin-top:2px}
+.schedule-item.s-main .schedule-date{font-size:18px!important;font-weight:900!important}
+.schedule-item.s-main .schedule-name{font-size:17px!important;font-weight:800!important}
+.schedule-info{flex:1}
+.schedule-date{font-size:13px;font-weight:700;color:var(--txt);line-height:1.3}
+.schedule-name{font-size:13px;color:var(--txt2);margin-top:2px}
+.schedule-badge{
+  display:inline-block;
+  font-size:11px;padding:1px 7px;border-radius:8px;font-weight:700;margin-left:5px;vertical-align:middle;
+}
+
+/* ── PHASE BANNER ── */
+#phase-banner{
+  border-radius:var(--rad);
+  overflow:hidden;margin-bottom:16px;
+  background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);
+  border:1px solid var(--border);
+}
+.phase-inner{padding:18px 20px}
+.phase-status{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:13px;font-weight:700;
+  padding:3px 10px;border-radius:10px;margin-bottom:8px;
+}
+.phase-name{font-size:19px;font-weight:800;letter-spacing:-.3px;margin-bottom:3px}
+.phase-desc{font-size:14px;color:var(--txt2)}
+
+/* ── WINNER BANNER ── */
+#winner-banner{
+  display:none;
+  border-radius:var(--rad);overflow:hidden;
+  margin-bottom:16px;
+  background:linear-gradient(135deg,#e8effe 0%,#d4ccff 50%,#c4b0ff 100%);
+  position:relative;min-height:140px;
+  padding:24px 28px;
+  align-items:center;gap:16px;
+}
+.winner-medal{
+  font-size:44px;flex-shrink:0;
+}
+.winner-info{flex:1}
+.winner-tag{
+  font-size:13px;font-weight:700;
+  background:rgba(109,40,217,0.2);color:var(--purple2);
+  padding:3px 10px;border-radius:3px;display:inline-block;margin-bottom:8px;
+}
+.winner-name{
+  font-size:30px;font-weight:900;color:#1a1a2e;
+  letter-spacing:-.5px;
+}
+.winner-name span{color:var(--purple2)}
+
+/* ── RACE CARD ── */
+.race-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rad);overflow:hidden;
+  margin-bottom:16px;
+}
+.race-head{
+  padding:14px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.race-head-title{font-size:14px;font-weight:700;color:var(--txt2)}
+.race-cnt{
+  font-size:13px;color:var(--txt3);
+  background:rgba(255,255,255,0.04);
+  padding:3px 9px;border-radius:3px;
+}
+.race-body{padding:14px 18px}
+.cand-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--border);
+}
+.cand-row:last-child{border-bottom:none}
+.cand-num{
+  width:18px;text-align:center;
+  font-size:12px;font-weight:700;color:var(--txt3);flex-shrink:0;
+}
+.cand-num.top{color:var(--amber)}
+.cand-av{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;color:#fff;
+}
+.cand-info{flex:1;min-width:0}
+.cand-nm-row{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.cand-nm{font-size:16px;font-weight:700}
+.cand-pty{
+  font-size:12px;color:var(--txt2);
+  background:rgba(255,255,255,0.05);
+  padding:1px 6px;border-radius:2px;
+}
+.cand-pos{font-size:13px;color:var(--txt2)}
+.bar-wrap{height:5px;background:rgba(255,255,255,0.06);border-radius:3px;margin-top:5px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.cand-stat{text-align:right;flex-shrink:0;min-width:72px}
+.cand-pct{font-size:24px;font-weight:800;line-height:1}
+.cand-vn{font-size:12px;color:var(--txt2);margin-top:2px}
+.no-data{text-align:center;padding:28px;color:var(--txt3);font-size:14px}
+
+/* ── NEWS ── */
+.news-head-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
+}
+.btn-refresh{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:13px;font-weight:600;color:var(--purple);
+  background:var(--pdim);
+  border:1px solid rgba(139,92,246,0.2);
+  border-radius:5px;padding:5px 12px;
+  transition:.2s;
+}
+.btn-refresh:hover{background:rgba(139,92,246,0.22)}
+.btn-refresh.loading svg{animation:spin 1s linear infinite}
+.btn-refresh svg{width:13px;height:13px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.news-list{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rad);overflow:hidden}
+.news-item{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:14px 16px;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:.15s;
+}
+.news-item:last-child{border-bottom:none}
+.news-item:hover{background:rgba(255,255,255,0.02)}
+.news-thumb{
+  width:150px;height:110px;border-radius:8px;
+  background:var(--bg4);flex-shrink:0;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.news-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+/* 이미지 없을 때 CSS 플레이스홀더 */
+.news-thumb-empty{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,var(--bg4) 0%,var(--bg3) 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+.news-thumb-empty::before{
+  content:'';position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 12px,rgba(255,255,255,0.025) 12px,rgba(255,255,255,0.025) 13px),
+    repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(255,255,255,0.015) 28px,rgba(255,255,255,0.015) 29px);
+}
+.news-thumb-empty::after{
+  content:'📰';font-size:36px;position:relative;z-index:1;opacity:.5;
+}
+.news-body{flex:1;min-width:0}
+.news-title{
+  font-size:17px;font-weight:500;line-height:1.55;
+  margin-bottom:6px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.news-meta{display:flex;align-items:center;gap:7px;font-size:14px;color:var(--txt2)}
+.news-src{background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:2px}
+/* 뉴스 분류 뱃지 */
+.news-badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px}
+.nbadge{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:4px;white-space:nowrap}
+.nbadge-kim{background:rgba(34,197,94,0.15);color:#22c55e}
+.nbadge-min{background:rgba(96,165,250,0.15);color:#60a5fa}
+.nbadge-kang{background:rgba(167,139,250,0.15);color:#a78bfa}
+.nbadge-common{background:rgba(255,255,255,0.06);color:var(--txt2)}
+.nbadge-type{background:rgba(255,255,255,0.05);color:var(--txt3);font-weight:600}
+.nbadge-jndc{background:rgba(251,191,36,0.13);color:#fbbf24}
+.news-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.news-tag{font-size:11px;color:var(--txt3);padding:1px 5px;border-radius:3px;background:rgba(255,255,255,0.04)}
+.news-ai{
+  font-size:13px;color:var(--txt2);
+  border-left:2px solid var(--purple);
+  padding:5px 9px;margin-top:7px;
+  background:rgba(139,92,246,0.06);border-radius:0 3px 3px 0;
+}
+.btn-ai{
+  font-size:12px;padding:2px 7px;
+  background:rgba(139,92,246,0.1);
+  border:1px solid rgba(139,92,246,0.2);
+  border-radius:3px;color:#a78bfa;margin-left:auto;
+}
+
+/* ── SIDEBAR ── */
+.sidebar-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rad);padding:18px;margin-bottom:14px;
+}
+.sidebar-label{
+  font-size:13px;font-weight:700;color:var(--txt3);
+  letter-spacing:.6px;text-transform:uppercase;margin-bottom:14px;
+}
+
+/* D-day */
+.dday-box{text-align:center}
+.dday-num{
+  font-size:52px;font-weight:900;letter-spacing:-2px;
+  color:var(--txt);line-height:1;
+}
+.dday-sub{font-size:14px;color:var(--txt2);margin-top:6px}
+.dday-date{font-size:14px;font-weight:600;color:var(--purple);margin-top:7px}
+
+/* 개표율 circle */
+.cnt-circle-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.cnt-circle{position:relative;width:110px;height:110px}
+.cnt-circle svg{width:110px;height:110px}
+.cnt-circle-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;
+}
+.cnt-pct{font-size:22px;font-weight:800;color:var(--txt)}
+.cnt-lbl{font-size:12px;color:var(--txt2);font-weight:600}
+.cnt-updated{font-size:12px;color:var(--txt3)}
+.btn-cnt-refresh{
+  background:none;border:none;color:var(--txt3);padding:2px;
+  transition:.2s;
+}
+.btn-cnt-refresh:hover{color:var(--txt2)}
+
+/* Camp */
+.camp-item{padding:8px 0;border-bottom:1px solid var(--border)}
+.camp-item:last-child{border-bottom:none}
+.camp-label{
+  display:flex;align-items:center;gap:6px;
+  font-size:14px;font-weight:700;margin-bottom:5px;
+}
+.camp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.camp-text{font-size:14px;line-height:1.5;color:var(--txt)}
+.camp-time{font-size:12px;color:var(--txt3);margin-top:3px}
+
+/* ── RESULTS PAGE ── */
+.accordion{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rad);overflow:hidden;margin-bottom:6px;
+}
+.acc-head{
+  width:100%;background:none;border:none;
+  padding:11px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:.15s;text-align:left;
+}
+.acc-head:hover{background:rgba(255,255,255,0.02)}
+.acc-name{font-size:15px;font-weight:600;color:var(--txt)}
+.acc-rate{
+  font-size:13px;color:var(--txt2);
+  background:rgba(255,255,255,0.04);
+  padding:2px 7px;border-radius:3px;margin-left:8px;
+}
+.acc-arrow{font-size:12px;color:var(--txt3);transition:transform .2s}
+.acc-arrow.open{transform:rotate(180deg)}
+.acc-body{display:none;padding:14px 16px;border-top:1px solid var(--border)}
+.acc-body.open{display:block}
+.acc-empty{font-size:12px;color:var(--txt3);text-align:center;padding:12px 0}
+
+/* ── CANDIDATES PAGE ── */
+.filter-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.filter-btn{
+  font-size:14px;padding:6px 16px;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:16px;color:var(--txt2);transition:.15s;
+}
+.filter-btn:hover,.filter-btn.active{background:var(--purple);border-color:var(--purple);color:#fff}
+.cand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.cand-grid-mayor{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.cand-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rad);overflow:hidden;transition:.2s;
+}
+.cand-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.cand-card-stripe{height:3px}
+.cand-card-top{padding:16px;display:flex;gap:14px;align-items:flex-start}
+.cand-card-av{
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:700;color:#fff;
+}
+.cand-card-av.mayor-av{
+  width:100px;height:110px;border-radius:10px;
+  font-size:32px;
+}
+.cand-card-av.mayor-av img{width:100%;height:100%;object-fit:cover;object-position:top center;border-radius:10px}
+.cand-card-nm{font-size:18px;font-weight:700;margin-bottom:2px}
+.cand-card-nm-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:2px}
+.cand-card-pty{font-size:13px;color:var(--txt2)}
+.cand-card-pos{font-size:13px;color:var(--txt2);margin-top:2px}
+.cand-card-body{padding:0 16px 16px}
+.career-list{display:flex;flex-direction:column;gap:2px}
+.career-item{
+  font-size:14px;color:var(--txt2);
+  display:flex;align-items:center;gap:6px;
+}
+.career-item::before{content:'·';color:var(--purple)}
+.cand-slogan{
+  font-size:14px;color:var(--txt2);
+  border-left:2px solid var(--purple);
+  padding:4px 8px;margin-top:10px;
+  background:var(--pdim);border-radius:0 3px 3px 0;
+  font-style:italic;
+}
+.badge-favorable{
+  display:inline-flex;align-items:center;
+  background:rgba(251,191,36,0.18);border:1px solid rgba(251,191,36,0.4);
+  color:#fbbf24;font-size:11px;font-weight:800;
+  padding:2px 7px;border-radius:4px;white-space:nowrap;
+}
+.badge-status{
+  display:inline-flex;align-items:center;
+  background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);
+  color:#60a5fa;font-size:11px;font-weight:700;
+  padding:2px 7px;border-radius:4px;white-space:nowrap;
+}
+.cand-hashtags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.cand-hashtag{font-size:12px;color:var(--purple);background:var(--pdim);padding:2px 6px;border-radius:3px}
+.sub-sec{margin-bottom:24px}
+.sub-sec-label{
+  font-size:14px;font-weight:700;color:var(--txt3);
+  letter-spacing:.5px;text-transform:uppercase;
+  margin-bottom:10px;padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.region-acc{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rad);overflow:hidden;margin-bottom:6px;
+}
+.region-acc-head{
+  width:100%;background:none;border:none;
+  padding:10px 14px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;transition:.15s;text-align:left;
+}
+.region-acc-head:hover{background:rgba(255,255,255,0.02)}
+.region-acc-name{font-size:14px;font-weight:600;color:var(--txt)}
+.region-acc-meta{display:flex;align-items:center;gap:6px}
+.region-acc-cnt{font-size:12px;color:var(--txt3);background:rgba(255,255,255,0.04);padding:2px 7px;border-radius:3px}
+.region-acc-jndc{font-size:11px;font-weight:700;padding:2px 7px;border-radius:3px}
+.jndc-direct{background:rgba(251,191,36,0.1);color:#fbbf24}
+.jndc-indirect{background:rgba(96,165,250,0.08);color:#60a5fa}
+.region-acc-arrow{font-size:11px;color:var(--txt3);transition:transform .2s}
+.region-acc-arrow.open{transform:rotate(180deg)}
+.region-acc-body{display:none;padding:10px 14px;border-top:1px solid var(--border);background:var(--bg)}
+.region-acc-body.open{display:block}
+.mini-cand-list{display:flex;flex-direction:column;gap:4px}
+.mini-cand-item{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 10px;border-radius:6px;
+  background:var(--bg2);border:1px solid var(--border);
+  font-size:14px;
+}
+.mini-cand-name{font-weight:600;min-width:52px;flex-shrink:0}
+.mini-cand-pos{font-size:12px;color:var(--txt2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mini-cand-comp{font-size:11px;color:var(--txt3);background:rgba(255,255,255,0.04);padding:1px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0}
+
+/* ── NEWS PAGE ── */
+.news-page-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.nf-btn{
+  font-size:14px;padding:6px 16px;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:16px;color:var(--txt2);transition:.15s;
+}
+.nf-btn.active,.nf-btn:hover{background:var(--purple);border-color:var(--purple);color:#fff}
+.api-notice{
+  background:rgba(139,92,246,0.06);
+  border:1px solid rgba(139,92,246,0.15);
+  border-radius:7px;padding:12px 16px;
+  font-size:14px;color:var(--txt2);
+  display:flex;align-items:center;gap:8px;margin-bottom:16px;
+}
+
+/* ── POLL CARD ── */
+.poll-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--rad);overflow:hidden;
+}
+.poll-head{
+  padding:14px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.poll-org{font-size:15px;font-weight:700}
+.poll-meta{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-size:13px;color:var(--txt2);margin-top:3px;
+}
+.poll-tag{
+  background:rgba(255,255,255,0.05);
+  padding:2px 7px;border-radius:3px;font-size:12px;
+}
+.poll-body{padding:16px 18px}
+.poll-row{
+  display:flex;align-items:center;gap:10px;
+  padding:7px 0;border-bottom:1px solid var(--border);
+}
+.poll-row:last-child{border-bottom:none}
+.poll-row.muted .poll-name{color:var(--txt3)}
+.poll-row.muted .poll-rate{color:var(--txt3)}
+.poll-row.muted .poll-bar-fill{opacity:.3}
+.poll-name{font-size:14px;font-weight:600;min-width:68px;flex-shrink:0}
+.poll-bar-wrap{flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden}
+.poll-bar-fill{height:100%;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.poll-rate{font-size:16px;font-weight:800;min-width:52px;text-align:right;flex-shrink:0}
+.poll-footer{
+  padding:10px 18px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;
+  font-size:12px;color:var(--txt3);
+}
+.poll-source-link{
+  font-size:12px;color:var(--purple);text-decoration:underline;cursor:pointer;
+}
+.poll-nav-btn{
+  font-size:13px;padding:4px 12px;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:14px;color:var(--txt2);transition:.15s;
+}
+.poll-nav-btn:hover,.poll-nav-btn.active{
+  background:var(--purple);border-color:var(--purple);color:#fff;
+}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:var(--bg3);border:1px solid var(--border2);
+  color:var(--txt);font-size:14px;padding:10px 18px;
+  border-radius:6px;z-index:9999;transition:.25s;pointer-events:none;white-space:nowrap;
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── UPDATED TIME ── */
+.updated-row{
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:6px;margin-bottom:14px;
+  font-size:13px;color:var(--txt3);
+}
+.updated-dot{width:5px;height:5px;border-radius:50%;background:var(--green)}
+
+/* scrollbar */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:3px}
+
+@media(max-width:480px){
+  .hero-title{font-size:26px}
+  #tabs{padding:8px;gap:2px}
+  .tab-btn{padding:7px 14px;font-size:14px}
+  .dday-num{font-size:42px}
+  .cand-pct{font-size:20px}
+  .cand-nm{font-size:15px}
+  .news-title{font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── SITE HEADER ── -->
+<header id="site-header">
+  <div class="site-logo">
+    <div class="site-logo-d">D</div>
+    <span>지선</span>
+  </div>
+  <button class="btn-admin" onclick="window.open('admin.html','_blank')">관리자</button>
+</header>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-badge">
+    <span class="hero-live" id="hero-live-dot"></span>
+    <span id="hero-badge-text">6.3 지선</span>
+  </div>
+  <div class="hero-title">제9회 전국동시<em>지방선거</em></div>
+  <div class="hero-sub">전남광주 개표센터 · 광주 5개 구 + 전남 22개 시군</div>
+</section>
+
+<!-- ── TAB NAV ── -->
+<nav id="tabs">
+  <button class="tab-btn active" data-tab="home"  onclick="switchTab('home')">홈</button>
+  <button class="tab-btn"        data-tab="count" onclick="switchTab('count')">개표</button>
+  <button class="tab-btn"        data-tab="cands" onclick="switchTab('cands')">후보자</button>
+  <button class="tab-btn"        data-tab="news"  onclick="switchTab('news')">뉴스</button>
+</nav>
+
+<!-- ════════════ TAB: 홈 ════════════ -->
+<div class="tab-content active" id="tab-home">
+<div class="container">
+
+  <div class="updated-row">
+    <span class="updated-dot" id="updated-dot"></span>
+    <span id="updated-time"></span>
+  </div>
+
+  <div class="home-grid">
+    <!-- MAIN -->
+    <div class="home-main">
+
+      <!-- Winner Banner (당선 확정 시) -->
+      <div id="winner-banner">
+        <div class="winner-medal">🏅</div>
+        <div class="winner-info">
+          <div class="winner-tag">당선</div>
+          <div class="winner-name" id="winner-name">-</div>
+        </div>
+      </div>
+
+      <!-- Phase Banner -->
+      <div id="phase-banner">
+        <div class="phase-inner">
+          <div class="phase-status" id="phase-status">
+            <span id="phase-live" class="hero-live" style="display:none"></span>
+            <span id="phase-label">-</span>
+          </div>
+          <div class="phase-name">전남광주특별시장 선거</div>
+          <div class="phase-desc" id="phase-desc">제9회 전국동시지방선거 · 2026년 6월 3일</div>
+        </div>
+      </div>
+
+      <!-- Mayor Race -->
+      <div class="race-card">
+        <div class="race-head">
+          <div class="race-head-title">전남광주특별시장</div>
+          <span class="race-cnt" id="home-cnt">개표 대기</span>
+        </div>
+        <div class="race-body" id="home-race-body">
+          <div class="no-data">선거 결과가 집계되면 표시됩니다</div>
+        </div>
+      </div>
+
+      <!-- 여론조사 -->
+      <div class="news-head-row" style="margin-top:4px">
+        <div class="sec-label">여론조사 현황</div>
+        <div id="poll-nav" style="display:flex;gap:6px"></div>
+      </div>
+      <div id="poll-card" style="margin-bottom:16px"></div>
+
+      <!-- Latest News -->
+      <div class="news-head-row">
+        <div class="sec-label">최신 뉴스</div>
+        <button class="btn-refresh" id="btn-ref-home" onclick="refreshNews('home')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+          </svg>
+          새로운 뉴스
+        </button>
+      </div>
+      <div class="news-list" id="home-news-list"></div>
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="home-sidebar">
+
+      <!-- D-day -->
+      <div class="sidebar-card">
+        <div class="sidebar-label">선거일까지</div>
+        <div class="dday-box">
+          <div class="dday-num" id="dday-num">-</div>
+          <div class="dday-sub">2026년 6월 3일 선거일</div>
+          <div class="dday-date" id="phase-mini"></div>
+        </div>
+      </div>
+
+      <!-- 향후 선거 일정 -->
+      <div class="sidebar-card">
+        <div class="sidebar-label">향후 선거 일정</div>
+        <div class="schedule-list">
+          <div class="schedule-item s-active">
+            <div class="schedule-bullet"></div>
+            <div class="schedule-info">
+              <div class="schedule-date">26. 04. 12. ~ 14.</div>
+              <div class="schedule-name">민주당 경선 결선<span class="schedule-badge" style="background:rgba(245,158,11,0.15);color:#f59e0b">진행 중</span></div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-bullet"></div>
+            <div class="schedule-info">
+              <div class="schedule-date">26. 05. 14. ~ 15.</div>
+              <div class="schedule-name">후보자 등록</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-bullet"></div>
+            <div class="schedule-info">
+              <div class="schedule-date">26. 05. 22. ~ 29.</div>
+              <div class="schedule-name">공식 선거운동</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-bullet"></div>
+            <div class="schedule-info">
+              <div class="schedule-date">26. 06. 01. ~ 02.</div>
+              <div class="schedule-name">사전투표</div>
+            </div>
+          </div>
+          <div class="schedule-item s-main">
+            <div class="schedule-bullet"></div>
+            <div class="schedule-info">
+              <div class="schedule-date" style="color:var(--purple)">26. 06. 03. 🗳 &nbsp;선거일</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 캠프 상황실 -->
+      <div class="sidebar-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="sidebar-label" style="margin-bottom:0">캠프 상황실</div>
+          <button class="btn-refresh" id="btn-ref-camp" onclick="refreshCamps()" style="font-size:11px;padding:3px 9px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+            </svg>
+            새소식
+          </button>
+        </div>
+        <div id="camp-list"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ TAB: 개표 ════════════ -->
+<div class="tab-content" id="tab-count">
+<div class="container">
+
+  <div class="sec-label" style="margin-bottom:12px">전남광주특별시장</div>
+  <div class="race-card" style="margin-bottom:24px">
+    <div class="race-head">
+      <div class="race-head-title">전남광주특별시장 개표 현황</div>
+      <span class="race-cnt" id="count-cnt">개표 대기</span>
+    </div>
+    <div class="race-body" id="count-race-body">
+      <div class="no-data">선거 결과가 집계되면 표시됩니다</div>
+    </div>
+  </div>
+
+  <div class="sec-label" style="margin-bottom:10px">광주광역시</div>
+  <div id="gwangju-acc" style="margin-bottom:24px"></div>
+
+  <div class="sec-label" style="margin-bottom:10px">전라남도</div>
+  <div id="jeonnam-acc" style="margin-bottom:24px"></div>
+
+</div>
+</div>
+
+<!-- ════════════ TAB: 후보자 ════════════ -->
+<div class="tab-content" id="tab-cands">
+<div class="container">
+
+  <div class="filter-row" id="cand-filter">
+    <button class="filter-btn active" onclick="filterCands('all',this)">전체</button>
+    <button class="filter-btn" onclick="filterCands('mayor',this)">특별시장</button>
+    <button class="filter-btn" onclick="filterCands('gwangju',this)">광주</button>
+    <button class="filter-btn" onclick="filterCands('jeonnam',this)">전남</button>
+  </div>
+
+  <div id="sec-mayor">
+    <div class="sec-label" style="margin-bottom:10px">전남광주특별시장 후보</div>
+    <div class="cand-grid-mayor" id="mayor-grid" style="margin-bottom:24px"></div>
+  </div>
+
+  <div id="sec-gwangju">
+    <div class="sub-sec">
+      <div class="sec-label" style="margin-bottom:10px">광주 기초단체장 (구청장)</div>
+      <div id="gwangju-mayors-grid" style="margin-bottom:24px"></div>
+    </div>
+    <div class="sub-sec">
+      <div class="sec-label" style="margin-bottom:10px">광주 광역의원</div>
+      <div id="gwangju-council-grid" style="margin-bottom:8px"></div>
+    </div>
+  </div>
+
+  <div id="sec-jeonnam">
+    <div class="sub-sec">
+      <div class="sec-label" style="margin-bottom:10px">전남 기초단체장 (시장·군수)</div>
+      <div id="jeonnam-mayors-grid" style="margin-bottom:24px"></div>
+    </div>
+    <div class="sub-sec">
+      <div class="sec-label" style="margin-bottom:10px">전남 광역의원</div>
+      <div id="jeonnam-council-grid" style="margin-bottom:8px"></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ════════════ TAB: 뉴스 ════════════ -->
+<div class="tab-content" id="tab-news">
+<div class="container">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <div class="news-page-filter" id="news-filter">
+      <button class="nf-btn active" onclick="filterNews('all',this)">전체</button>
+      <button class="nf-btn" onclick="filterNews('mayor',this)">특별시장</button>
+      <button class="nf-btn" onclick="filterNews('gwangju',this)">광주</button>
+      <button class="nf-btn" onclick="filterNews('jeonnam',this)">전남</button>
+    </div>
+    <button class="btn-refresh" id="btn-ref-news" onclick="refreshNews('news')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/>
+      </svg>
+      새 뉴스 가져오기
+    </button>
+  </div>
+
+  <div class="api-notice" id="api-notice">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    관리자 패널에서 Perplexity API 키를 설정하면 실시간 뉴스 수집이 가능합니다.
+  </div>
+
+  <div class="news-list" id="news-page-list"></div>
+
+</div>
+</div>
+
+<div id="toast"></div>
+
+<!-- DATA -->
+<script src="data/config.js"></script>
+<script src="data/candidates.js"></script>
+<script src="data/results.js"></script>
+<script src="data/news.js"></script>
+<script src="data/camps.js"></script>
+<script src="data/polls.js"></script>
+
+<script>
+// ── UTILS ──
+function timeAgo(iso){
+  const s=(Date.now()-new Date(iso))/1000;
+  if(s<60) return '방금';
+  if(s<3600) return Math.floor(s/60)+'분 전';
+  if(s<86400) return Math.floor(s/3600)+'시간 전';
+  const d=new Date(iso);return `${d.getMonth()+1}.${d.getDate()}`;
+}
+function fmt(n){return n?n.toLocaleString()+'표':'-'}
+function initial(n){return n?n.charAt(0):'?'}
+function toast(msg,ms=2500){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),ms);
+}
+
+// ── TABS ──
+function switchTab(tab){
+  document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+}
+
+// ── D-DAY ──
+function updateDday(){
+  const diff=new Date(CONFIG.election.date)-new Date();
+  const el=document.getElementById('dday-num');
+  if(!el)return;
+  if(diff<=0){el.textContent='D-DAY';el.style.color='var(--live)';return;}
+  const d=Math.ceil(diff/(864e5));
+  el.textContent='D-'+d;el.style.color='';
+}
+
+// ── PHASE ──
+function renderPhase(){
+  const ph=CONFIG.phases[CONFIG.phase];if(!ph)return;
+  const badge=document.getElementById('phase-status');
+  const label=document.getElementById('phase-label');
+  const live =document.getElementById('phase-live');
+  const mini =document.getElementById('phase-mini');
+  const heroDot=document.getElementById('hero-live-dot');
+  const heroTxt=document.getElementById('hero-badge-text');
+
+  if(badge){badge.style.background=ph.color+'18';badge.style.color=ph.color;}
+  if(label)label.textContent=ph.label;
+  if(live){live.style.display=ph.dot?'block':'none';live.style.background=ph.color;}
+  if(mini)mini.textContent=ph.label;
+  if(heroDot){heroDot.style.display=ph.dot?'block':'none';}
+  if(heroTxt)heroTxt.textContent='6.3 지선 · '+ph.label;
+
+  // updated time
+  const ut=document.getElementById('updated-time');
+  const ud=document.getElementById('updated-dot');
+  if(CONFIG.lastUpdated&&ut){
+    ut.textContent='업데이트 '+timeAgo(CONFIG.lastUpdated);
+    if(ud)ud.style.display=ph.dot?'block':'none';
+  }
+
+  // winner banner
+  if(CONFIG.phase==='final'){
+    const wb=document.getElementById('winner-banner');
+    const pb=document.getElementById('phase-banner');
+    if(wb&&pb){
+      wb.style.display='flex';pb.style.display='none';
+      // find top candidate
+      const sorted=CANDIDATES.mayor.slice().sort((a,b)=>
+        (RESULTS.mayor.candidates[b.id]?.rate||0)-(RESULTS.mayor.candidates[a.id]?.rate||0));
+      const w=sorted[0];
+      const wnEl=document.getElementById('winner-name');
+      if(wnEl&&w)wnEl.innerHTML=`<span>${w.name}</span> 당선을 축하합니다!`;
+    }
+  }
+}
+
+// ── RACE RENDER ──
+function renderRace(bodyId,cntId){
+  const body=document.getElementById(bodyId);
+  const cntEl=document.getElementById(cntId);
+  if(!body)return;
+  const rate=RESULTS.mayor.countingRate||0;
+
+  // 경선/준비 단계 → 여론조사 기반 대결구도
+  if(CONFIG.phase==='primary'||CONFIG.phase==='preparation'){
+    if(cntEl)cntEl.textContent='여론조사 기반';
+    if(typeof POLLS==='undefined'||!POLLS.length){
+      body.innerHTML='<div class="no-data">여론조사 데이터 로드 중...</div>';return;
+    }
+    const poll=POLLS.find(p=>p.candidates.some(c=>c.rate>0))||POLLS[0];
+    const candMap={};CANDIDATES.mayor.forEach(c=>{candMap[c.id]=c;});
+    const top2=poll.candidates.filter(c=>c.name!=='모름/무응답'&&c.rate>0).sort((a,b)=>b.rate-a.rate).slice(0,2);
+    const c1=top2[0],c2=top2[1];
+    const i1=c1.id?candMap[c1.id]:{name:c1.name,color:'#8b5cf6',party:''};
+    const i2=c2.id?candMap[c2.id]:{name:c2.name,color:'#64748b',party:''};
+    const tot=c1.rate+c2.rate;
+    const b1=tot>0?(c1.rate/tot*100).toFixed(1):50;
+    const diff=(c1.rate-c2.rate).toFixed(1);
+    const av1=i1.image?`<img src="${i1.image}" alt="${c1.name}">`:`<span>${c1.name[0]}</span>`;
+    const av2=i2.image?`<img src="${i2.image}" alt="${c2.name}">`:`<span>${c2.name[0]}</span>`;
+    body.innerHTML=`
+      <div class="duel-wrap">
+        <div class="duel-card">
+          <div class="duel-avatar" style="background:${i1.color}">
+            ${av1}
+            <div class="duel-av-rank" style="background:${i1.color};color:#fff">1위</div>
+          </div>
+          <div class="duel-side">
+            <div class="duel-name" style="color:${i1.color}">${c1.name}</div>
+            <div class="duel-party">${i1.party||''}</div>
+            <div class="duel-pct" style="color:${i1.color}">${c1.rate}%</div>
+          </div>
+          <div class="duel-mid">
+            <div class="duel-gap-lbl">격차</div>
+            <div class="duel-gap">+${diff}%p</div>
+          </div>
+          <div class="duel-side">
+            <div class="duel-name" style="color:${i2.color}">${c2.name}</div>
+            <div class="duel-party">${i2.party||''}</div>
+            <div class="duel-pct" style="color:${i2.color}">${c2.rate}%</div>
+          </div>
+          <div class="duel-avatar" style="background:${i2.color}">
+            ${av2}
+            <div class="duel-av-rank" style="background:${i2.color};color:#fff">2위</div>
+          </div>
+        </div>
+        <div class="duel-bar">
+          <div class="duel-bar-l" style="width:${b1}%;background:${i1.color}"></div>
+          <div class="duel-bar-r" style="width:${100-b1}%;background:${i2.color}"></div>
+        </div>
+        <div class="duel-foot">* ${poll.period} ${poll.organization} 여론조사 기준</div>
+      </div>`;
+    return;
+  }
+
+  // 개표 단계
+  if(cntEl)cntEl.textContent=rate>0?`개표율 ${rate}%`:'개표 대기';
+  if(rate===0){body.innerHTML='<div class="no-data">선거 결과가 집계되면 표시됩니다</div>';return;}
+  const sorted=CANDIDATES.mayor.slice().sort((a,b)=>
+    (RESULTS.mayor.candidates[b.id]?.rate||0)-(RESULTS.mayor.candidates[a.id]?.rate||0));
+  const maxR=Math.max(...sorted.map(c=>RESULTS.mayor.candidates[c.id]?.rate||0),1);
+  body.innerHTML=sorted.map((c,i)=>{
+    const r=RESULTS.mayor.candidates[c.id]||{votes:0,rate:0};
+    const w=maxR>0?(r.rate/maxR*100):0;
+    return `<div class="cand-row">
+      <div class="cand-num${i===0?' top':''}">${i+1}</div>
+      <div class="cand-av" style="background:${c.color}">${initial(c.name)}</div>
+      <div class="cand-info">
+        <div class="cand-nm-row">
+          <span class="cand-nm">${c.name}</span>
+          <span class="cand-pty">${c.party}</span>
+        </div>
+        <div class="cand-pos">${c.position}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${w}%;background:${c.color}"></div></div>
+      </div>
+      <div class="cand-stat">
+        <div class="cand-pct" style="color:${c.color}">${r.rate>0?r.rate.toFixed(1)+'%':'0%'}</div>
+        <div class="cand-vn">${fmt(r.votes)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── CIRCLE ──
+function renderCircle(){
+  const rate=RESULTS.mayor.countingRate||0;
+  const arc=document.getElementById('cnt-arc');
+  const pct=document.getElementById('cnt-pct');
+  const upd=document.getElementById('cnt-updated');
+  const circumference=238.76;
+  if(arc)arc.style.strokeDashoffset=circumference-(circumference*rate/100);
+  if(pct)pct.textContent=rate+'%';
+  if(upd)upd.textContent=CONFIG.lastUpdated?timeAgo(CONFIG.lastUpdated):'대기 중';
+}
+
+// ── NEWS ──
+let curCat='all';
+const CAND_CLASS={'김영록':'nbadge-kim','민형배':'nbadge-min','강기정→민형배':'nbadge-kang','공통':'nbadge-common'};
+function newsItem(n,showAi=false){
+  const thumb=n.image
+    ?`<div class="news-thumb"><img src="${n.image}" alt="" loading="lazy" onerror="this.parentNode.className='news-thumb';this.parentNode.innerHTML='<div class=news-thumb-empty></div>'"></div>`
+    :`<div class="news-thumb"><div class="news-thumb-empty"></div></div>`;
+  const candBadge=n.candidate?`<span class="nbadge ${CAND_CLASS[n.candidate]||'nbadge-common'}">${n.candidate}</span>`:'';
+  const typeBadge=n.newsType?`<span class="nbadge nbadge-type">${n.newsType}</span>`:'';
+  const jndcBadge=n.jndc_relevance?`<span class="nbadge nbadge-jndc">JNDC</span>`:'';
+  const badges=(candBadge||typeBadge||jndcBadge)?`<div class="news-badges">${candBadge}${typeBadge}${jndcBadge}</div>`:'';
+  const tags=n.tags&&n.tags.length?`<div class="news-tags">${n.tags.map(t=>`<span class="news-tag">#${t}</span>`).join('')}</div>`:'';
+  return `<div class="news-item" onclick="openUrl('${n.url}')">
+    ${thumb}
+    <div class="news-body">
+      ${badges}
+      <div class="news-title">${n.title}</div>
+      ${tags}
+      ${n.aiSummary&&showAi?`<div class="news-ai">🤖 ${n.aiSummary}</div>`:''}
+      <div class="news-meta">
+        <span class="news-src">${n.source}</span>
+        <span>${timeAgo(n.publishedAt)}</span>
+        ${showAi&&!n.aiSummary?`<button class="btn-ai" onclick="event.stopPropagation();aiSum(${n.id})">AI 요약</button>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+function renderHomeNews(){
+  const el=document.getElementById('home-news-list');
+  if(!el)return;
+  const items=NEWS.slice(0,5);
+  el.innerHTML=items.length?items.map(n=>newsItem(n)).join(''):'<div class="no-data" style="padding:20px">뉴스가 없습니다</div>';
+}
+function renderNewsPage(){
+  const el=document.getElementById('news-page-list');
+  if(!el)return;
+  const items=curCat==='all'?NEWS:NEWS.filter(n=>n.category===curCat);
+  el.innerHTML=items.length?items.map(n=>newsItem(n,true)).join(''):'<div class="no-data" style="padding:20px">뉴스가 없습니다</div>';
+}
+function filterNews(cat,btn){
+  curCat=cat;
+  document.querySelectorAll('.nf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderNewsPage();
+}
+function openUrl(u){if(u&&u.startsWith('http'))window.open(u,'_blank');}
+
+// ── REFRESH (Perplexity) ──
+async function refreshNews(target){
+  const btnId=target==='home'?'btn-ref-home':'btn-ref-news';
+  const btn=document.getElementById(btnId);
+  const key=localStorage.getItem('perplexity_api_key');
+  if(!key){toast('관리자 패널에서 Perplexity API 키를 설정해주세요');return;}
+  btn.classList.add('loading');btn.disabled=true;
+  try{
+    const res=await fetch('https://api.perplexity.ai/chat/completions',{
+      method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'sonar-pro',messages:[
+        {role:'system',content:'You are a JSON-only API. Always respond with only valid JSON arrays, no explanations, no markdown.'},
+        {role:'user',
+        content:'한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 주제: ①전남광주통합특별시장 경선(김영록·민형배 결선) ②광주·전남 6.3 지방선거 전체(기초단체장·광역의원 포함) ③JNDC·전남개발공사 관련 개발사업. 서로 다른 주제·후보·지역으로 최대 10개(중복 후보·주제 지양, 다양성 우선). JSON 배열만 응답. 필드: title(기사 제목), source(언론사명), date(YYYY.MM.DD HH:MM), url(실제 기사 URL), candidate(김영록|민형배|공통|기타 중 하나), category(경선·결선|공약·정책|여론조사|기초단체장|광역의원|JNDC·개발|선거일정|공방·논란 중 하나), tags(키워드 배열 최대 3개), region(광주|전남동부|전남서부|전남북부|광주·전남 중 하나), jndc_relevance(전남개발공사·JNDC 관련이면 true), summary(20자 이내). 24시간 초과 기사는 절대 포함 불가. JSON 배열만.'}
+      ],temperature:.1})
+    });
+    if(!res.ok)throw new Error('API오류 '+res.status);
+    const d=await res.json();
+    const txt=(d.choices?.[0]?.message?.content||'').replace(/```[\w]*\n?/g,'').replace(/```/g,'').trim();
+    const m=txt.match(/\[[\s\S]*\]/);if(!m)throw new Error('파싱 실패');
+    const fetched=JSON.parse(m[0]);
+    const regionToTab={
+      '광주':'gwangju','전남동부':'jeonnam','전남서부':'jeonnam',
+      '전남북부':'jeonnam','광주·전남전체':'mayor'
+    };
+    const newItems=fetched.slice(0,10).map((item,i)=>{
+      const dateStr=item.date||'';
+      let publishedAt=new Date().toISOString();
+      if(dateStr){
+        try{
+          const norm=dateStr.replace(/\./g,'-').replace(' ','T');
+          const d=new Date(norm.includes('T')?norm+''+'+09:00':norm);
+          if(!isNaN(d.getTime()))publishedAt=d.toISOString();
+        }catch(e){}
+      }
+      return {
+        id:Date.now()+i,
+        title:item.title||'',
+        summary:item.summary||'',
+        source:item.source||'미상',
+        url:item.url||'',
+        category:regionToTab[item.region]||'mayor',
+        newsType:item.category||'',
+        candidate:item.candidate||'',
+        tags:Array.isArray(item.tags)?item.tags:[],
+        region:item.region||'',
+        jndc_relevance:!!item.jndc_relevance,
+        publishedAt,
+        aiSummary:''
+      };
+    });
+    NEWS.splice(0,NEWS.length,...newItems);
+    renderHomeNews();renderNewsPage();toast(newItems.length+'건 최신 뉴스로 교체');
+  }catch(e){toast('실패: '+e.message);}
+  finally{btn.classList.remove('loading');btn.disabled=false;}
+}
+
+// ── AI SUMMARY ──
+async function aiSum(id){
+  const key=localStorage.getItem('anthropic_api_key');
+  if(!key){toast('Anthropic API 키를 설정해주세요');return;}
+  const item=NEWS.find(n=>n.id===id);if(!item)return;
+  toast('AI 요약 중...');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'x-api-key':key,'anthropic-version':'2023-06-01',
+        'content-type':'application/json','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:120,
+        messages:[{role:'user',content:`뉴스를 20자 이내 1문장으로 요약: "${item.title}"`}]})
+    });
+    const d=await res.json();
+    item.aiSummary=d.content?.[0]?.text||'';
+    renderHomeNews();renderNewsPage();toast('요약 완료');
+  }catch(e){toast('실패: '+e.message);}
+}
+
+// ── CAMPS ──
+async function refreshCamps(){
+  const btn=document.getElementById('btn-ref-camp');
+  const key=localStorage.getItem('perplexity_api_key');
+  if(!key){toast('관리자 패널에서 Perplexity API 키를 설정해주세요');return;}
+  btn.classList.add('loading');btn.disabled=true;
+  try{
+    const res=await fetch('https://api.perplexity.ai/chat/completions',{
+      method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'sonar-pro',messages:[
+        {role:'system',content:'You are a JSON-only API. Always respond with only valid JSON arrays, no explanations, no markdown.'},
+        {role:'user',
+        content:'전남광주특별시장 경선 후보 김영록, 민형배 캠프의 최신 활동 소식. JSON 배열만 응답. 형식: [{"camp":"kim","text":"김영록 캠프 소식","time":"2026-04-06T10:00:00+09:00"},{"camp":"min","text":"민형배 캠프 소식","time":"2026-04-06T10:00:00+09:00"}]. 각 후보 5개씩 총 10개. camp 값은 kim 또는 min. time은 ISO8601. JSON 배열만.'}
+      ],temperature:.1})
+    });
+    if(!res.ok)throw new Error('API오류 '+res.status);
+    const d=await res.json();
+    const txt=(d.choices?.[0]?.message?.content||'').replace(/```[\w]*\n?/g,'').replace(/```/g,'').trim();
+    const m=txt.match(/\[[\s\S]*\]/);
+    if(!m)throw new Error('응답 형식 오류');
+    const items=JSON.parse(m[0]);
+    if(!Array.isArray(items)||!items.length)throw new Error('데이터 없음');
+    CAMPS['kim-young-rok'].updates=items.filter(i=>i.camp==='kim').slice(0,5).map(i=>({text:i.text,time:i.time}));
+    CAMPS['min-hyung-bae'].updates=items.filter(i=>i.camp==='min').slice(0,5).map(i=>({text:i.text,time:i.time}));
+    renderCamps();toast('캠프 소식 '+items.length+'건 업데이트');
+  }catch(e){toast('실패: '+e.message);}
+  finally{btn.classList.remove('loading');btn.disabled=false;}
+}
+function renderCamps(){
+  const el=document.getElementById('camp-list');if(!el)return;
+  el.innerHTML=Object.values(CAMPS).map(c=>`
+    <div class="camp-item">
+      <div class="camp-label">
+        <span class="camp-dot" style="background:${c.color}"></span>
+        <span style="color:${c.color}">${c.label}</span>
+      </div>
+      ${(c.updates||[]).slice(0,5).map(u=>`
+        <div class="camp-text">${u.text}</div>
+        <div class="camp-time">${timeAgo(u.time)}</div>`).join('')}
+    </div>`).join('');
+}
+
+// ── ACCORDIONS ──
+function renderAcc(containerId,regions,results){
+  const el=document.getElementById(containerId);if(!el)return;
+  el.innerHTML=Object.entries(regions).map(([k,r])=>{
+    const rate=(results[k]||{}).countingRate||0;
+    return `<div class="accordion">
+      <button class="acc-head" onclick="toggleAcc(this)">
+        <div style="display:flex;align-items:center">
+          <span class="acc-name">${r.name}</span>
+          <span class="acc-rate">개표율 ${rate}%</span>
+        </div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-empty">후보자 정보 등록 후 표시됩니다</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function toggleAcc(btn){
+  const body=btn.nextElementSibling;
+  const arr=btn.querySelector('.acc-arrow');
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  arr.classList.toggle('open',!open);
+}
+
+// ── CANDIDATES ──
+function renderMayor(){
+  const el=document.getElementById('mayor-grid');if(!el)return;
+  const active=CANDIDATES.mayor.filter(c=>!c.eliminated);
+  el.innerHTML=active.map(c=>{
+    const avHtml=c.image
+      ?`<div class="cand-card-av mayor-av" style="background:${c.color};padding:0;overflow:hidden"><img src="${c.image}" alt="${c.name}" onerror="this.parentNode.innerHTML='${c.name[0]}'"></div>`
+      :`<div class="cand-card-av mayor-av" style="background:${c.color}">${initial(c.name)}</div>`;
+    const favorBadge=c.favorable?`<span class="badge-favorable">⭐ 유력</span>`:'';
+    const statusBadge=c.status?`<span class="badge-status">${c.status==='결선중'?'🔵 '+c.status:c.status}</span>`:'';
+    const hashtags=(c.hashtags||[]).map(h=>`<span class="cand-hashtag">${h}</span>`).join('');
+    return `
+    <div class="cand-card">
+      <div class="cand-card-stripe" style="background:${c.color}"></div>
+      <div class="cand-card-top">
+        ${avHtml}
+        <div style="flex:1;min-width:0">
+          <div class="cand-card-nm-row">
+            <span class="cand-card-nm" style="color:${c.color}">${c.name}</span>
+            ${favorBadge}${statusBadge}
+          </div>
+          <div class="cand-card-pty">${c.party}</div>
+          <div class="cand-card-pos">${c.position}</div>
+          ${c.statusNote?`<div style="font-size:12px;color:var(--txt3);margin-top:3px">${c.statusNote}</div>`:''}
+        </div>
+      </div>
+      <div class="cand-card-body">
+        <div class="career-list">
+          ${(c.career||[]).map(i=>`<div class="career-item">${i}</div>`).join('')}
+        </div>
+        ${c.slogan?`<div class="cand-slogan">"${c.slogan}"</div>`:''}
+        ${hashtags?`<div class="cand-hashtags">${hashtags}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderRegionAcc(containerId, regions, displayFn){
+  const el=document.getElementById(containerId);if(!el)return;
+  el.innerHTML=Object.entries(regions).map(([k,r])=>{
+    const allCands=r.candidates||[];
+    const favorCount=allCands.filter(c=>c.favorable).length;
+    const jndcClass=r.jndc==='직접'?'jndc-direct':r.jndc==='간접'?'jndc-indirect':'';
+    const jndcBadge=r.jndc?`<span class="region-acc-jndc ${jndcClass}">${r.jndc}</span>`:'';
+    return `<div class="region-acc">
+      <button class="region-acc-head" onclick="toggleRegionAcc(this)">
+        <span class="region-acc-name">${r.name}</span>
+        <div class="region-acc-meta">
+          ${favorCount>0?`<span class="badge-favorable" style="font-size:10px">⭐유력 ${favorCount}명</span>`:''}
+          ${jndcBadge}
+          <span class="region-acc-cnt">${allCands.length}명</span>
+          <span class="region-acc-arrow">▼</span>
+        </div>
+      </button>
+      <div class="region-acc-body">
+        <div class="mini-cand-list">${displayFn(allCands,r)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function mayorCandHtml(cands){
+  return cands.map(c=>{
+    const fav=c.favorable?`<span class="badge-favorable" style="font-size:10px;margin-left:4px">⭐유력</span>`:'';
+    const dot=`<span style="width:8px;height:8px;border-radius:50%;background:${c.color||'#8b5cf6'};display:inline-block;flex-shrink:0"></span>`;
+    return `<div class="mini-cand-item">
+      ${dot}
+      <span class="mini-cand-name">${c.name}${fav}</span>
+      <span class="mini-cand-pos">${c.slogan&&c.slogan!=='준비중'?c.slogan:(c.position||c.status||'')}</span>
+      <span class="mini-cand-comp">${c.competition}</span>
+    </div>`;
+  }).join('');
+}
+
+function councilCandHtml(cands){
+  const byDistrict={};
+  cands.forEach(c=>{
+    const d=c.district||'';
+    if(!byDistrict[d])byDistrict[d]=[];
+    byDistrict[d].push(c);
+  });
+  return Object.entries(byDistrict).map(([dist,list])=>`
+    <div style="margin-bottom:8px">
+      <div style="font-size:11px;color:var(--txt3);margin-bottom:4px;font-weight:600">${dist}</div>
+      ${list.map(c=>{
+        const fav=c.favorable?`<span class="badge-favorable" style="font-size:10px;margin-left:4px">⭐유력</span>`:'';
+        return `<div class="mini-cand-item">
+          <span class="mini-cand-name">${c.name}${fav}</span>
+          <span class="mini-cand-comp">${c.competition}</span>
+        </div>`;
+      }).join('')}
+    </div>`).join('');
+}
+
+function renderGwangjuMayors(){
+  renderRegionAcc('gwangju-mayors-grid', CANDIDATES.gwangju_mayors, (cands)=>mayorCandHtml(cands));
+}
+function renderJeonnamMayors(){
+  renderRegionAcc('jeonnam-mayors-grid', CANDIDATES.jeonnam_mayors, (cands)=>mayorCandHtml(cands));
+}
+function renderGwangjuCouncil(){
+  renderRegionAcc('gwangju-council-grid', CANDIDATES.gwangju_council, (cands)=>councilCandHtml(cands));
+}
+function renderJeonnamCouncil(){
+  renderRegionAcc('jeonnam-council-grid', CANDIDATES.jeonnam_council, (cands)=>councilCandHtml(cands));
+}
+
+function toggleRegionAcc(btn){
+  const body=btn.nextElementSibling;
+  const arr=btn.querySelector('.region-acc-arrow');
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  arr.classList.toggle('open',!open);
+}
+
+function filterCands(r,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sec-mayor').style.display=(r==='all'||r==='mayor')?'':'none';
+  document.getElementById('sec-gwangju').style.display=(r==='all'||r==='gwangju')?'':'none';
+  document.getElementById('sec-jeonnam').style.display=(r==='all'||r==='jeonnam')?'':'none';
+}
+
+// ── API NOTICE ──
+function checkApiNotice(){
+  const el=document.getElementById('api-notice');
+  if(el&&localStorage.getItem('perplexity_api_key'))el.style.display='none';
+}
+
+// ── POLLS ──
+let curPollIdx = 0;
+
+function renderPolls() {
+  if (typeof POLLS === 'undefined' || !POLLS.length) return;
+
+  // 네비 버튼
+  const nav = document.getElementById('poll-nav');
+  if (nav) {
+    nav.innerHTML = POLLS.map((p, i) => `
+      <button class="poll-nav-btn${i===curPollIdx?' active':''}"
+        onclick="showPoll(${i})">${p.period}</button>`).join('');
+  }
+
+  showPoll(curPollIdx);
+}
+
+function showPoll(idx) {
+  curPollIdx = idx;
+  const poll = POLLS[idx];
+  if (!poll) return;
+
+  // 네비 버튼 활성화
+  document.querySelectorAll('.poll-nav-btn').forEach((b, i) =>
+    b.classList.toggle('active', i === idx));
+
+  // 후보자별 색상 매핑
+  const colorMap = {};
+  CANDIDATES.mayor.forEach(c => { colorMap[c.id] = c.color; });
+
+  // 모름/무응답 제외하고 최대값 계산
+  const mainCands = poll.candidates.filter(c => c.name !== '모름/무응답');
+  const maxRate = Math.max(...mainCands.map(c => c.rate), 1);
+
+  const card = document.getElementById('poll-card');
+  if (!card) return;
+
+  card.innerHTML = `
+    <div class="poll-card">
+      <div class="poll-head">
+        <div>
+          <div class="poll-org">${poll.organization}</div>
+          <div class="poll-meta">
+            <span class="poll-tag">📅 ${poll.period}</span>
+            <span class="poll-tag">🗺 ${poll.region}</span>
+            ${poll.sampleSize ? `<span class="poll-tag">n=${poll.sampleSize.toLocaleString()}</span>` : ''}
+            <span class="poll-tag">${poll.method}</span>
+            ${poll.margin ? `<span style="color:var(--amber)">±${poll.margin}%p</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="poll-body">
+        ${poll.candidates.map(c => {
+          const isMuted = c.name === '모름/무응답';
+          const color = c.id ? (colorMap[c.id] || 'var(--txt3)') : (isMuted ? 'var(--txt3)' : 'var(--txt3)');
+          const barColor = c.id ? (colorMap[c.id] || '#444') : '#333';
+          const barW = isMuted ? 0 : (c.rate / maxRate * 100);
+          return `
+          <div class="poll-row${isMuted ? ' muted' : ''}">
+            <div class="poll-name" style="color:${isMuted ? 'var(--txt3)' : color}">${c.name}</div>
+            <div class="poll-bar-wrap">
+              <div class="poll-bar-fill" style="width:${barW}%;background:${barColor}"></div>
+            </div>
+            <div class="poll-rate" style="color:${isMuted ? 'var(--txt3)' : color}">${c.rate}%</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="poll-footer">
+        <span>신뢰수준 ${poll.confidence}% | 중앙선거여론조사심의위원회 등록 조사</span>
+        ${poll.url ? `<span class="poll-source-link" onclick="openUrl('${poll.url}')">원문 보기 →</span>` : ''}
+      </div>
+    </div>`;
+}
+
+// ── INIT ──
+function init(){
+  renderGwangjuMayors();
+  renderJeonnamMayors();
+  renderGwangjuCouncil();
+  renderJeonnamCouncil();
+  renderPhase();
+  updateDday();
+  renderRace('home-race-body','home-cnt');
+  renderRace('count-race-body','count-cnt');
+  renderCircle();
+  renderHomeNews();
+  renderNewsPage();
+  renderCamps();
+  renderMayor();
+  renderAcc('gwangju-acc',CANDIDATES.gwangju_council,RESULTS.gwangju);
+  renderAcc('jeonnam-acc',CANDIDATES.jeonnam_council,RESULTS.jeonnam);
+  renderPolls();
+  checkApiNotice();
+  setInterval(updateDday,60000);
+}
+document.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
