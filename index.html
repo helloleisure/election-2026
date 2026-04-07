@@ -664,6 +664,52 @@ img{display:block;max-width:100%}
   .cand-nm{font-size:15px}
   .news-title{font-size:14px}
 }
+
+/* ── 공유 모달 ── */
+.share-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  z-index:1200;display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.share-box{
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:var(--rad);padding:24px;width:320px;max-width:90vw;
+}
+.share-title{font-size:16px;font-weight:700;margin-bottom:16px;text-align:center}
+.share-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.share-btn{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:14px 10px;border-radius:10px;border:1px solid var(--border2);
+  background:var(--bg3);cursor:pointer;font-size:12px;font-weight:600;
+  color:var(--txt);transition:.15s;
+}
+.share-btn:hover{border-color:var(--border2);background:rgba(255,255,255,0.07);transform:translateY(-1px)}
+.share-btn .sico{font-size:26px;line-height:1}
+.share-close{width:100%;padding:9px;border-radius:8px;border:1px solid var(--border2);
+  background:none;color:var(--txt2);font-size:13px;cursor:pointer}
+.share-close:hover{background:rgba(255,255,255,0.05)}
+.share-url-row{display:flex;gap:6px;margin-bottom:10px}
+.share-url-row input{
+  flex:1;padding:8px 10px;background:var(--bg3);border:1px solid var(--border2);
+  border-radius:6px;color:var(--txt3);font-size:12px;outline:none;
+}
+.share-url-row button{
+  padding:8px 12px;border-radius:6px;background:var(--blue);
+  border:none;color:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;
+}
+
+/* ── 프린트 스타일 ── */
+@media print{
+  #site-header,#tabs,#float-banners,.btn-refresh,.btn-admin,
+  .news-page-filter,#btn-ref-home,#btn-ref-news,
+  .region-acc-arrow,.share-overlay{display:none!important}
+  body{background:#fff!important;color:#111!important}
+  .tab-content{display:block!important;page-break-before:always}
+  #tab-home{page-break-before:avoid}
+  .cand-card,.mini-cand-item,.news-item{border:1px solid #ddd!important;background:#fff!important}
+  .mini-cand-avatar img{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  a{color:inherit;text-decoration:none}
+}
 </style>
 </head>
 <body>
@@ -674,7 +720,11 @@ img{display:block;max-width:100%}
     <div class="site-logo-d">D</div>
     <span>지선</span>
   </div>
-  <button class="btn-admin" onclick="window.open('admin.html','_blank')">관리자</button>
+  <div style="display:flex;gap:6px;align-items:center">
+    <button class="btn-admin" onclick="shareSheet()" title="공유">🔗 공유</button>
+    <button class="btn-admin" onclick="printPage()" title="인쇄">🖨️ 인쇄</button>
+    <button class="btn-admin" onclick="window.open('admin.html','_blank')">관리자</button>
+  </div>
 </header>
 
 <!-- ── HERO ── -->
@@ -1591,6 +1641,103 @@ function init(){
   setInterval(updateDday,60000);
 }
 document.addEventListener('DOMContentLoaded',init);
+
+// ── 프린트 ──
+function printPage(){window.print();}
+
+// ── 공유 모달 ──
+function shareSheet(){
+  const url=location.href;
+  const title='6.3 지방선거 모니터링 — 전남광주특별시장';
+  const text='전남광주특별시장 결선 및 6.3 지방선거 후보자 모니터링 페이지입니다.';
+
+  // Web Share API 지원 시 바로 호출 (모바일)
+  if(navigator.share){
+    navigator.share({title,text,url}).catch(()=>{});
+    return;
+  }
+  // 미지원 시 모달 표시
+  const overlay=document.createElement('div');
+  overlay.className='share-overlay';
+  overlay.innerHTML=`
+    <div class="share-box">
+      <div class="share-title">🔗 공유하기</div>
+      <div class="share-url-row">
+        <input id="share-url-input" value="${url}" readonly>
+        <button onclick="copyShareUrl()">복사</button>
+      </div>
+      <div class="share-btns">
+        <button class="share-btn" onclick="shareKakao()">
+          <span class="sico">💬</span>카카오톡
+        </button>
+        <button class="share-btn" onclick="shareTwitter()">
+          <span class="sico">🐦</span>X (Twitter)
+        </button>
+        <button class="share-btn" onclick="shareFacebook()">
+          <span class="sico">📘</span>Facebook
+        </button>
+        <button class="share-btn" onclick="shareNaverBand()">
+          <span class="sico">📣</span>네이버 밴드
+        </button>
+        <button class="share-btn" onclick="shareThreads()">
+          <span class="sico">🧵</span>Threads
+        </button>
+        <button class="share-btn" onclick="printPage();closeShare()">
+          <span class="sico">🖨️</span>인쇄
+        </button>
+      </div>
+      <button class="share-close" onclick="closeShare()">닫기</button>
+    </div>`;
+  overlay.addEventListener('click',e=>{if(e.target===overlay)closeShare();});
+  document.body.appendChild(overlay);
+  window._shareOverlay=overlay;
+}
+
+function closeShare(){
+  if(window._shareOverlay){window._shareOverlay.remove();window._shareOverlay=null;}
+}
+
+function copyShareUrl(){
+  const inp=document.getElementById('share-url-input');
+  inp.select();
+  navigator.clipboard?.writeText(inp.value).then(()=>toast('링크 복사됨')).catch(()=>{
+    document.execCommand('copy');toast('링크 복사됨');
+  });
+}
+
+function shareKakao(){
+  // Kakao SDK 미사용 — 카카오톡 공유 URL 스킴
+  const url=encodeURIComponent(location.href);
+  const text=encodeURIComponent('6.3 지방선거 모니터링 — 전남광주특별시장 결선 현황');
+  window.open(`https://sharer.kakao.com/talk/friends/picker/link?app_key=KAKAO_APP_KEY&validation_action=default&validation_params=%7B%7D`,'_blank');
+  // 앱 미설치 시 카카오링크 URL 복사 대체
+  copyShareUrl();toast('카카오톡 앱에서 링크를 붙여넣어 공유하세요');
+}
+
+function shareTwitter(){
+  const text=encodeURIComponent('6.3 지방선거 모니터링 | 전남광주특별시장 결선 (김영록 vs 민형배) 현황');
+  const url=encodeURIComponent(location.href);
+  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,'_blank','width=600,height=400');
+  closeShare();
+}
+
+function shareFacebook(){
+  const url=encodeURIComponent(location.href);
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`,'_blank','width=600,height=400');
+  closeShare();
+}
+
+function shareNaverBand(){
+  const text=encodeURIComponent('6.3 지방선거 모니터링 — 전남광주특별시장 결선 현황\n'+location.href);
+  window.open(`https://band.us/plugin/share?body=${text}`,'_blank','width=600,height=400');
+  closeShare();
+}
+
+function shareThreads(){
+  const text=encodeURIComponent('6.3 지방선거 모니터링 | 전남광주특별시장 결선 (김영록 vs 민형배)\n'+location.href);
+  window.open(`https://www.threads.net/intent/post?text=${text}`,'_blank','width=600,height=500');
+  closeShare();
+}
 </script>
 
 <!-- ── 우측 하단 고정 배너 ── -->
