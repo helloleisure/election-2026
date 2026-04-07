@@ -1166,45 +1166,62 @@ async function refreshNews(target){
   const key=localStorage.getItem('perplexity_api_key');
   if(!key){toast('관리자 패널에서 Perplexity API 키를 설정해주세요');return;}
   btn.classList.add('loading');btn.disabled=true;
-  const PROMPT='한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 주제: ①전남광주통합특별시장 결선(김영록·민형배) ②광주·전남 6.3 지방선거 전체(기초단체장·광역의원 포함) ③JNDC·전남개발공사 관련 개발사업. 서로 다른 주제·후보·지역으로 정확히 10개(중복 없이, 다양성 우선). 반드시 10개를 채울 것 — 24시간 이내 뉴스가 부족하면 최신순으로 확장. JSON 배열만 응답. 필드: title(기사 제목), source(언론사명), date(YYYY.MM.DD HH:MM), url(실제 기사 URL), candidate(김영록|민형배|공통|기타), category(경선·결선|공약·정책|여론조사|기초단체장|광역의원|JNDC·개발|선거일정|공방·논란), tags(키워드 배열 최대 3개), region(광주|전남동부|전남서부|전남북부|광주·전남), jndc_relevance(JNDC 관련이면 true), summary(20자 이내). JSON 배열만, 다른 텍스트 없이.';
+
+  // 오늘 날짜(KST) — 모델에 직접 알려줘서 "최근" 기준 명확히
+  const kstNow=new Date(Date.now()+9*3600*1000);
+  const kstStr=kstNow.toISOString().slice(0,16).replace('T',' ');
+  const PROMPT=`지금 한국 시간은 ${kstStr} 입니다. 아래 주제의 뉴스를 최신순으로 10개 찾아줘.\n주제: ①전남광주통합특별시장 결선(김영록·민형배) ②광주·전남 6.3 지방선거(기초단체장·광역의원 포함) ③JNDC·전남개발공사 개발사업.\n조건: 최신 기사 우선(가능하면 48시간 이내), 서로 다른 주제·후보·지역, 중복 없이 10개.\nJSON 배열만 응답. 각 항목 필드: title(기사 제목), source(언론사), date(YYYY.MM.DD HH:MM 형식), url(실제 기사 URL), candidate(김영록|민형배|공통|기타), category(경선·결선|공약·정책|여론조사|기초단체장|광역의원|JNDC·개발|선거일정|공방·논란), tags(키워드 배열 최대3개), region(광주|전남동부|전남서부|전남북부|광주·전남), jndc_relevance(true|false), summary(20자 이내).\nJSON 배열만, 마크다운·설명 없이.`;
+
+  const parseDate=(dateStr)=>{
+    if(!dateStr)return null;
+    try{
+      // "2026.04.08 14:30" or "2026-04-08 14:30" or "2026-04-08T14:30"
+      const norm=dateStr.replace(/\./g,'-').replace(' ','T');
+      const withTz=norm.includes('+')||norm.includes('Z')?norm:norm+'+09:00';
+      const d=new Date(withTz);
+      return isNaN(d.getTime())?null:d;
+    }catch(e){return null;}
+  };
+
   const tryFetch=async(model)=>{
     const res=await fetch('https://api.perplexity.ai/chat/completions',{
       method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
       body:JSON.stringify({model,messages:[
-        {role:'system',content:'You are a JSON-only API. Respond ONLY with a valid JSON array. No markdown, no explanation, no code fences.'},
+        {role:'system',content:'You are a JSON-only API. Output ONLY a valid JSON array. No markdown fences, no explanation.'},
         {role:'user',content:PROMPT}
       ],temperature:.1,max_tokens:4000})
     });
-    if(!res.ok)throw new Error('API오류 '+res.status);
+    if(!res.ok){
+      const errBody=await res.text().catch(()=>'');
+      throw new Error('API '+res.status+(errBody?': '+errBody.slice(0,120):''));
+    }
     const d=await res.json();
-    const txt=(d.choices?.[0]?.message?.content||'').replace(/```[\w]*\n?/g,'').replace(/```/g,'').trim();
+    const raw=d.choices?.[0]?.message?.content||'';
+    const txt=raw.replace(/```[\w]*\n?/g,'').replace(/```/g,'').trim();
     const m=txt.match(/\[[\s\S]*\]/);
-    if(!m)throw new Error('JSON 없음');
+    if(!m)throw new Error('JSON 파싱 실패 — 응답: '+txt.slice(0,120));
     const arr=JSON.parse(m[0]);
     if(!Array.isArray(arr)||arr.length===0)throw new Error('빈 배열');
     return arr;
   };
+
   try{
     let fetched;
-    try{ fetched=await tryFetch('sonar-pro'); }
-    catch(e1){
-      // 실패 시 sonar 모델로 재시도
+    let usedModel='sonar-pro';
+    try{
+      fetched=await tryFetch('sonar-pro');
+    }catch(e1){
+      usedModel='sonar';
       fetched=await tryFetch('sonar');
     }
+
     const regionToTab={
       '광주':'gwangju','전남동부':'jeonnam','전남서부':'jeonnam',
-      '전남북부':'jeonnam','광주·전남전체':'mayor'
+      '전남북부':'jeonnam','광주·전남전체':'mayor','광주·전남':'mayor'
     };
+
     const newItems=fetched.slice(0,10).map((item,i)=>{
-      const dateStr=item.date||'';
-      let publishedAt=new Date().toISOString();
-      if(dateStr){
-        try{
-          const norm=dateStr.replace(/\./g,'-').replace(' ','T');
-          const d=new Date(norm.includes('T')?norm+''+'+09:00':norm);
-          if(!isNaN(d.getTime()))publishedAt=d.toISOString();
-        }catch(e){}
-      }
+      const d=parseDate(item.date);
       return {
         id:Date.now()+i,
         title:item.title||'',
@@ -1217,14 +1234,19 @@ async function refreshNews(target){
         tags:Array.isArray(item.tags)?item.tags:[],
         region:item.region||'',
         jndc_relevance:!!item.jndc_relevance,
-        publishedAt,
+        publishedAt:d?d.toISOString():new Date().toISOString(),
         aiSummary:''
       };
     });
+
+    // 최신순 정렬
+    newItems.sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
+
     if(newItems.length>0){
       NEWS.splice(0,NEWS.length,...newItems);
-      renderHomeNews();renderNewsPage();toast(newItems.length+'건 최신 뉴스로 교체');
-    } else {
+      renderHomeNews();renderNewsPage();
+      toast(newItems.length+'건 수집 완료 ('+usedModel+')');
+    }else{
       toast('뉴스를 찾지 못했습니다. 잠시 후 다시 시도해주세요.');
     }
   }catch(e){toast('실패: '+e.message);}
