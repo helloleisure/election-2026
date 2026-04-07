@@ -1149,20 +1149,31 @@ async function refreshNews(target){
   const key=localStorage.getItem('perplexity_api_key');
   if(!key){toast('관리자 패널에서 Perplexity API 키를 설정해주세요');return;}
   btn.classList.add('loading');btn.disabled=true;
-  try{
+  const PROMPT='한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 주제: ①전남광주통합특별시장 결선(김영록·민형배) ②광주·전남 6.3 지방선거 전체(기초단체장·광역의원 포함) ③JNDC·전남개발공사 관련 개발사업. 서로 다른 주제·후보·지역으로 정확히 10개(중복 없이, 다양성 우선). 반드시 10개를 채울 것 — 24시간 이내 뉴스가 부족하면 최신순으로 확장. JSON 배열만 응답. 필드: title(기사 제목), source(언론사명), date(YYYY.MM.DD HH:MM), url(실제 기사 URL), candidate(김영록|민형배|공통|기타), category(경선·결선|공약·정책|여론조사|기초단체장|광역의원|JNDC·개발|선거일정|공방·논란), tags(키워드 배열 최대 3개), region(광주|전남동부|전남서부|전남북부|광주·전남), jndc_relevance(JNDC 관련이면 true), summary(20자 이내). JSON 배열만, 다른 텍스트 없이.';
+  const tryFetch=async(model)=>{
     const res=await fetch('https://api.perplexity.ai/chat/completions',{
       method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'sonar-pro',messages:[
-        {role:'system',content:'You are a JSON-only API. Always respond with only valid JSON arrays, no explanations, no markdown.'},
-        {role:'user',
-        content:'한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 주제: ①전남광주통합특별시장 경선(김영록·민형배 결선) ②광주·전남 6.3 지방선거 전체(기초단체장·광역의원 포함) ③JNDC·전남개발공사 관련 개발사업. 서로 다른 주제·후보·지역으로 최대 10개(중복 후보·주제 지양, 다양성 우선). JSON 배열만 응답. 필드: title(기사 제목), source(언론사명), date(YYYY.MM.DD HH:MM), url(실제 기사 URL), candidate(김영록|민형배|공통|기타 중 하나), category(경선·결선|공약·정책|여론조사|기초단체장|광역의원|JNDC·개발|선거일정|공방·논란 중 하나), tags(키워드 배열 최대 3개), region(광주|전남동부|전남서부|전남북부|광주·전남 중 하나), jndc_relevance(전남개발공사·JNDC 관련이면 true), summary(20자 이내). 24시간 초과 기사는 절대 포함 불가. JSON 배열만.'}
-      ],temperature:.1})
+      body:JSON.stringify({model,messages:[
+        {role:'system',content:'You are a JSON-only API. Respond ONLY with a valid JSON array. No markdown, no explanation, no code fences.'},
+        {role:'user',content:PROMPT}
+      ],temperature:.1,max_tokens:4000})
     });
     if(!res.ok)throw new Error('API오류 '+res.status);
     const d=await res.json();
     const txt=(d.choices?.[0]?.message?.content||'').replace(/```[\w]*\n?/g,'').replace(/```/g,'').trim();
-    const m=txt.match(/\[[\s\S]*\]/);if(!m)throw new Error('파싱 실패');
-    const fetched=JSON.parse(m[0]);
+    const m=txt.match(/\[[\s\S]*\]/);
+    if(!m)throw new Error('JSON 없음');
+    const arr=JSON.parse(m[0]);
+    if(!Array.isArray(arr)||arr.length===0)throw new Error('빈 배열');
+    return arr;
+  };
+  try{
+    let fetched;
+    try{ fetched=await tryFetch('sonar-pro'); }
+    catch(e1){
+      // 실패 시 sonar 모델로 재시도
+      fetched=await tryFetch('sonar');
+    }
     const regionToTab={
       '광주':'gwangju','전남동부':'jeonnam','전남서부':'jeonnam',
       '전남북부':'jeonnam','광주·전남전체':'mayor'
@@ -1193,8 +1204,12 @@ async function refreshNews(target){
         aiSummary:''
       };
     });
-    NEWS.splice(0,NEWS.length,...newItems);
-    renderHomeNews();renderNewsPage();toast(newItems.length+'건 최신 뉴스로 교체');
+    if(newItems.length>0){
+      NEWS.splice(0,NEWS.length,...newItems);
+      renderHomeNews();renderNewsPage();toast(newItems.length+'건 최신 뉴스로 교체');
+    } else {
+      toast('뉴스를 찾지 못했습니다. 잠시 후 다시 시도해주세요.');
+    }
   }catch(e){toast('실패: '+e.message);}
   finally{btn.classList.remove('loading');btn.disabled=false;}
 }

@@ -1,5 +1,41 @@
 const POLLS = [
   {
+    id: 5,
+    title: "전남광주특별시장 가상 양자대결 (결선 시뮬레이션)",
+    organization: "코리아정보리서치 / 서울경제TV 의뢰",
+    method: "ARS",
+    period: "2026.03.23~24",
+    sampleSize: 1808,
+    margin: 2.3,
+    confidence: 95,
+    region: "광주+전남",
+    note: "광주 민형배 30.9% vs 김영록 19.8% / 전남 김영록 29.1% vs 민형배 22.1%",
+    candidates: [
+      { id: "min-hyung-bae", name: "민형배", rate: 33.6 },
+      { id: "kim-young-rok", name: "김영록", rate: 33.0 },
+      { name: "모름/무응답",  rate: 33.4 }
+    ],
+    url: "https://www.sentv.co.kr/article/view/sentv202603260062"
+  },
+  {
+    id: 4,
+    title: "전남광주특별시장 가상 양자대결 (결선 시뮬레이션)",
+    organization: "리얼미터 / 남도일보·광주CBS 노컷뉴스 의뢰",
+    method: "ARS",
+    period: "2026.03.22~23",
+    sampleSize: 1787,
+    margin: 2.3,
+    confidence: 95,
+    region: "광주+전남",
+    note: "민주당 지지층: 민형배 29.8% vs 김영록 24.3%",
+    candidates: [
+      { id: "min-hyung-bae", name: "민형배", rate: 42.7 },
+      { id: "kim-young-rok", name: "김영록", rate: 39.6 },
+      { name: "모름/무응답",  rate: 17.7 }
+    ],
+    url: "https://www.namdonews.com/news/articleView.html?idxno=905097"
+  },
+  {
     id: 3,
     title: "전남광주특별시장 후보 적합도",
     organization: "남도일보·광주CBS 노컷뉴스",
