@@ -1557,5 +1557,63 @@ function init(){
 }
 document.addEventListener('DOMContentLoaded',init);
 </script>
+
+<!-- ── 우측 하단 고정 배너 ── -->
+<div id="float-banners" style="
+  position:fixed;bottom:24px;right:20px;
+  display:flex;flex-direction:column;gap:8px;
+  z-index:900;
+">
+  <a href="https://2026win.kr/" target="_blank" rel="noopener" style="
+    display:flex;align-items:center;gap:9px;
+    background:rgba(17,24,39,0.92);
+    border:1px solid rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+    border-radius:10px;padding:9px 13px;
+    text-decoration:none;color:#e8edf5;
+    font-size:13px;font-weight:600;
+    box-shadow:0 4px 18px rgba(0,0,0,0.45);
+    transition:transform .15s,box-shadow .15s;
+    min-width:148px;
+  " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.55)'"
+     onmouseout="this.style.transform='';this.style.boxShadow='0 4px 18px rgba(0,0,0,0.45)'">
+    <div style="
+      width:32px;height:32px;border-radius:6px;overflow:hidden;flex-shrink:0;
+      background:linear-gradient(135deg,#22c55e,#16a34a);
+      display:flex;align-items:center;justify-content:center;
+      font-size:18px;
+    ">🏆</div>
+    <div>
+      <div style="font-size:12px;color:#22c55e;font-weight:700;line-height:1.2">2026WIN</div>
+      <div style="font-size:11px;color:#8b96aa;line-height:1.2">후보자 공식 포털</div>
+    </div>
+  </a>
+
+  <a href="https://theminjoo.kr/main/" target="_blank" rel="noopener" style="
+    display:flex;align-items:center;gap:9px;
+    background:rgba(17,24,39,0.92);
+    border:1px solid rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+    border-radius:10px;padding:9px 13px;
+    text-decoration:none;color:#e8edf5;
+    font-size:13px;font-weight:600;
+    box-shadow:0 4px 18px rgba(0,0,0,0.45);
+    transition:transform .15s,box-shadow .15s;
+    min-width:148px;
+  " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.55)'"
+     onmouseout="this.style.transform='';this.style.boxShadow='0 4px 18px rgba(0,0,0,0.45)'">
+    <div style="
+      width:32px;height:32px;border-radius:6px;overflow:hidden;flex-shrink:0;
+      background:linear-gradient(135deg,#3b82f6,#1d4ed8);
+      display:flex;align-items:center;justify-content:center;
+      font-size:16px;font-weight:800;color:#fff;
+    ">민</div>
+    <div>
+      <div style="font-size:12px;color:#60a5fa;font-weight:700;line-height:1.2">더불어민주당</div>
+      <div style="font-size:11px;color:#8b96aa;line-height:1.2">공식 홈페이지</div>
+    </div>
+  </a>
+</div>
+
 </body>
 </html>
