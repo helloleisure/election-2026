@@ -1,117 +1,98 @@
-// 자동 업데이트: 2026.04.09 01:03 (KST)
+// 자동 업데이트: 2026.04.09 01:20 (KST)
 const NEWS = [
   {
-    "id": 1775696623,
-    "title": "민주 전남광주통합특별시장 민형배·김영록 결선행…본경선 과반 득표 무산",
-    "summary": "초대 통합시장 결선 투표 확정",
-    "source": "광주일보",
-    "url": "https://v.daum.net/v/20260405184647030",
+    "id": 1775697611,
+    "title": "신정훈 측 인사들 민형배·김영록 캠프로 분산 합류",
+    "summary": "신정훈 캠프 인사 분산 합류",
+    "source": "노컷뉴스",
+    "url": "https://www.nocutnews.co.kr/news/6499024",
     "category": "mayor",
     "newsType": "결선",
     "candidate": "공통",
     "tags": [
-      "초대통합시장",
-      "결선투표",
-      "과반미달"
+      "신정훈",
+      "캠프합류",
+      "세결집"
     ],
     "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-05T18:46:00+09:00",
+    "publishedAt": "2026-04-08T14:00:00+09:00",
     "aiSummary": ""
   },
   {
-    "id": 1775696622,
-    "title": "민주당 전남광주시장 경선, 민형배·김영록 결선행",
-    "summary": "본경선 과반 미달로 결선 진행",
-    "source": "한겨레",
-    "url": "https://www.hani.co.kr/arti/politics/politics_general/1252750.html",
-    "category": "mayor",
+    "id": 1775697612,
+    "title": "\"구애 작전도 치열\" 민형배·김영록, 신정훈 자택 방문",
+    "summary": "결선 후보들 신정훈 방문",
+    "source": "KBC",
+    "url": "https://www.ikbc.co.kr/article/view/kbc202604080028",
+    "category": "jeonnam",
     "newsType": "결선",
     "candidate": "공통",
     "tags": [
-      "본경선개표",
-      "결선투표",
-      "신정훈탈락"
+      "신정훈",
+      "자택방문",
+      "지지유치"
     ],
-    "region": "광주·전남",
+    "region": "전남서부",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-05T09:00:00",
+    "publishedAt": "2026-04-08T12:00:00+09:00",
     "aiSummary": ""
   },
   {
-    "id": 1775696624,
-    "title": "민주당, 전남광주통합특별시장 민형배-김영록 2파전..신정훈 탈락",
-    "summary": "신정훈 탈락, 2파전 확정",
-    "source": "다음뉴스",
-    "url": "https://v.daum.net/v/Y8MauUOcnV",
+    "id": 1775697613,
+    "title": "김영록 \"120원 친환경 전기로 반도체 유치…광주도 출생수당\"",
+    "summary": "김영록 정책 공약 발표",
+    "source": "KBC",
+    "url": "https://www.ikbc.co.kr/news/article/view/kbc202604080062",
     "category": "mayor",
-    "newsType": "결선",
-    "candidate": "공통",
+    "newsType": "공약·정책",
+    "candidate": "김영록",
     "tags": [
-      "2파전",
-      "신정훈탈락",
-      "본경선"
+      "공약",
+      "전기로",
+      "출생수당"
     ],
     "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-05T09:00:00",
+    "publishedAt": "2026-04-08T10:00:00+09:00",
     "aiSummary": ""
   },
   {
-    "id": 1775696625,
-    "title": "민주당 전남광주통합특별시장 경선, 김영록·민형배 결선행",
-    "summary": "결선 12~14일 진행 예정",
-    "source": "조선일보",
-    "url": "https://www.chosun.com/politics/assembly/2026/04/05/WVUG7TO4FZAMHJ3YBSRVG6A55U/",
+    "id": 1775697615,
+    "title": "민주당 통합시장 여론조사..민형배 42% vs 김영록 30%",
+    "summary": "민형배 여론조사 우위",
+    "source": "광주MBC",
+    "url": "https://kjmbc.co.kr/NewsArticle/1513164",
     "category": "mayor",
-    "newsType": "결선",
+    "newsType": "여론조사",
     "candidate": "공통",
     "tags": [
-      "결선일정",
-      "12-14일",
-      "득표율미공개"
+      "여론조사",
+      "민형배",
+      "김영록"
     ],
     "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-05T09:00:00",
+    "publishedAt": "2026-04-07T20:00:00+09:00",
     "aiSummary": ""
   },
   {
-    "id": 1775696621,
-    "title": "민주 전남광주통합시장 민형배·김영록 결선행",
-    "summary": "민형배·김영록 결선 진출 확정",
-    "source": "연합뉴스TV",
-    "url": "https://www.yonhapnewstv.co.kr/news/MYH20260406060156BQa",
+    "id": 1775697614,
+    "title": "\"예산·권한 파격 약속\"...통합시장 결선 앞두고 '단체장 표심' 수",
+    "summary": "단체장 표심 유치 경쟁",
+    "source": "KBC",
+    "url": "https://www.ikbc.co.kr/article/view/kbc202604070060",
     "category": "mayor",
     "newsType": "결선",
     "candidate": "공통",
     "tags": [
-      "결선진출",
-      "본경선",
-      "과반미달"
+      "단체장",
+      "표심",
+      "세불리기"
     ],
     "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-05T06:01:00+09:00",
-    "aiSummary": ""
-  },
-  {
-    "id": 1775696626,
-    "title": "민형배·김영록 압축 與 전남광주특별시장 결선…승패 가를 변수?",
-    "summary": "결선 변수 분석 및 토론회",
-    "source": "뉴스1",
-    "url": "https://www.news1.kr/local/gwangju-jeonnam/6125958",
-    "category": "mayor",
-    "newsType": "결선",
-    "candidate": "공통",
-    "tags": [
-      "본경선토론회",
-      "맞대결",
-      "지지층흡수"
-    ],
-    "region": "광주·전남",
-    "jndc_relevance": false,
-    "publishedAt": "2026-03-25T09:00:00",
+    "publishedAt": "2026-04-07T18:00:00+09:00",
     "aiSummary": ""
   }
 ];
