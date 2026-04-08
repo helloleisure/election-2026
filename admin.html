@@ -809,13 +809,13 @@ function savePhase() {
 const NEWS_KEYWORD_DEFAULTS = {
   mayor:   '6.3지선, 김영록, 민형배, 지방선거, 선거 캠프, 여론조사, 민주당',
   gwangju: '광주 구청장, 광주 광역의원, 광주 6.3 지방선거, 광주 민주당 공천, 광주 선거 여론조사',
-  jeonnam: '전남 시장 군수, 전남 광역의원, 전남 6.3 지방선거, 전남개발공사 JNDC, 전남 선거 여론조사'
+  jeonnam: '전남 시장 군수, 전남 광역의원, 전남 6.3 지방선거, 전남 선거 공천, 전남 선거 여론조사'
 };
 
 const NEWS_PROMPTS = {
   mayor:   (kw) => `한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 키워드: ${kw}. 전남광주통합특별시장 경선·결선(김영록·민형배), 여론조사, 선거 캠프, 민주당 동향 관련 뉴스 5개. JSON 배열만. 필드: title, summary(30자), source, url, category("mayor").`,
   gwangju: (kw) => `한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 키워드: ${kw}. 광주시 5개 구청장 후보·광역의원 선거·공천·여론조사·선거운동 관련 뉴스 5개. JSON 배열만. 필드: title, summary(30자), source, url, category("gwangju").`,
-  jeonnam: (kw) => `한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 키워드: ${kw}. 전남 22개 시군 시장·군수·광역의원 선거, 전남개발공사(JNDC), 여론조사 관련 뉴스 5개. JSON 배열만. 필드: title, summary(30자), source, url, category("jeonnam").`
+  jeonnam: (kw) => `한국 시간 기준 최근 24시간 이내 발행된 뉴스만. 키워드: ${kw}. 전남 22개 시군 시장·군수·광역의원 선거·공천·경선·본선 관련 뉴스 5개. JSON 배열만. 필드: title, summary(30자), source, url, category("jeonnam").`
 };
 
 function onNewsCatChange(cat) {
