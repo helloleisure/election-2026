@@ -1007,7 +1007,19 @@ function timeAgo(iso){
   if(s<60) return '방금';
   if(s<3600) return Math.floor(s/60)+'분 전';
   if(s<86400) return Math.floor(s/3600)+'시간 전';
-  const d=new Date(iso);return `${d.getMonth()+1}.${d.getDate()}`;
+  const d=new Date(iso);return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmtNewsDate(iso){
+  if(!iso)return '';
+  const d=new Date(iso);
+  if(isNaN(d))return '';
+  const now=new Date();
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  const dd=String(d.getDate()).padStart(2,'0');
+  const hh=String(d.getHours()).padStart(2,'0');
+  const mi=String(d.getMinutes()).padStart(2,'0');
+  const sameDay=d.toDateString()===now.toDateString();
+  return sameDay?`오늘 ${hh}:${mi}`:`${d.getFullYear()}.${mm}.${dd} ${hh}:${mi}`;
 }
 function fmt(n){return n?n.toLocaleString()+'표':'-'}
 function initial(n){return n?n.charAt(0):'?'}
@@ -1196,7 +1208,7 @@ function newsItem(n,showAi=false){
       ${n.aiSummary&&showAi?`<div class="news-ai">🤖 ${n.aiSummary}</div>`:''}
       <div class="news-meta">
         <span class="news-src">${n.source}</span>
-        <span>${timeAgo(n.publishedAt)}</span>
+        <span>${fmtNewsDate(n.publishedAt)||timeAgo(n.publishedAt)}</span>
         ${showAi&&!n.aiSummary?`<button class="btn-ai" onclick="event.stopPropagation();aiSum(${n.id})">AI 요약</button>`:''}
       </div>
     </div>
