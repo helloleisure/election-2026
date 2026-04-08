@@ -43,20 +43,20 @@ const CANDIDATES = {
   // ── 광주 기초단체장 ──
   gwangju_mayors: {
     "donggu":   { name: "동구청장", candidates: [
-      { name:"임택",  position:"현직 동구청장",  status:"현직", competition:"단독",   image:"https://2026win.kr/files/candidate/profile/20260306200415_98b46429b4d169f9.jpg", born:"1963-10-02", career:["현직 현 광주 동구청장", "현직 현 더불어민주당 당대표 지방자치특보"], edu:["전남대학교 일반대학원(광주) 정치학과 정치학(박사) 수료", "조선대학교 정책대학원(광주) 행정학과 자치행정학(석사) 졸업"], favorable:true,  color:"#22c55e", slogan:"준비중" }
+      { name:"임택",  position:"현직 동구청장",  status:"현직", competition:"단독",   image:"https://2026win.kr/files/candidate/profile/20260306200415_98b46429b4d169f9.jpg", born:"1963-10-02", career:["현직 현 광주 동구청장", "현직 현 더불어민주당 당대표 지방자치특보"], edu:["전남대학교 일반대학원(광주) 정치학과 정치학(박사) 수료", "조선대학교 정책대학원(광주) 행정학과 자치행정학(석사) 졸업"], nominated:true, favorable:true,  color:"#22c55e", slogan:"준비중" }
     ]},
     "seogu":    { name: "서구청장", candidates: [
-      { name:"김이강", position:"현직 서구청장",  status:"현직", competition:"단독",   image:"https://2026win.kr/files/candidate/profile/20260306200414_f38c0b67be125ec3.jpg", born:"1971-06-15", career:["현직 서구청장", "전직 대통령 직속 일자리위원회 대외협력관"], edu:["전남대학교(광주) 경영학 경영학석사 졸업", "한국외국어대학교(서울) 무역학 졸업"], favorable:true,  color:"#22c55e", slogan:"#골목경제" }
+      { name:"김이강", position:"현직 서구청장",  status:"현직", competition:"단독",   image:"https://2026win.kr/files/candidate/profile/20260306200414_f38c0b67be125ec3.jpg", born:"1971-06-15", career:["현직 서구청장", "전직 대통령 직속 일자리위원회 대외협력관"], edu:["전남대학교(광주) 경영학 경영학석사 졸업", "한국외국어대학교(서울) 무역학 졸업"], nominated:true, favorable:true,  color:"#22c55e", slogan:"#골목경제" }
     ]},
     "namgu":    { name: "남구청장", candidates: [
-      { name:"김병내", position:"현직 남구청장",  status:"현직", competition:"단독",   image:"https://2026win.kr/files/candidate/profile/20260306200443_0faefa983a947d2b.jpg", born:"1973-05-16", career:["현직 광주광역시 남구 구청장", "전직 대통령실 행정관"], edu:["고려대학교 일반대학원(세종) 북한학과 박사 수료", "전남대학교 행정대학원(광주) 행정학과 석사 졸업"], favorable:true,  color:"#22c55e", slogan:"준비중" }
+      { name:"김병내", position:"현직 남구청장",  status:"현직", competition:"단독",   image:"https://2026win.kr/files/candidate/profile/20260306200443_0faefa983a947d2b.jpg", born:"1973-05-16", career:["현직 광주광역시 남구 구청장", "전직 대통령실 행정관"], edu:["고려대학교 일반대학원(세종) 북한학과 박사 수료", "전남대학교 행정대학원(광주) 행정학과 석사 졸업"], nominated:true, favorable:true,  color:"#22c55e", slogan:"준비중" }
     ]},
     "bukgu":    { name: "북구청장", candidates: [
-      { name:"신수정", position:"도전자",          status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260306200411_832eaaab04ba1427.jpg", born:"1973-01-19", career:["현직 광주광역시의회 의장", "전직 더불어민주당 중앙당 정책위원회 부의장"], edu:["전남대학교 정책대학원(광주) 사회문화복지정책 석사 졸업", "광주대학교(광주) 산업디자인학과 졸업"], favorable:false, color:"#60a5fa", slogan:"준비중" },
-      { name:"정다은", position:"도전자",          status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260306200437_6a98f41181846d89.jpg", born:"1986-09-18", career:["현직 대한변호사협회 우수변호사", "현직 더불어민주당 중앙당 부대변인"], edu:["전남대학교 법학전문대학원(광주) 법학전문대학원 석사과정 졸업", "전남대학교(광주) 법학과 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" }
+      { name:"신수정", position:"도전자",          status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260306200411_832eaaab04ba1427.jpg", born:"1973-01-19", career:["현직 광주광역시의회 의장", "전직 더불어민주당 중앙당 정책위원회 부의장"], edu:["전남대학교 정책대학원(광주) 사회문화복지정책 석사 졸업", "광주대학교(광주) 산업디자인학과 졸업"], runoffStatus:"결선중", favorable:false, color:"#60a5fa", slogan:"준비중" },
+      { name:"정다은", position:"도전자",          status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260306200437_6a98f41181846d89.jpg", born:"1986-09-18", career:["현직 대한변호사협회 우수변호사", "현직 더불어민주당 중앙당 부대변인"], edu:["전남대학교 법학전문대학원(광주) 법학전문대학원 석사과정 졸업", "전남대학교(광주) 법학과 졸업"], runoffStatus:"결선중", favorable:false, color:"#a78bfa", slogan:"준비중" }
     ]},
     "gwangsan": { name: "광산구청장", candidates: [
-      { name:"박병규", position:"현직 광산구청장", status:"현직", competition:"단독",   image:"https://2026win.kr/files/candidate/profile/20260306200413_eced449440e57cec.jpg", born:"1966-11-28", career:["현직 광주광역시 광산구청장", "전직 광주광역시 경제부시장"], edu:["송원대학(광주) 사회복지학과 졸업"], favorable:true,  color:"#22c55e", slogan:"준비중" }
+      { name:"박병규", position:"현직 광산구청장", status:"현직", competition:"단독",   image:"https://2026win.kr/files/candidate/profile/20260306200413_eced449440e57cec.jpg", born:"1966-11-28", career:["현직 광주광역시 광산구청장", "전직 광주광역시 경제부시장"], edu:["송원대학(광주) 사회복지학과 졸업"], nominated:true, favorable:true,  color:"#22c55e", slogan:"준비중" }
     ]}
   },
 
@@ -64,7 +64,7 @@ const CANDIDATES = {
   jeonnam_mayors: {
     "gangjin":    { name:"강진군수",  jndc:"간접", candidates:[
       { name:"김보미", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260406232637_bbb1a17201d4c3a7.png", born:"1989-12-04", career:["현직 강진군의회 의원", "전직 민선9기 강진군의회 의장"], edu:["전남대학교 일반대학원(광주) 미술학과 석사 수료", "전남대학교(광주) 미술학과 졸업"], favorable:false, color:"#60a5fa", slogan:"돈을 버는 강진군! / 연180만원 강진기본소득" },
-      { name:"차영수", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260402205941_724bdbe4e6075769.jpeg", born:"1963-05-30", career:["현직 전라남도의원", "현직 더불어민주당 정책위원회 부의장"], edu:["조선대학교(광주) 체육학과 졸업"], favorable:false, color:"#a78bfa", slogan:"머물고 일하고 돌아오는 강진 / 강진 예산 1조 시대" }
+      { name:"차영수", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260402205941_724bdbe4e6075769.jpeg", born:"1963-05-30", career:["현직 전라남도의원", "현직 더불어민주당 정책위원회 부의장"], edu:["조선대학교(광주) 체육학과 졸업"], nominated:true, favorable:false, color:"#a78bfa", slogan:"머물고 일하고 돌아오는 강진 / 강진 예산 1조 시대" }
     ]},
     "goheung":    { name:"고흥군수",  jndc:"간접", candidates:[
       { name:"공영민", status:"현직",   competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145415_19229e9f9b9cee64.jpg", born:"1954-02-02", career:["현직 더불어민주당 현 고흥군수", "전직 기획재정부 23년 근무(부이사관 출신)"], edu:["중앙대학교대학원(서울) 사회복지학과 석사 졸업", "한성대학교대학원(서울) 정책학 박사 졸업"], favorable:false, color:"#22c55e", slogan:"준비중" },
@@ -80,7 +80,7 @@ const CANDIDATES = {
     ]},
     "gwangyang":  { name:"광양시장",  jndc:"직접", candidates:[
       { name:"김태균", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145346_dfcdc9dc06e6f7fc.jpg", born:"1963-08-10", career:["현직 전남도의회 의장", "전직 더불어민주당 전남도당 상임부위원장"], edu:["조선대학교(광주) 경영학 석사 졸업", "동의대학교(부산) 산업공학과 졸업"], favorable:false, color:"#60a5fa", slogan:"준비중" },
-      { name:"정인화", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145311_9afbd7ce48366189.jpg", born:"1957-07-27", career:["현직 현직 광양시장", "전직 제20대 국회의원(전남 광양", "곡성"], edu:["한양대학교 국제관광대학원(서울) 국제관광학 석사 졸업", "전남대학교(광주) 행정학과 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" }
+      { name:"정인화", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145311_9afbd7ce48366189.jpg", born:"1957-07-27", career:["현직 현직 광양시장", "전직 제20대 국회의원(전남 광양", "곡성"], edu:["한양대학교 국제관광대학원(서울) 국제관광학 석사 졸업", "전남대학교(광주) 행정학과 졸업"], nominated:true, favorable:false, color:"#a78bfa", slogan:"준비중" }
     ]},
     "gurye":      { name:"구례군수",  jndc:"간접", candidates:[
       { name:"김순호", status:"도전자", competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145315_5f9d7603e5e4a07d.jpg", born:"1962-12-07", career:["전직 3개면장 등 29년 공직 재직", "현직 민선 7기", "8기 구례군수"], edu:["순천대학교 경영행정대학원(전남) 행정학과 행정학석사 졸업", "한국방송통신대학교(서울) 행정학과 졸업"], favorable:false, color:"#60a5fa", slogan:"준비중" },
@@ -89,16 +89,16 @@ const CANDIDATES = {
       { name:"홍봉만", status:"도전자", competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145358_ae04a8d6e6e055f6.jpg", born:"1970-03-20", career:["전직 서울대학교 사범대학 학생회장", "현직 지리산장터 대표"], edu:["서울대학교(서울) 교육행정 석사 중퇴", "서울대학교(서울) 지리교육 졸업"], favorable:false, color:"#fb923c", slogan:"준비중" }
     ]},
     "naju":       { name:"나주시장",  jndc:"직접", candidates:[
-      { name:"윤병태", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145322_e6626947f34ec6c9.jpg", born:"1960-08-25", career:["현직 민선8기 나주시장", "전직 전라남도 정무부지사"], edu:["美 미주리주립대학교(미국) 경제학 박사 졸업", "성균관대학교(서울) 경제학과 졸업"], favorable:false, color:"#60a5fa", slogan:"준비중" },
+      { name:"윤병태", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145322_e6626947f34ec6c9.jpg", born:"1960-08-25", career:["현직 민선8기 나주시장", "전직 전라남도 정무부지사"], edu:["美 미주리주립대학교(미국) 경제학 박사 졸업", "성균관대학교(서울) 경제학과 졸업"], nominated:true, favorable:false, color:"#60a5fa", slogan:"준비중" },
       { name:"이재태", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145402_17de2906b970e437.jpg", born:"1967-08-24", career:["현직 더불어민주당 전남도의원", "현직 더불어민주당 나주화순지역위원회 부위원장"], edu:["목포대학교(전라) 사회과학대학 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" }
     ]},
     "damyang":    { name:"담양군수",  jndc:"간접", candidates:[
-      { name:"박종원", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145400_a6af7e4cf3df6b18.jpg", born:"1968-07-04", career:["전직 제 5대.7대 담양군의회 의원", "현직 제 11대.12대 전라남도의회 의원"], edu:["전남대학교 정책대학원(광주) 일반행정전공 행정학석사 졸업", "광주대학교(광주) 토목공학과 졸업"], favorable:false, color:"#60a5fa", slogan:"담양 주도 성장 / AI스마트농업·반도체밸리·정원도시 8대혁신" },
-      { name:"이규현", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145412_5beb2f40ab218dfd.jpg", born:"1959-01-25", career:["현직 전라남도의회 의원", "현직 농어촌기본소득운동전남본부상임대표"], edu:["전남대학교(광주) 행정학 석사 수료", "전남대학교(광주) 지역개발학과 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" },
+      { name:"박종원", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145400_a6af7e4cf3df6b18.jpg", born:"1968-07-04", career:["전직 제 5대.7대 담양군의회 의원", "현직 제 11대.12대 전라남도의회 의원"], edu:["전남대학교 정책대학원(광주) 일반행정전공 행정학석사 졸업", "광주대학교(광주) 토목공학과 졸업"], runoffStatus:"결선중", favorable:false, color:"#60a5fa", slogan:"담양 주도 성장 / AI스마트농업·반도체밸리·정원도시 8대혁신" },
+      { name:"이규현", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145412_5beb2f40ab218dfd.jpg", born:"1959-01-25", career:["현직 전라남도의회 의원", "현직 농어촌기본소득운동전남본부상임대표"], edu:["전남대학교(광주) 행정학 석사 수료", "전남대학교(광주) 지역개발학과 졸업"], runoffStatus:"결선중", favorable:false, color:"#a78bfa", slogan:"준비중" },
       { name:"이재종", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145226_d957a91cf65a6cb9.jpg", born:"1975-07-20", career:["전직 대통령 비서실 행정관", "현직 민주당 정책위원회 부의장"], edu:["전남대학교(광주) 국악과 졸업"], favorable:false, color:"#f472b6", slogan:"준비중" }
     ]},
     "mokpo":      { name:"목포시장",  jndc:"직접", candidates:[
-      { name:"강성휘", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260401155104_62f97b7baf609aed.png", born:"1967-11-20", career:["현직 더불어민주당 정책위 부의장", "현직 국립목포대학교 행정학박사"], edu:["목포대학교 경영행정대학원(전남) 행정학 행정학(석사) 졸업", "목포대학교 경영행정대학원(전남) 행정학 행정학(박사) 졸업"], favorable:false, color:"#60a5fa", slogan:"제대로 목포시 대전환 / 시민주권·해상풍력 배후도시" },
+      { name:"강성휘", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260401155104_62f97b7baf609aed.png", born:"1967-11-20", career:["현직 더불어민주당 정책위 부의장", "현직 국립목포대학교 행정학박사"], edu:["목포대학교 경영행정대학원(전남) 행정학 행정학(석사) 졸업", "목포대학교 경영행정대학원(전남) 행정학 행정학(박사) 졸업"], nominated:true, favorable:false, color:"#60a5fa", slogan:"제대로 목포시 대전환 / 시민주권·해상풍력 배후도시" },
       { name:"이호균", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260319190411_4a9588a66cf7addb.jpg", born:"1962-02-14", career:["현직 더불어민주당 정책위원회 부의장", "전직 전라남도의회 의장"], edu:["건국대학교 경영대학원(서울) 경영학 경영학 석사 졸업", "대불대학교 일반대학원(전라) 경영학 경영학 박사 졸업"], favorable:false, color:"#a78bfa", slogan:"이재명처럼 이호균 / 목포크게쓰자" }
     ]},
     "muan":       { name:"무안군수",  jndc:"직접", candidates:[
@@ -124,7 +124,7 @@ const CANDIDATES = {
       { name:"김경화", status:"도전자", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145225_e06650840c63fdbf.jpg", born:"1949-12-07", career:["전직 전 민주당 체육특별위원회 부위원장", "전직 전 민주당 체육특별위원회 부위원장"], edu:[], favorable:false, color:"#60a5fa", slogan:"준비중" },
       { name:"김행원", status:"도전자", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145246_fba2ed518eda2f66.jpg", born:"1963-04-06", career:["전직 목포시청 지역경제과장", "전직 더불어민주당 해양수산특별위원회 부위원장"], edu:["마리아회(목포) 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" },
       { name:"박석배", status:"도전자", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145250_8ed2f632a8cdc9ce.jpg", born:"1963-01-05", career:["전직 더불어민주당 민주연구원/부원장", "현직 더불어민주당 전남도당 부위원장"], edu:["카톨릭대학교(경기) 회계학과 졸업"], favorable:false, color:"#f472b6", slogan:"군민주권신안" },
-      { name:"박우량", status:"현직",   competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145259_9dc023fb5d79a907.jpg", born:"1955-09-14", career:["현직 더불어민주당 당대표 특별보좌역 전남특보", "전직 신안군수"], edu:["오사카대학(일본) 공법학 석사 졸업", "성균관대학(서울) 행정 박사 수료"], favorable:false, color:"#22c55e", slogan:"준비중" },
+      { name:"박우량", status:"현직",   competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145259_9dc023fb5d79a907.jpg", born:"1955-09-14", career:["현직 더불어민주당 당대표 특별보좌역 전남특보", "전직 신안군수"], edu:["오사카대학(일본) 공법학 석사 졸업", "성균관대학(서울) 행정 박사 수료"], nominated:true, favorable:false, color:"#22c55e", slogan:"준비중" },
       { name:"천경배", status:"도전자", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145223_8ae57b2e1e8beb9c.jpg", born:"1975-10-19", career:["전직 더불어민주당 당대표실 국장", "전직 민선7기 민주당 신안군수 후보"], edu:["중앙대학교(서울) 사회과학대학 국제관계학과 졸업"], favorable:false, color:"#fb923c", slogan:"준비중" }
     ]},
     "yeosu":      { name:"여수시장",  jndc:"직접", candidates:[
@@ -143,7 +143,7 @@ const CANDIDATES = {
       { name:"장세일", status:"현직",   competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260402230118_4c2949f33e260933.png", born:"1964-05-09", career:["현직 영광군수", "현직 더불어민주당 당대표 지방자치 특보"], edu:["동강(광주) 사회복지행정과 졸업", "영광(전남 영광군) 졸업"], favorable:false, color:"#22c55e", slogan:"잘 해온 군수! 더 잘할 군수! / 군민 평생연금·에너지 기본소득" }
     ]},
     "yeongam":    { name:"영암군수",  jndc:"직접", candidates:[
-      { name:"우승희", status:"현직",   competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145330_7320c658aab8d95e.jpg", born:"1973-10-08", career:["현직 영암군수", "현직 더불어민주당 당대표 특보"], edu:["조선대학교(광주) 정치외교학과 석사 졸업", "조선대학교(광주) 정치외교학과 졸업"], favorable:true,  color:"#22c55e", slogan:"영암을 위해 한번 더 / 대통령 혁신 파트너·에너지 기본소득" },
+      { name:"우승희", status:"현직",   competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145330_7320c658aab8d95e.jpg", born:"1973-10-08", career:["현직 영암군수", "현직 더불어민주당 당대표 특보"], edu:["조선대학교(광주) 정치외교학과 석사 졸업", "조선대학교(광주) 정치외교학과 졸업"], nominated:true, favorable:true,  color:"#22c55e", slogan:"영암을 위해 한번 더 / 대통령 혁신 파트너·에너지 기본소득" },
       { name:"전동평", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145239_bc846f5a8078db14.jpg", born:"1961-02-07", career:["전직 전라남도 영암군 군수", "현직 더불어민주당 전남 도당 부위원장"], edu:["전남대학교(광주) 행정학과 석사 졸업", "전남대학교(광주) 산업공학과 졸업"], favorable:false, color:"#60a5fa", slogan:"함께 꾸는 꿈 현실로 / 준비된 리더" }
     ]},
     "wando":      { name:"완도군수",  jndc:"간접", candidates:[
@@ -154,33 +154,33 @@ const CANDIDATES = {
       { name:"허궁희", status:"도전자", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145427_4dd987fdadd56af9.jpg", born:"1960-06-05", career:["(현) 민주당 당대표특보", "(전) 제9대 완도군의회 전반기 의장"], edu:["동아보건대학교(전라) 사회복지학부 졸업"], favorable:false, color:"#38bdf8", slogan:"준비중" }
     ]},
     "jangseong":  { name:"장성군수",  jndc:"간접", candidates:[
-      { name:"김한종", status:"도전자", competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145420_b7122dbb43bffa69.jpg", born:"1954-03-29", career:["현직 현 장성군수", "전직 전 전라남도의회 의장"], edu:["조선대학교(광주) 생체의용화학공학과 중퇴"], favorable:false, color:"#60a5fa", slogan:"준비중" },
+      { name:"김한종", status:"도전자", competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145420_b7122dbb43bffa69.jpg", born:"1954-03-29", career:["현직 현 장성군수", "전직 전 전라남도의회 의장"], edu:["조선대학교(광주) 생체의용화학공학과 중퇴"], runoffStatus:"결선중", favorable:false, color:"#60a5fa", slogan:"준비중" },
       { name:"박노원", status:"도전자", competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145410_155f6394d6cd952f.jpg", born:"1969-11-05", career:["전직 대통령비서실 행정관", "전직 장성군 부군수"], edu:["한국개발연구원국제정책대학원(세종) 공공정책학과 석사 졸업", "전남대학교(광주) 경제학과 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" },
-      { name:"소영호", status:"도전자", competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145427_a0f67e2bd27c5a0b.jpg", born:"1969-06-21", career:["전직 목포시 부시장", "현직 더불어민주당 전국농어민위원회 부위원장"], edu:["KDI국제정책대학원(서울) 정책학과 석사 졸업", "경기대학교(서울) 행정학과 졸업"], favorable:false, color:"#f472b6", slogan:"준비중" },
+      { name:"소영호", status:"도전자", competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145427_a0f67e2bd27c5a0b.jpg", born:"1969-06-21", career:["전직 목포시 부시장", "현직 더불어민주당 전국농어민위원회 부위원장"], edu:["KDI국제정책대학원(서울) 정책학과 석사 졸업", "경기대학교(서울) 행정학과 졸업"], runoffStatus:"결선중", favorable:false, color:"#f472b6", slogan:"준비중" },
       { name:"유성수", status:"도전자", competition:"4인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145341_843b4095cabf637c.jpg", born:"1968-10-10", career:["현직 더불어민주당 정책위원회 부의장", "전직 제11대 전라남도 의원"], edu:["원광(전북) 약학과 졸업"], favorable:false, color:"#fb923c", slogan:"준비중" }
     ]},
     "jangheung":  { name:"장흥군수",  jndc:"간접", candidates:[
-      { name:"곽태수", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145422_c55550ad4ef56e41.jpg", born:"1962-10-07", career:["전직 전) 11대 전라남도 의원", "전직 전) 더불어민주당 전남도당 부위원장"], edu:["전남도립대학교(전남) 원예산업과 졸업", "초당대학교(전남) 창업경영학과 졸업"], favorable:false, color:"#60a5fa", slogan:"준비중" },
-      { name:"김성",   status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145428_98ba1b5d6a2b4e86.jpg", born:"1959-09-23", career:["현직 장흥군수", "현직 더불어민주당 호남발전특별위원회 수석부위원장"], edu:["조선대학교(광주) 행정학과 박사 졸업", "건국대학교(서울) 무역학과 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" },
+      { name:"곽태수", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145422_c55550ad4ef56e41.jpg", born:"1962-10-07", career:["전직 전) 11대 전라남도 의원", "전직 전) 더불어민주당 전남도당 부위원장"], edu:["전남도립대학교(전남) 원예산업과 졸업", "초당대학교(전남) 창업경영학과 졸업"], runoffStatus:"결선중", favorable:false, color:"#60a5fa", slogan:"준비중" },
+      { name:"김성",   status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145428_98ba1b5d6a2b4e86.jpg", born:"1959-09-23", career:["현직 장흥군수", "현직 더불어민주당 호남발전특별위원회 수석부위원장"], edu:["조선대학교(광주) 행정학과 박사 졸업", "건국대학교(서울) 무역학과 졸업"], runoffStatus:"결선중", favorable:false, color:"#a78bfa", slogan:"준비중" },
       { name:"왕윤채", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145303_9fdd94cf898add0e.jpg", born:"1964-10-02", career:["현직 전 장흥군의회 의장", "현직 더불어민주당 정책위원회 부의장"], edu:["순천대학교(순천) 경영학과 졸업"], favorable:false, color:"#f472b6", slogan:"준비중" }
     ]},
     "jindo":      { name:"진도군수",  jndc:"간접", candidates:[
       { name:"김인정", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145411_bc93167a95382d16.jpg", born:"1960-11-19", career:["현직 제12대 전라남도의원", "전직 제6", "7"], edu:["송원대학교(광주) 재활보건학과 졸업", "진도실업고등하교(진도 진도읍) 졸업"], favorable:false, color:"#60a5fa", slogan:"떠나지 않는 진도 / 인구소멸 위기 극복" },
-      { name:"이재각", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145230_f473800c3d9d4506.jpg", born:"1961-04-09", career:["전직 충북지방병무청장", "현직 더불어민주당 전남도당 부위원장"], edu:["수원대학교(경기) 경영학과 석사 졸업", "광주대학교(광주) 행정학과 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" }
+      { name:"이재각", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145230_f473800c3d9d4506.jpg", born:"1961-04-09", career:["전직 충북지방병무청장", "현직 더불어민주당 전남도당 부위원장"], edu:["수원대학교(경기) 경영학과 석사 졸업", "광주대학교(광주) 행정학과 졸업"], nominated:true, favorable:false, color:"#a78bfa", slogan:"준비중" }
     ]},
     "hampyeong":  { name:"함평군수",  jndc:"직접", candidates:[
       { name:"이남오", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145249_3011c35368f9c690.jpg", born:"1972-04-03", career:["현직 더불어민주당 당대표 특보", "현직 함평군의회 의장"], edu:["초당대학교 대학원(전라) 행정학과 석사 졸업", "전남대학교(광주) 경영전문대학원 경영자과정 수료"], favorable:false, color:"#60a5fa", slogan:"준비중" },
       { name:"이상익", status:"도전자", competition:"2인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145232_1c303d025293751b.jpg", born:"1956-07-07", career:["현직 현 함평군수", "현직 현 전국농어촌지역군수협의회 부회장"], edu:["초당대학교(전라) 사회복지학과 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" }
     ]},
     "haenam":     { name:"해남군수",  jndc:"간접", candidates:[
-      { name:"명현관", status:"현직",   competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145257_24902a6e92655d53.jpg", born:"1962-06-21", career:["현직 더불어민주당 현 해남군수", "전직 제10대 전라남도의회 전반기 의장"], edu:["호남대학교(광주) 체육학과 체육학 석사 졸업"], favorable:false, color:"#22c55e", slogan:"준비중" },
+      { name:"명현관", status:"현직",   competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145257_24902a6e92655d53.jpg", born:"1962-06-21", career:["현직 더불어민주당 현 해남군수", "전직 제10대 전라남도의회 전반기 의장"], edu:["호남대학교(광주) 체육학과 체육학 석사 졸업"], nominated:true, favorable:false, color:"#22c55e", slogan:"준비중" },
       { name:"김성주", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145331_2d4d5f13ce33fa17.jpg", born:"1959-07-08", career:["전직 해남군수협 3선 조합장", "현직 나주대학교 특임교수"], edu:["조선대학교 경영대학원(광주) 경영학과 석사 졸업", "전남대학교 일반대학원(광주) 수산과학과 박사 졸업"], favorable:false, color:"#60a5fa", slogan:"준비중" },
       { name:"이길운", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145253_97453302edadabd4.jpg", born:"1966-03-09", career:["전직 해남군의회 의원(5대~7대)", "현직 해남군체육회 회장"], edu:["조선대학교 경영대학원(광주) 경영학과 석사 졸업", "조선대학교(광주) 원자력공학과 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" }
     ]},
     "hwasun":     { name:"화순군수",  jndc:"간접", candidates:[
       { name:"문행주", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145235_9557a778af4be6e6.jpg", born:"1964-07-29", career:["전직 화순군의회의원", "전직 전라남도의회의원"], edu:["전남대학교(광주) 중어중문학과 졸업"], favorable:false, color:"#60a5fa", slogan:"준비중" },
-      { name:"윤영민", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145421_a1d720023f3dff7f.jpg", born:"1970-06-10", career:["전직 화순군의회부의장", "현직 더불어민주당정책위원회부의장"], edu:["전남대학교대학원(광주) 사회복지문화학 석사 졸업", "전남대학교대학원(광주) 기록관리협동과정 박사(기록관리학) 졸업"], favorable:false, color:"#a78bfa", slogan:"준비중" },
-      { name:"임지락", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145404_dbeaf028df71004f.jpg", born:"1964-04-27", career:["현직 전라남도의회 의원", "현직 더불어민주당정책위원회 부의장"], edu:["전남대학교 행정대학원(광주) 행정학과 행정학석사 졸업", "전남대학교(광주) 농과대학 원예학과 졸업"], favorable:false, color:"#f472b6", slogan:"준비중" }
+      { name:"윤영민", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145421_a1d720023f3dff7f.jpg", born:"1970-06-10", career:["전직 화순군의회부의장", "현직 더불어민주당정책위원회부의장"], edu:["전남대학교대학원(광주) 사회복지문화학 석사 졸업", "전남대학교대학원(광주) 기록관리협동과정 박사(기록관리학) 졸업"], runoffStatus:"결선중", favorable:false, color:"#a78bfa", slogan:"준비중" },
+      { name:"임지락", status:"도전자", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260227145404_dbeaf028df71004f.jpg", born:"1964-04-27", career:["현직 전라남도의회 의원", "현직 더불어민주당정책위원회 부의장"], edu:["전남대학교 행정대학원(광주) 행정학과 행정학석사 졸업", "전남대학교(광주) 농과대학 원예학과 졸업"], runoffStatus:"결선중", favorable:false, color:"#f472b6", slogan:"준비중" }
     ]}
   },
 
@@ -195,7 +195,7 @@ const CANDIDATES = {
       { name:"김명수", district:"제2선거구", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260306200414_ac0f579f690e3ef8.jpg", born:"1956-02-17", career:["현직 광산구의회 3선 현의장", "현직 더불어민주당 정청래 당대표 지방자치특보"], edu:["호남대학교(광주) 행정학과 행정학박사 졸업", "호남대학교(광주) 행정학과 졸업"], favorable:false },
       { name:"김창삼", district:"제2선거구", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260306200426_f1e73f98f06f67e2.jpg", born:"1972-10-28", career:["현직 중앙당 기후 특위 부위원장", "현직 광산갑 민생실천 위원장"], edu:["전남과학대학교(전남) 건축과 졸업"], favorable:false },
       { name:"박경신", district:"제2선거구", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260306200428_a461a6d7b525cb30.jpg", born:"1972-02-19", career:["전직 광산구의회 산업도시위원장", "현직 초록우산광주후원회사무국장"], edu:["호남대학교(광주) 사회복지학과 석사 졸업", "호남대학교(광주) 행정학과 졸업"], favorable:false },
-      { name:"박종원", district:"제2선거구", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145400_a6af7e4cf3df6b18.jpg", born:"1968-07-04", career:["전직 제 5대.7대 담양군의회 의원", "현직 제 11대.12대 전라남도의회 의원"], edu:["전남대학교 정책대학원(광주) 일반행정전공 행정학석사 졸업", "광주대학교(광주) 토목공학과 졸업"], favorable:false },
+      { name:"박종원", district:"제2선거구", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260227145400_a6af7e4cf3df6b18.jpg", born:"1968-07-04", career:["전직 제 5대.7대 담양군의회 의원", "현직 제 11대.12대 전라남도의회 의원"], edu:["전남대학교 정책대학원(광주) 일반행정전공 행정학석사 졸업", "광주대학교(광주) 토목공학과 졸업"], runoffStatus:"결선중", favorable:false },
       { name:"이영순", district:"제2선거구", competition:"5인 혼전", image:"https://2026win.kr/files/candidate/profile/20260306200416_a65f9101946b44af.jpg", born:"1958-12-14", career:["전직 광산구의회 의장", "전직 이재명대통령후보 국민주권위원회 광주전남본부 위원장"], edu:["광주여자대학원(광주) 미용과학과 박사 졸업", "광주여자대학교(광주) 미용학과 졸업"], favorable:false },
       { name:"박필순", district:"제3선거구", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260306200414_6d76b73fa9adb75a.jpg", born:"1974-08-16", career:["현직 더불어민주당 현 광주광역시의원", "현직 광주광역시의회 산업건설위원장"], edu:["전남대학교(광주) 불어물문학과 중퇴"], favorable:false },
       { name:"이영훈", district:"제3선거구", competition:"3인 경합", image:"https://2026win.kr/files/candidate/profile/20260306200420_b4eda8b2c93863db.jpg", born:"1972-01-16", career:["전직 광산구의회 의장", "전직 대통령직속국가균형발전위원회국민소통특별위원"], edu:["호남대학교사회융합대학원(광주) 행정학과 행정학 석사 졸업", "호남대학교(광주) 행정학과 졸업"], favorable:false },

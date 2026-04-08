@@ -13,18 +13,18 @@
   --bg2:   #13131e;
   --bg3:   #1b1b28;
   --bg4:   #222232;
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.12);
-  --txt:   #e2e8f0;
-  --txt2:  #8892a4;
-  --txt3:  #454f62;
-  --purple:#8b5cf6;
-  --purple2:#6d28d9;
-  --pdim:  rgba(139,92,246,0.15);
-  --green: #22c55e;
-  --blue:  #60a5fa;
-  --amber: #fbbf24;
-  --live:  #ef4444;
+  --border:rgba(255,255,255,0.09);
+  --border2:rgba(255,255,255,0.15);
+  --txt:   #f0f4ff;
+  --txt2:  #b8c4d8;
+  --txt3:  #7a8898;
+  --purple:#a78bfa;
+  --purple2:#7c3aed;
+  --pdim:  rgba(167,139,250,0.12);
+  --green: #4ade80;
+  --blue:  #7dd3fc;
+  --amber: #fcd34d;
+  --live:  #f87171;
   --rad:   10px;
 }
 html{scroll-behavior:smooth}
@@ -509,7 +509,19 @@ img{display:block;max-width:100%}
 .badge-status{
   display:inline-flex;align-items:center;
   background:rgba(96,165,250,0.15);border:1px solid rgba(96,165,250,0.3);
-  color:#60a5fa;font-size:11px;font-weight:700;
+  color:#7dd3fc;font-size:11px;font-weight:700;
+  padding:2px 7px;border-radius:4px;white-space:nowrap;
+}
+.badge-nominated{
+  display:inline-flex;align-items:center;
+  background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.45);
+  color:#4ade80;font-size:10px;font-weight:800;
+  padding:2px 7px;border-radius:4px;white-space:nowrap;
+}
+.badge-runoff{
+  display:inline-flex;align-items:center;
+  background:rgba(251,146,60,0.15);border:1px solid rgba(251,146,60,0.4);
+  color:#fb923c;font-size:10px;font-weight:800;
   padding:2px 7px;border-radius:4px;white-space:nowrap;
 }
 .cand-hashtags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
@@ -1435,12 +1447,16 @@ function renderRegionAcc(containerId, regions, displayFn){
   el.innerHTML=Object.entries(regions).map(([k,r])=>{
     const allCands=r.candidates||[];
     const favorCount=allCands.filter(c=>c.favorable).length;
+    const nomCount=allCands.filter(c=>c.nominated).length;
+    const runoffCount=allCands.filter(c=>c.runoffStatus).length;
     const jndcClass=r.jndc==='직접'?'jndc-direct':r.jndc==='간접'?'jndc-indirect':'';
     const jndcBadge=r.jndc?`<span class="region-acc-jndc ${jndcClass}">${r.jndc}</span>`:'';
     return `<div class="region-acc">
       <button class="region-acc-head" onclick="toggleRegionAcc(this)">
         <span class="region-acc-name">${r.name}</span>
         <div class="region-acc-meta">
+          ${nomCount>0?`<span class="badge-nominated" style="font-size:10px">✅공천 ${nomCount}명</span>`:''}
+          ${runoffCount>0?`<span class="badge-runoff" style="font-size:10px">🔶결선 ${runoffCount}명</span>`:''}
           ${favorCount>0?`<span class="badge-favorable" style="font-size:10px">⭐유력 ${favorCount}명</span>`:''}
           ${jndcBadge}
           <span class="region-acc-cnt">${allCands.length}명</span>
@@ -1467,6 +1483,8 @@ function fmtBorn(born){
 function candCard(c, showDistrict=false){
   const bg=c.color||'#8b5cf6';
   const fav=c.favorable?`<span class="badge-favorable" style="font-size:10px">⭐유력</span>`:'';
+  const nomBadge=c.nominated?`<span class="badge-nominated">✅ 공천확정</span>`:
+                 c.runoffStatus?`<span class="badge-runoff">🔶 ${c.runoffStatus}</span>`:'';
   const av=c.image
     ?`<div class="mini-cand-avatar" style="background:${bg}"><img src="${c.image}" alt="${c.name}" onerror="this.style.display='none'"></div>`
     :`<div class="mini-cand-avatar" style="background:${bg}">${initial(c.name)}</div>`;
@@ -1481,7 +1499,7 @@ function candCard(c, showDistrict=false){
       ${av}
       <div class="mini-cand-info">
         ${districtTag}
-        <div class="mini-cand-name">${c.name}${fav}</div>
+        <div class="mini-cand-name" style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">${c.name}${fav}${nomBadge}</div>
         ${bornStr?`<div style="font-size:10px;color:var(--txt3);margin-bottom:3px">📅 ${bornStr}</div>`:''}
         <div class="mini-cand-comp">${c.competition}</div>
         ${career?`<div class="mini-cand-career">${career}</div>`:''}

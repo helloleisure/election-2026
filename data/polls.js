@@ -1,5 +1,23 @@
 const POLLS = [
   {
+    id: 6,
+    title: "전남광주특별시장 가상 양자대결 (결선 시뮬레이션)",
+    organization: "한국갤럽 / KBS광주 의뢰",
+    method: "전화면접",
+    period: "2026.03.22~23",
+    sampleSize: 1603,
+    margin: 2.4,
+    confidence: 95,
+    region: "광주+전남",
+    note: "전화면접 방식 기준 가장 큰 격차 — 민형배 우세 유효",
+    candidates: [
+      { id: "min-hyung-bae", name: "민형배", rate: 48.0 },
+      { id: "kim-young-rok", name: "김영록", rate: 40.0 },
+      { name: "모름/무응답",  rate: 12.0 }
+    ],
+    url: "https://www.yna.co.kr/view/AKR20260325061200054"
+  },
+  {
     id: 5,
     title: "전남광주특별시장 가상 양자대결 (결선 시뮬레이션)",
     organization: "코리아정보리서치 / 서울경제TV 의뢰",
