@@ -1232,7 +1232,7 @@ async function refreshNews(target){
   // 오늘 날짜(KST) — 모델에 직접 알려줘서 "최근" 기준 명확히
   const kstNow=new Date(Date.now()+9*3600*1000);
   const kstStr=kstNow.toISOString().slice(0,16).replace('T',' ');
-  const PROMPT=`지금 한국 시간은 ${kstStr} 입니다. 아래 주제의 뉴스를 최신순으로 10개 찾아줘.\n주제: ①전남광주통합특별시장 결선(김영록·민형배) ②광주·전남 6.3 지방선거(기초단체장·광역의원 포함) ③JNDC·전남개발공사 개발사업.\n조건: 최신 기사 우선(가능하면 48시간 이내), 서로 다른 주제·후보·지역, 중복 없이 10개.\nJSON 배열만 응답. 각 항목 필드: title(기사 제목), source(언론사), date(YYYY.MM.DD HH:MM 형식), url(실제 기사 URL), candidate(김영록|민형배|공통|기타), category(경선·결선|공약·정책|여론조사|기초단체장|광역의원|JNDC·개발|선거일정|공방·논란), tags(키워드 배열 최대3개), region(광주|전남동부|전남서부|전남북부|광주·전남), jndc_relevance(true|false), summary(20자 이내).\nJSON 배열만, 마크다운·설명 없이.`;
+  const PROMPT=`지금 한국 시간은 ${kstStr} 입니다. 아래 주제의 실제 뉴스 기사를 최신순으로 10개 찾아줘.\n주제: ①전남광주통합특별시장 결선(김영록·민형배) ②광주·전남 6.3 지방선거(기초단체장·광역의원 포함) ③JNDC·전남개발공사 개발사업.\n엄격 조건:\n- 반드시 ${kstStr.slice(0,10)} 기준 72시간 이내 발행된 기사만 포함 (그 이전 기사 절대 불가)\n- url은 반드시 실제 접근 가능한 원본 기사 URL (추측·생성 금지, 확인된 URL만)\n- 제목과 url이 동일한 기사를 가리키는지 확인 후 포함\n- 서로 다른 주제·후보·지역, 중복 없이 10개\nJSON 배열만 응답. 각 항목 필드: title(기사 제목), source(언론사), date(YYYY.MM.DD HH:MM 형식), url(실제 기사 URL), candidate(김영록|민형배|공통|기타), category(경선·결선|공약·정책|여론조사|기초단체장|광역의원|JNDC·개발|선거일정|공방·논란), tags(키워드 배열 최대3개), region(광주|전남동부|전남서부|전남북부|광주·전남), jndc_relevance(true|false), summary(20자 이내).\nJSON 배열만, 마크다운·설명 없이.`;
 
   const parseDate=(dateStr)=>{
     if(!dateStr)return null;
@@ -1412,7 +1412,7 @@ function renderMayor(){
     const avHtml=c.image
       ?`<div class="cand-card-av mayor-av" style="background:${c.color};padding:0;overflow:hidden"><img src="${c.image}" alt="${c.name}" onerror="this.parentNode.innerHTML='${c.name[0]}'"></div>`
       :`<div class="cand-card-av mayor-av" style="background:${c.color}">${initial(c.name)}</div>`;
-    const favorBadge=c.favorable?`<span class="badge-favorable">⭐ 유력</span>`:'';
+    const favorBadge=c.favorable&&!c.nominated?`<span class="badge-favorable">⭐ 유력</span>`:'';
     const statusBadge=c.status?`<span class="badge-status">${c.status==='결선중'?'🔵 '+c.status:c.status}</span>`:'';
     const hashtags=(c.hashtags||[]).map(h=>`<span class="cand-hashtag">${h}</span>`).join('');
     return `
@@ -1446,7 +1446,7 @@ function renderRegionAcc(containerId, regions, displayFn){
   const el=document.getElementById(containerId);if(!el)return;
   el.innerHTML=Object.entries(regions).map(([k,r])=>{
     const allCands=r.candidates||[];
-    const favorCount=allCands.filter(c=>c.favorable).length;
+    const favorCount=allCands.filter(c=>c.favorable&&!c.nominated).length;
     const nomCount=allCands.filter(c=>c.nominated).length;
     const runoffCount=allCands.filter(c=>c.runoffStatus).length;
     const jndcClass=r.jndc==='직접'?'jndc-direct':r.jndc==='간접'?'jndc-indirect':'';
@@ -1482,7 +1482,7 @@ function fmtBorn(born){
 
 function candCard(c, showDistrict=false){
   const bg=c.color||'#8b5cf6';
-  const fav=c.favorable?`<span class="badge-favorable" style="font-size:10px">⭐유력</span>`:'';
+  const fav=c.favorable&&!c.nominated?`<span class="badge-favorable" style="font-size:10px">⭐유력</span>`:'';
   const nomBadge=c.nominated?`<span class="badge-nominated">✅ 공천확정</span>`:
                  c.runoffStatus?`<span class="badge-runoff">🔶 ${c.runoffStatus}</span>`:'';
   const av=c.image

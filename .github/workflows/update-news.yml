@@ -1,4 +1,4 @@
-name: 뉴스 자동 현행화
+name: 뉴스·캠프 자동 현행화
 
 on:
   push:
@@ -29,10 +29,15 @@ jobs:
           # 현재 KST 시각
           kst = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
           kst_str = kst.strftime('%Y.%m.%d %H:%M')
+          kst_date = kst.strftime('%Y-%m-%d')
 
-          PROMPT = f"""지금 한국 시간은 {kst_str} 입니다. 아래 주제의 뉴스를 최신순으로 10개 찾아줘.
+          PROMPT = f"""지금 한국 시간은 {kst_str} 입니다. 아래 주제의 실제 뉴스 기사를 최신순으로 10개 찾아줘.
           주제: ①전남광주통합특별시장 결선(김영록·민형배) ②광주·전남 6.3 지방선거(기초단체장·광역의원 포함) ③JNDC·전남개발공사 개발사업.
-          조건: 최신 기사 우선(가능하면 48시간 이내), 서로 다른 주제·후보·지역, 중복 없이 10개.
+          엄격 조건:
+          - 반드시 {kst_date} 기준 72시간 이내 발행된 기사만 포함 (그 이전 기사 절대 불가)
+          - url은 반드시 실제 접근 가능한 원본 기사 URL (추측·생성 금지, 확인된 URL만)
+          - 제목과 url이 동일한 기사를 가리키는지 확인 후 포함
+          - 서로 다른 주제·후보·지역, 중복 없이 10개
           JSON 배열만 응답. 각 항목 필드: title(기사 제목), source(언론사), date(YYYY.MM.DD HH:MM 형식), url(실제 기사 URL), candidate(김영록|민형배|공통|기타), category(경선·결선|공약·정책|여론조사|기초단체장|광역의원|JNDC·개발|선거일정|공방·논란), tags(키워드 배열 최대3개), region(광주|전남동부|전남서부|전남북부|광주·전남), jndc_relevance(true|false), summary(20자 이내).
           JSON 배열만, 마크다운·설명 없이."""
 
@@ -124,14 +129,116 @@ jobs:
           print(f"✅ {len(news_items)}건 뉴스 업데이트 완료 ({kst_str} KST)")
           PYEOF
 
-      - name: news.js 변경 사항 커밋
+      - name: Perplexity API로 캠프 상황실 현행화
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+        run: |
+          python3 - << 'PYEOF'
+          import os, json, urllib.request, urllib.error, datetime, re
+
+          api_key = os.environ.get('PERPLEXITY_API_KEY', '')
+          if not api_key:
+              print("::warning::PERPLEXITY_API_KEY not set — skipping camp update")
+              exit(0)
+
+          kst = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+          kst_str = kst.strftime('%Y.%m.%d %H:%M')
+          kst_date = kst.strftime('%Y-%m-%d')
+
+          PROMPT = f"""지금 한국 시간은 {kst_str} 입니다.
+          전남광주특별시장 결선 후보 김영록, 민형배 캠프의 최신 활동 소식을 찾아줘.
+          조건: {kst_date} 기준 최근 7일 이내 실제 뉴스 기반. 각 후보 5개씩 총 10개.
+          JSON 배열만 응답. 형식: [{{"camp":"kim","text":"활동 내용 (출처: 언론사명)","time":"ISO8601 시각"}}]
+          camp 값은 kim(김영록) 또는 min(민형배). time은 ISO8601+09:00 형식.
+          JSON 배열만, 마크다운 없이."""
+
+          payload = json.dumps({
+              "model": "sonar-pro",
+              "messages": [
+                  {"role": "system", "content": "You are a JSON-only API. Output ONLY a valid JSON array."},
+                  {"role": "user", "content": PROMPT}
+              ],
+              "temperature": 0.1,
+              "max_tokens": 2000
+          }).encode()
+
+          req = urllib.request.Request(
+              "https://api.perplexity.ai/chat/completions",
+              data=payload,
+              headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+          )
+
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  data = json.loads(r.read())
+          except urllib.error.HTTPError as e:
+              body = e.read().decode()[:200]
+              print(f"::warning::캠프 API 오류 {e.code}: {body} — sonar 재시도")
+              payload2 = json.loads(payload)
+              payload2["model"] = "sonar"
+              req2 = urllib.request.Request(
+                  "https://api.perplexity.ai/chat/completions",
+                  data=json.dumps(payload2).encode(),
+                  headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+              )
+              with urllib.request.urlopen(req2, timeout=30) as r:
+                  data = json.loads(r.read())
+
+          raw = data["choices"][0]["message"]["content"]
+          txt = re.sub(r'```[\w]*\n?', '', raw).replace('```', '').strip()
+          m = re.search(r'\[[\s\S]*\]', txt)
+          if not m:
+              print("::warning::캠프 JSON 파싱 실패 — 건너뜀")
+              exit(0)
+
+          items = json.loads(m.group(0))
+          if not items:
+              print("::warning::캠프 빈 배열 — 건너뜀")
+              exit(0)
+
+          def parse_time(s):
+              if not s: return kst.strftime('%Y-%m-%dT%H:%M:%S+09:00')
+              try:
+                  norm = s if ('+' in s or 'Z' in s) else s + '+09:00'
+                  datetime.datetime.fromisoformat(norm)
+                  return norm
+              except:
+                  return kst.strftime('%Y-%m-%dT%H:%M:%S+09:00')
+
+          kim_updates = [{"text": i["text"], "time": parse_time(i.get("time",""))}
+                         for i in items if i.get("camp") == "kim"][:5]
+          min_updates = [{"text": i["text"], "time": parse_time(i.get("time",""))}
+                         for i in items if i.get("camp") == "min"][:5]
+
+          # 기존 파일 읽어 updates만 교체 (color, label 등 정적 값 보존)
+          camps = {
+              "kim-young-rok": {
+                  "label": "김영록 캠프",
+                  "color": "#22c55e",
+                  "updates": kim_updates
+              },
+              "min-hyung-bae": {
+                  "label": "민형배 캠프",
+                  "color": "#60a5fa",
+                  "updates": min_updates
+              }
+          }
+
+          js_content = f"// 자동 업데이트: {kst_str} (KST)\nconst CAMPS = {json.dumps(camps, ensure_ascii=False, indent=2)};\n"
+          with open("data/camps.js", "w", encoding="utf-8") as f:
+              f.write(js_content)
+
+          print(f"✅ 캠프 상황실 업데이트 완료 (김영록 {len(kim_updates)}건 / 민형배 {len(min_updates)}건)")
+          PYEOF
+
+      - name: news.js · camps.js 변경 사항 커밋
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/news.js
+          git add data/news.js data/camps.js
           if git diff --staged --quiet; then
             echo "변경 없음 — 커밋 건너뜀"
           else
-            git commit -m "chore: 뉴스 자동 현행화 $(date +'%Y-%m-%d %H:%M') KST"
+            git commit -m "chore: 뉴스·캠프 자동 현행화 $(date +'%Y-%m-%d %H:%M') KST"
             git push
           fi
