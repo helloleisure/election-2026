@@ -1241,15 +1241,22 @@ async function refreshNews(target){
   if(!key){toast('관리자 패널에서 Perplexity API 키를 설정해주세요');return;}
   btn.classList.add('loading');btn.disabled=true;
 
-  // 오늘 날짜(KST) — 모델에 직접 알려줘서 "최근" 기준 명확히
   const kstNow=new Date(Date.now()+9*3600*1000);
   const kstStr=kstNow.toISOString().slice(0,16).replace('T',' ');
-  const PROMPT=`지금 한국 시간은 ${kstStr} 입니다. 아래 주제의 실제 뉴스 기사를 최신순으로 10개 찾아줘.\n주제: ①전남광주통합특별시장 결선(김영록·민형배) — 공약·여론조사·유세·지지선언·캠프동향 ②광주·전남 6.3 지방선거 — 기초단체장·광역의원 공천·경선·본선\n엄격 조건:\n- ${kstStr.slice(0,10)} 기준 72시간 이내 발행된 기사만 (이전 기사 절대 불가)\n- url은 반드시 실제 존재하는 원본 기사 URL — 추측·조합 금지, 확인된 URL만 사용\n- 제목과 url이 같은 기사를 가리키는지 반드시 확인\n- 중복 없이 10개\nJSON 배열만 응답. 각 항목 필드: title(기사 제목), source(언론사), date(YYYY.MM.DD HH:MM), url(원본 기사 URL), candidate(김영록|민형배|공통|기타), category(결선|공약·정책|여론조사|기초단체장|광역의원|선거일정|공방·논란), tags(키워드 배열 최대3개), region(광주|전남동부|전남서부|전남북부|광주·전남), summary(20자 이내).\nJSON 배열만, 마크다운·설명 없이.`;
+
+  // 신뢰 언론사 도메인 (sonar search_domain_filter)
+  const TRUSTED_DOMAINS=[
+    'yna.co.kr','namdonews.com','kjmbc.co.kr','nocutnews.co.kr',
+    'jeonnam.mbc.co.kr','newsis.com','news1.kr','hani.co.kr',
+    'ohmynews.com','pressian.com','sentv.co.kr','ikbc.co.kr'
+  ];
+
+  // 프롬프트: URL·날짜 조건은 API 파라미터에 위임, 내용·포맷에만 집중
+  const PROMPT=`지금 한국 시간 ${kstStr}. 전남광주통합특별시장 결선(민형배·김영록) 및 광주·전남 6.3 지방선거 최신 뉴스 10개를 최신순으로 찾아줘. 최근 3일 기사 우선, 부족하면 최근 7일. JSON 배열만 응답. 필드: title(기사 제목), source(언론사명), date(YYYY.MM.DD HH:MM), url(기사 URL), candidate(김영록|민형배|공통|기타), category(결선|공약·정책|여론조사|기초단체장|광역의원|선거일정|공방·논란), tags(키워드 배열 최대3개), region(광주|전남동부|전남서부|전남북부|광주·전남), summary(20자 이내). JSON만, 마크다운 없이.`;
 
   const parseDate=(dateStr)=>{
     if(!dateStr)return null;
     try{
-      // "2026.04.08 14:30" or "2026-04-08 14:30" or "2026-04-08T14:30"
       const norm=dateStr.replace(/\./g,'-').replace(' ','T');
       const withTz=norm.includes('+')||norm.includes('Z')?norm:norm+'+09:00';
       const d=new Date(withTz);
@@ -1257,36 +1264,60 @@ async function refreshNews(target){
     }catch(e){return null;}
   };
 
+  // tryFetch: HTTP 오류만 throw, 빈배열·파싱실패는 {items:[], citations:[]} 반환
   const tryFetch=async(model)=>{
     const res=await fetch('https://api.perplexity.ai/chat/completions',{
       method:'POST',headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
-      body:JSON.stringify({model,messages:[
-        {role:'system',content:'You are a JSON-only API. Output ONLY a valid JSON array. No markdown fences, no explanation.'},
-        {role:'user',content:PROMPT}
-      ],temperature:.1,max_tokens:4000})
+      body:JSON.stringify({
+        model,
+        messages:[
+          {role:'system',content:'You are a JSON-only API. Output ONLY a valid JSON array. No markdown, no explanation.'},
+          {role:'user',content:PROMPT}
+        ],
+        temperature:.1,
+        max_tokens:4000,
+        search_recency_filter:'week',       // API 레벨 날짜 필터 (프롬프트보다 신뢰도 높음)
+        return_citations:true,              // 모델이 실제 검색한 검증된 URL 배열 반환
+        search_domain_filter:TRUSTED_DOMAINS // 신뢰 언론사 도메인만 검색
+      })
     });
     if(!res.ok){
       const errBody=await res.text().catch(()=>'');
-      throw new Error('API '+res.status+(errBody?': '+errBody.slice(0,120):''));
+      const err=new Error('API '+res.status+(errBody?': '+errBody.slice(0,80):''));
+      err.isApiError=true;
+      throw err;
     }
     const d=await res.json();
     const raw=d.choices?.[0]?.message?.content||'';
+    const citations=d.citations||[];        // 검증된 URL 목록 (return_citations 결과)
     const txt=raw.replace(/```[\w]*\n?/g,'').replace(/```/g,'').trim();
     const m=txt.match(/\[[\s\S]*\]/);
-    if(!m)throw new Error('JSON 파싱 실패 — 응답: '+txt.slice(0,120));
-    const arr=JSON.parse(m[0]);
-    if(!Array.isArray(arr)||arr.length===0)throw new Error('빈 배열');
-    return arr;
+    if(!m)return{items:[],citations};
+    let arr;try{arr=JSON.parse(m[0]);}catch(e){return{items:[],citations};}
+    if(!Array.isArray(arr))return{items:[],citations};
+    return{items:arr,citations};
   };
 
   try{
-    let fetched;
+    let result;
     let usedModel='sonar-pro';
     try{
-      fetched=await tryFetch('sonar-pro');
+      result=await tryFetch('sonar-pro');
     }catch(e1){
-      usedModel='sonar';
-      fetched=await tryFetch('sonar');
+      // HTTP 오류일 때만 sonar 폴백 (빈배열·파싱실패는 폴백 안 함)
+      if(e1.isApiError){
+        usedModel='sonar';
+        result=await tryFetch('sonar');
+      }else{
+        throw e1;
+      }
+    }
+
+    const{items:fetched,citations}=result;
+
+    if(!fetched.length){
+      toast('최근 3일 내 관련 뉴스를 찾지 못했습니다.');
+      return;
     }
 
     const regionToTab={
@@ -1296,33 +1327,29 @@ async function refreshNews(target){
 
     const newItems=fetched.slice(0,10).map((item,i)=>{
       const d=parseDate(item.date);
+      // citations[i]로 URL 보완: JSON URL이 없거나 http로 시작 안 하면 citation 사용
+      const url=(item.url&&item.url.startsWith('http'))?item.url:(citations[i]||'');
       return {
         id:Date.now()+i,
         title:item.title||'',
         summary:item.summary||'',
         source:item.source||'미상',
-        url:item.url||'',
+        url,
         category:regionToTab[item.region]||'mayor',
         newsType:item.category||'',
         candidate:item.candidate||'',
         tags:Array.isArray(item.tags)?item.tags:[],
         region:item.region||'',
-        jndc_relevance:!!item.jndc_relevance,
+        jndc_relevance:false,
         publishedAt:d?d.toISOString():new Date().toISOString(),
         aiSummary:''
       };
     });
 
-    // 최신순 정렬
     newItems.sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
-
-    if(newItems.length>0){
-      NEWS.splice(0,NEWS.length,...newItems);
-      renderHomeNews();renderNewsPage();
-      toast(newItems.length+'건 수집 완료 ('+usedModel+')');
-    }else{
-      toast('뉴스를 찾지 못했습니다. 잠시 후 다시 시도해주세요.');
-    }
+    NEWS.splice(0,NEWS.length,...newItems);
+    renderHomeNews();renderNewsPage();
+    toast(newItems.length+'건 수집 완료 ('+usedModel+(citations.length?' · citations '+citations.length:'')+')')
   }catch(e){toast('실패: '+e.message);}
   finally{btn.classList.remove('loading');btn.disabled=false;}
 }
