@@ -1,193 +1,117 @@
-// 자동 업데이트: 2026.04.09 00:39 (KST)
+// 자동 업데이트: 2026.04.09 00:55 (KST)
 const NEWS = [
   {
-    "id": 1775695167,
-    "title": "JNDC, 전남동부 개발사업 착공식 개최",
-    "summary": "동부 개발 착공",
-    "source": "매일경제",
-    "url": "https://www.mk.co.kr/news/region/11234567",
-    "category": "jeonnam",
-    "newsType": "JNDC·개발",
-    "candidate": "기타",
-    "tags": [
-      "JNDC",
-      "착공",
-      "동부"
-    ],
-    "region": "전남동부",
-    "jndc_relevance": true,
-    "publishedAt": "2026-04-08T11:15:00+09:00",
-    "aiSummary": ""
-  },
-  {
-    "id": 1775695166,
-    "title": "광주 북구 광역의원 경선 D-3, 여론조사 결과 발표",
-    "summary": "북구 의원 여론조사",
-    "source": "뉴스1",
-    "url": "https://www.news1.kr/articles/6126000",
-    "category": "gwangju",
+    "id": 1775696159,
+    "title": "민주당 통합시장 여론조사..민형배 42% vs 김영록 30%",
+    "summary": "민형배 오차범위 밖 우위",
+    "source": "목포MBC",
+    "url": "https://www.mpmbc.co.kr/NewsArticle/1513169",
+    "category": "mayor",
     "newsType": "여론조사",
-    "candidate": "기타",
+    "candidate": "공통",
     "tags": [
-      "광역의원",
+      "지지도조사",
+      "민형배우위",
+      "부동층29%"
+    ],
+    "region": "광주·전남",
+    "jndc_relevance": false,
+    "publishedAt": "2026-04-07T09:00:00",
+    "aiSummary": ""
+  },
+  {
+    "id": 1775696160,
+    "title": "민형배 42%·김영록 30%...통합시장 부동층 29%에 달렸다",
+    "summary": "결선 여론조사 결과 분석",
+    "source": "무등일보",
+    "url": "https://www.mdilbo.com/detail/754580",
+    "category": "mayor",
+    "newsType": "여론조사",
+    "candidate": "공통",
+    "tags": [
       "여론조사",
-      "북구"
+      "지지도격차",
+      "결선변수"
     ],
-    "region": "광주",
+    "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-08T09:30:00+09:00",
+    "publishedAt": "2026-04-07T09:00:00",
     "aiSummary": ""
   },
   {
-    "id": 1775695165,
-    "title": "김영록 후보, 전남 서부 기초단체장 지원 선언",
-    "summary": "서부 단체장 지원",
-    "source": "전남매일",
-    "url": "https://www.jnmnews.com/article/67890",
-    "category": "jeonnam",
-    "newsType": "기초단체장",
-    "candidate": "김영록",
-    "tags": [
-      "김영록",
-      "서부",
-      "지원"
-    ],
-    "region": "전남서부",
-    "jndc_relevance": false,
-    "publishedAt": "2026-04-07T18:10:00+09:00",
-    "aiSummary": ""
-  },
-  {
-    "id": 1775695164,
-    "title": "민형배, 전남광주통합시장 경선 결선 돌입 '통합 비전' 강조",
-    "summary": "민형배 통합비전",
-    "source": "광주일보",
-    "url": "https://www.kjmbc.co.kr/news/article.html?no=12345",
-    "category": "gwangju",
+    "id": 1775696161,
+    "title": "[2026 지방선거] [전남광주특별시장] 민형배 \"통합특별시, 행정혁신 중심으로\"",
+    "summary": "민형배 3대 전략 제시",
+    "source": "딜사이트경제TV",
+    "url": "https://news.dealsitetv.com/articles/168213",
+    "category": "mayor",
     "newsType": "공약·정책",
     "candidate": "민형배",
     "tags": [
-      "민형배",
-      "통합비전",
-      "경선"
-    ],
-    "region": "광주",
-    "jndc_relevance": false,
-    "publishedAt": "2026-04-07T16:45:00+09:00",
-    "aiSummary": ""
-  },
-  {
-    "id": 1775695163,
-    "title": "\"전기료 100원\" vs \"투자 500조\"..통합특별시 경제 주도권 '격돌'",
-    "summary": "경제정책 격돌",
-    "source": "KJMBC",
-    "url": "https://kjmbc.co.kr/NewsArticle/1512987",
-    "category": "mayor",
-    "newsType": "공약·정책",
-    "candidate": "공통",
-    "tags": [
-      "정책",
-      "에너지",
-      "AI"
+      "행정혁신",
+      "재생에너지",
+      "정책공약"
     ],
     "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-07T14:20:00+09:00",
+    "publishedAt": "2026-04-07T09:00:00",
     "aiSummary": ""
   },
   {
-    "id": 1775695162,
-    "title": "김영록·민형배, 전남광주통합특별시장 결선 맞대결 성사",
-    "summary": "결선 맞대결 성사",
-    "source": "호남교육신문",
-    "url": "https://ihopenews.com/news/articleView.html?idxno=252613",
+    "id": 1775696157,
+    "title": "민주당 전남광주시장 경선, 민형배·김영록 결선행",
+    "summary": "3파전 본경선 결과 2인 결선",
+    "source": "한겨레",
+    "url": "https://www.hani.co.kr/arti/politics/politics_general/1252750.html",
     "category": "mayor",
     "newsType": "결선",
     "candidate": "공통",
     "tags": [
-      "김영록",
-      "민형배",
-      "맞대결"
-    ],
-    "region": "광주·전남",
-    "jndc_relevance": false,
-    "publishedAt": "2026-04-06T11:30:00+09:00",
-    "aiSummary": ""
-  },
-  {
-    "id": 1775695161,
-    "title": "[무등의 아침] 통합시장 결선 투표는 '광주 대전'…민형배·김영록",
-    "summary": "결선투표 12~14일",
-    "source": "Daum",
-    "url": "https://v.daum.net/v/KhS4E7CEhC",
-    "category": "mayor",
-    "newsType": "결선",
-    "candidate": "공통",
-    "tags": [
+      "본경선",
       "결선투표",
-      "일정",
-      "광주대전"
+      "신정훈탈락"
     ],
     "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-06T10:00:00+09:00",
+    "publishedAt": "2026-04-05T09:00:00",
     "aiSummary": ""
   },
   {
-    "id": 1775695160,
-    "title": "민형배·김영록 압축 與 전남광주특별시장 결선…승패 가를 변수?",
-    "summary": "결선 승패 변수 분석",
-    "source": "뉴스1",
-    "url": "https://www.news1.kr/local/gwangju-jeonnam/6125958",
+    "id": 1775696158,
+    "title": "민주당 전남광주통합특별시장 경선, 김영록·민형배 결선행",
+    "summary": "결선 12~14일 진행 예정",
+    "source": "조선일보",
+    "url": "https://www.chosun.com/politics/assembly/2026/04/05/WVUG7TO4FZAMHJ3YBSRVG6A55U/",
     "category": "mayor",
     "newsType": "결선",
     "candidate": "공통",
     "tags": [
-      "결선",
-      "변수",
-      "토론회"
+      "경선결과",
+      "결선일정",
+      "득표율미공개"
     ],
     "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-06T09:15:00+09:00",
+    "publishedAt": "2026-04-05T09:00:00",
     "aiSummary": ""
   },
   {
-    "id": 1775695159,
-    "title": "민형배·김영록, 전남광주통합특별시장 결선 맞대결…통합 비전 경쟁",
-    "summary": "결선 국면 본격화",
-    "source": "매일일보",
-    "url": "https://www.m-i.kr/news/articleView.html?idxno=1361949",
+    "id": 1775696156,
+    "title": "민주 전남광주통합시장 민형배·김영록 결선행",
+    "summary": "민형배·김영록 결선 진출 확정",
+    "source": "연합뉴스TV",
+    "url": "https://www.yonhapnewstv.co.kr/news/MYH20260406060156BQa",
     "category": "mayor",
     "newsType": "결선",
     "candidate": "공통",
     "tags": [
-      "결선",
-      "맞대결",
-      "통합비전"
+      "결선진출",
+      "본경선결과",
+      "과반득표미달"
     ],
     "region": "광주·전남",
     "jndc_relevance": false,
-    "publishedAt": "2026-04-06T08:20:00+09:00",
-    "aiSummary": ""
-  },
-  {
-    "id": 1775695158,
-    "title": "민주당, 전남광주통합특별시장 민형배-김영록 2파전..신정훈 탈락",
-    "summary": "민형배·김영록 결선 결정",
-    "source": "Daum",
-    "url": "https://v.daum.net/v/20260406074505075",
-    "category": "mayor",
-    "newsType": "결선",
-    "candidate": "공통",
-    "tags": [
-      "민형배",
-      "김영록",
-      "신정훈"
-    ],
-    "region": "광주·전남",
-    "jndc_relevance": false,
-    "publishedAt": "2026-04-06T07:45:00+09:00",
+    "publishedAt": "2026-04-05T06:01:00+09:00",
     "aiSummary": ""
   }
 ];
